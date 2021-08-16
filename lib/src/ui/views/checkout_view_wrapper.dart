@@ -22,6 +22,7 @@ class CheckoutViewWrapper extends StatefulWidget {
     this.bodyPageController,
     this.onPageChanged,
     this.checkoutCurrency,
+    this.environment,
   }) : super(key: key);
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
@@ -30,6 +31,7 @@ class CheckoutViewWrapper extends StatefulWidget {
   final PageController bodyPageController;
   final Function(int) onPageChanged;
   final CheckoutCurrency checkoutCurrency;
+  final Environment environment;
 
   @override
   _CheckoutViewWrapperState createState() => _CheckoutViewWrapperState();

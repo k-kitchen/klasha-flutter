@@ -31,7 +31,7 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
     } else {
       MobileMoneyResponse mobileMoneyResponse = MobileMoneyResponse.fromJson(decodedResponseMap);
-      log('mobile money service => mobile money  payment here = $mobileMoneyResponse');
+      // log('mobile money service => mobile money  payment here = $mobileMoneyResponse');
 
       apiResponse.data = mobileMoneyResponse;
       apiResponse.message = 'Successful';
@@ -66,7 +66,7 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
     } else {
       MobileMoneyVerifyResponse mobileMoneyVerifyResponse = MobileMoneyVerifyResponse.fromJson(decodedResponseMap);
-      log('mobile money service => mobile money verify payment here = $mobileMoneyVerifyResponse');
+      // log('mobile money service => mobile money verify payment here = $mobileMoneyVerifyResponse');
 
       apiResponse.data = mobileMoneyVerifyResponse;
       apiResponse.message = 'Successful';

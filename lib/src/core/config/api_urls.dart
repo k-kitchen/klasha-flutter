@@ -1,6 +1,8 @@
+import 'package:klasha_checkout/klasha_checkout.dart';
+
 class ApiUrls {
   // base url
-  static const String baseUrl = 'https://ktests.com';
+  static String baseUrl;
 
   // bank transfer urls
   static const String bankTransferUrl = '/pay/NGN/banktransfer';
@@ -17,6 +19,17 @@ class ApiUrls {
   static const String mobileMoneyUrl = '/pay/GHS/mobilemoney';
 
   // verify payment
-  static  String verifyPaymentUrl(String countryCode) => '/pay/$countryCode/payment/verify';
+  static String verifyPaymentUrl(String countryCode) =>
+      '/pay/$countryCode/payment/verify';
 
+  static void getBaseUrl(Environment environment) {
+    switch (environment) {
+      case Environment.TEST:
+        baseUrl = 'https://ktests.com';
+        break;
+      case Environment.LIVE:
+        baseUrl = 'https://gate.klasapps.com';
+        break;
+    }
+  }
 }

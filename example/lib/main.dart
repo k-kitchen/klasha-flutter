@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/klasha_checkout.dart';
@@ -43,10 +41,10 @@ class _HomePageState extends State<HomePage> {
         amount: int.parse(_amount),
         checkoutCurrency: _checkoutCurrency,
         onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
-          log('checkout response is here ${klashaCheckoutResponse.transactionReference}');
-          log('checkout response is here ${klashaCheckoutResponse.status}');
-          log('checkout response is here ${klashaCheckoutResponse.message}');
-        }
+          print('checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
+          print('checkout response status is ${klashaCheckoutResponse.status}');
+          print('checkout response message is ${klashaCheckoutResponse.message}');
+        },
       );
     }
   }
