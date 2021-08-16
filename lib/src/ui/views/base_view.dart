@@ -14,11 +14,13 @@ class KlashaCheckoutBaseView extends StatefulWidget {
     this.email,
     this.amount,
     this.checkoutCurrency,
+    this.onComplete,
   }) : super(key: key);
 
   final String email;
   final int amount;
   final CheckoutCurrency checkoutCurrency;
+  final OnCheckoutResponse<KlashaCheckoutResponse> onComplete;
 
   @override
   _KlashaCheckoutBaseViewState createState() => _KlashaCheckoutBaseViewState();
@@ -66,7 +68,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                 if (_currentIndex == 0)
                   SizedBox.shrink()
                 else
-                  // back button
+                // back button
                   KlashaBackButton(
                     onTap: () {
                       _bodyPageController.previousPage(
@@ -102,33 +104,32 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
               },
               child: _klashaCheckoutResponse == null
                   ? CheckoutViewWrapper(
-                      email: widget.email,
-                      amount: widget.amount,
-                      checkoutCurrency: widget.checkoutCurrency,
-                      onCheckoutResponse: (KlashaCheckoutResponse response) {
-                        _klashaCheckoutResponse = response;
-                        log('response message is ${response.message}');
-                        log('response status is ${response.status}');
-                        setState(() {});
-                      },
-                      bodyPageController: _bodyPageController,
-                      onPageChanged: (newIndex) {
-                        setState(() {});
+                email: widget.email,
+                amount: widget.amount,
+                checkoutCurrency: widget.checkoutCurrency,
+                onCheckoutResponse: (KlashaCheckoutResponse response) {
+                  _klashaCheckoutResponse = response;
+                  widget.onComplete(response);
+                  setState(() {});
+                },
+                bodyPageController: _bodyPageController,
+                onPageChanged: (newIndex) {
+                  setState(() {});
 
-                        _currentIndex = newIndex;
-                      },
-                    )
+                  _currentIndex = newIndex;
+                },
+              )
                   : PaymentStatusView(
-                      paymentStatus: _klashaCheckoutResponse.status,
-                      onAction: () {
-                        if (_klashaCheckoutResponse.status) {
-                          Navigator.pop(context);
-                        } else {
-                          _klashaCheckoutResponse = null;
-                        }
-                        setState(() {});
-                      },
-                    ),
+                paymentStatus: _klashaCheckoutResponse.status,
+                onAction: () {
+                  if (_klashaCheckoutResponse.status) {
+                    Navigator.pop(context);
+                  } else {
+                    _klashaCheckoutResponse = null;
+                  }
+                  setState(() {});
+                },
+              ),
             ),
           ),
 

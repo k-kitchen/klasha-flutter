@@ -46,6 +46,7 @@ class KlashaCheckout {
             email: email,
             amount: amount,
             checkoutCurrency: checkoutCurrency,
+            onComplete: onComplete,
           ),
         );
       },
