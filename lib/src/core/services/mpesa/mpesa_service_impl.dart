@@ -26,7 +26,7 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
 
     } else {
       MpesaCheckoutResponse mpesaCheckoutResponse = MpesaCheckoutResponse.fromJson(decodedResponseMap);
-      log('mpesa service => mpesa payment here = $mpesaCheckoutResponse');
+      // log('mpesa service => mpesa payment here = $mpesaCheckoutResponse');
 
       apiResponse.data = mpesaCheckoutResponse;
       apiResponse.message = 'Successful';
@@ -61,7 +61,7 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
 
     } else {
       MpesaVerifyResponse mpesaVerifyResponse = MpesaVerifyResponse.fromJson(decodedResponseMap);
-      log('mpesa service => mpesa verify payment here = $mpesaVerifyResponse');
+      // log('mpesa service => mpesa verify payment here = $mpesaVerifyResponse');
 
       apiResponse.data = mpesaVerifyResponse;
       apiResponse.message = 'Successful';

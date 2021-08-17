@@ -29,7 +29,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     } else {
       AddBankCardResponse addBankCardResponse = AddBankCardResponse.fromJson(decodedResponseMap);
-      log('card service => add bank card response = $addBankCardResponse');
+      // log('card service => add bank card response = $addBankCardResponse');
 
       apiResponse.data = addBankCardResponse;
       apiResponse.message = 'Charge authorization data required';
@@ -63,7 +63,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     } else {
       AuthenticateBankCardResponse authenticateBankCardResponse = AuthenticateBankCardResponse.fromJson(decodedResponseMap);
-      log('card service => authenticate bank card response = $authenticateBankCardResponse');
+      // log('card service => authenticate bank card response = $authenticateBankCardResponse');
 
       apiResponse.data = authenticateBankCardResponse;
       apiResponse.message = 'Please enter the OTP sent to your mobile number 080****** and email te**@rave**.com';
@@ -95,7 +95,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     } else {
       ValidateBankCardResponse validateBankCardResponse = ValidateBankCardResponse.fromJson(decodedResponseMap);
-      log('card service => validate bank card response = $validateBankCardResponse');
+      // log('card service => validate bank card response = $validateBankCardResponse');
 
       apiResponse.data = validateBankCardResponse;
       apiResponse.message = 'Charge validated';

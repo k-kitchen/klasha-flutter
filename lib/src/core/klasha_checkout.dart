@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/config/config.dart';
 import 'package:klasha_checkout/src/ui/views/base_view.dart';
-import 'package:klasha_checkout/src/ui/views/checkout_view_wrapper.dart';
 
 /// Make payment using the KlashaCheckout payment options.
 class KlashaCheckout {
@@ -13,7 +12,7 @@ class KlashaCheckout {
   ///
   /// [amount] -> The amount to pay in the currency selected in [checkoutCurrency], if the [checkoutCurrency] is not provided, it defaults to [CheckoutCurrency.NGN]
   ///
-  /// [checkoutCurrency] -> The checkout currency to use, if the [checkoutCurrency] is not provided, it defaults to [CheckoutCurrency.NGN],
+  /// [checkoutCurrency] -> The checkout currency to use, if the [checkoutCurrency] is not provided, it defaults to [CheckoutCurrency.NGN]
   ///
   /// [environment] -> The environment to use, if it is not provided, it defaults to [Environment.TEST]
   ///
@@ -47,33 +46,11 @@ class KlashaCheckout {
             amount: amount,
             checkoutCurrency: checkoutCurrency,
             onComplete: onComplete,
+            environment: environment,
           ),
         );
       },
     );
-
-    // showGeneralDialog(
-    //   context: context,
-    //   barrierDismissible: true,
-    //   barrierLabel: 'label',
-    //   transitionDuration: Duration(milliseconds: 300),
-    //   pageBuilder: (_, __, ___) => Dialog(
-    //     insetPadding: EdgeInsets.symmetric(horizontal: 15),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(15.0),
-    //     ),
-    //     child: KlashaCheckoutBaseView(
-    //       email: email,
-    //       amount: amount,
-    //     ),
-    //   ),
-    //   transitionBuilder: (_, anim, __, child) {
-    //     return SlideTransition(
-    //       position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim),
-    //       child: child,
-    //     );
-    //   },
-    // );
   }
 
   static _validateEmailAndAmount(String email, int amount) {

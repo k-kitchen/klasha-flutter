@@ -15,12 +15,14 @@ class KlashaCheckoutBaseView extends StatefulWidget {
     this.amount,
     this.checkoutCurrency,
     this.onComplete,
+    this.environment,
   }) : super(key: key);
 
   final String email;
   final int amount;
   final CheckoutCurrency checkoutCurrency;
   final OnCheckoutResponse<KlashaCheckoutResponse> onComplete;
+  final Environment environment;
 
   @override
   _KlashaCheckoutBaseViewState createState() => _KlashaCheckoutBaseViewState();
@@ -30,13 +32,13 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
   KlashaCheckoutResponse _klashaCheckoutResponse;
   int _currentIndex = 0;
 
-  /// to be removed
   PageController _bodyPageController;
 
   @override
   void initState() {
     super.initState();
     _bodyPageController = PageController();
+    ApiUrls.getBaseUrl(widget.environment);
   }
 
   @override
@@ -68,7 +70,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                 if (_currentIndex == 0)
                   SizedBox.shrink()
                 else
-                // back button
+                  // back button
                   KlashaBackButton(
                     onTap: () {
                       _bodyPageController.previousPage(
@@ -104,32 +106,33 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
               },
               child: _klashaCheckoutResponse == null
                   ? CheckoutViewWrapper(
-                email: widget.email,
-                amount: widget.amount,
-                checkoutCurrency: widget.checkoutCurrency,
-                onCheckoutResponse: (KlashaCheckoutResponse response) {
-                  _klashaCheckoutResponse = response;
-                  widget.onComplete(response);
-                  setState(() {});
-                },
-                bodyPageController: _bodyPageController,
-                onPageChanged: (newIndex) {
-                  setState(() {});
+                      email: widget.email,
+                      amount: widget.amount,
+                      checkoutCurrency: widget.checkoutCurrency,
+                      onCheckoutResponse: (KlashaCheckoutResponse response) {
+                        _klashaCheckoutResponse = response;
+                        widget.onComplete(response);
+                        setState(() {});
+                      },
+                      bodyPageController: _bodyPageController,
+                      onPageChanged: (newIndex) {
+                        setState(() {});
 
-                  _currentIndex = newIndex;
-                },
-              )
+                        _currentIndex = newIndex;
+                      },
+                      environment: widget.environment,
+                    )
                   : PaymentStatusView(
-                paymentStatus: _klashaCheckoutResponse.status,
-                onAction: () {
-                  if (_klashaCheckoutResponse.status) {
-                    Navigator.pop(context);
-                  } else {
-                    _klashaCheckoutResponse = null;
-                  }
-                  setState(() {});
-                },
-              ),
+                      paymentStatus: _klashaCheckoutResponse.status,
+                      onAction: () {
+                        if (_klashaCheckoutResponse.status) {
+                          Navigator.pop(context);
+                        } else {
+                          _klashaCheckoutResponse = null;
+                        }
+                        setState(() {});
+                      },
+                    ),
             ),
           ),
 

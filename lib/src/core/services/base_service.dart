@@ -52,11 +52,10 @@ mixin KlashaBaseService {
     log('base service => response body = ${response.body}; response status code = ${response.statusCode}');
 
     if (statusCode == HttpStatus.ok) {
-      log('base service, http ok if check passed');
+      // log('base service, http ok if check passed');
       return jsonDecode(response.body);
     } else {
-      log('base service, http ok if check NOT passed');
-      // throw PetraAfricaException(PetraAfricaStrings.somethingWentWrong);
+      // log('base service, http ok if check NOT passed');
     }
   }
 

@@ -22,6 +22,7 @@ class CheckoutViewWrapper extends StatefulWidget {
     this.bodyPageController,
     this.onPageChanged,
     this.checkoutCurrency,
+    this.environment,
   }) : super(key: key);
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
@@ -30,6 +31,7 @@ class CheckoutViewWrapper extends StatefulWidget {
   final PageController bodyPageController;
   final Function(int) onPageChanged;
   final CheckoutCurrency checkoutCurrency;
+  final Environment environment;
 
   @override
   _CheckoutViewWrapperState createState() => _CheckoutViewWrapperState();
@@ -80,85 +82,6 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
       reverse: true,
       child: Column(
         children: [
-          // SizedBox(
-          //   height: 20,
-          // ),
-
-          // Container(
-          //   height: 50,
-          //   width: double.infinity,
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.only(
-          //       topRight: Radius.circular(15.0),
-          //       topLeft: Radius.circular(15.0),
-          //     ),
-          //     color: appColors.primary,
-          //   ),
-          //   padding: EdgeInsets.symmetric(horizontal: 15.0),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       if (_currentIndex == 0)
-          //         SizedBox.shrink()
-          //       else
-          //         // back button
-          //         KlashaBackButton(
-          //           onTap: () {
-          //             _bodyPageController.previousPage(
-          //               duration: Duration(milliseconds: 500),
-          //               curve: Curves.easeInOut,
-          //             );
-          //           },
-          //         ),
-          //
-          //       // close button
-          //       KlashaCloseButton(),
-          //     ],
-          //   ),
-          // ),
-
-          // PaymentStatusView(
-          //   paymentStatus: true,
-          // ),
-
-          // clickable thingy
-          // SizedBox(
-          //   height: 70,
-          //   width: double.infinity,
-          //   child: ListView(
-          //     scrollDirection: Axis.horizontal,
-          //     // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: [
-          //       ...List.generate(
-          //         4,
-          //         (index) => Padding(
-          //           padding: const EdgeInsets.only(left: 15.0),
-          //           child: _PaymentTypeEntry(
-          //             paymentName: _paymentNames[index],
-          //             assetName: _paymentImages[index],
-          //             onTap: () {
-          //               setState(() {
-          //                 _currentIndex = index;
-          //               });
-          //               const _kDuration = Duration(milliseconds: 300);
-          //               _bodyPageController.animateToPage(
-          //                 _currentIndex,
-          //                 duration: _kDuration,
-          //                 curve: Curves.easeInOut,
-          //               );
-          //             },
-          //             isSelected: _currentIndex == index,
-          //           ),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // ),
-
-          // SizedBox(
-          //   height: 20,
-          // ),
-
           // pageview
           SizedBox(
             height: 375,
@@ -171,7 +94,6 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                 CheckoutOptionsView(
                   checkoutCurrency: widget.checkoutCurrency,
                   onCheckoutSelected: (checkoutName) {
-                    log('checkout name is $checkoutName');
                     switch (checkoutName) {
                       case 'Card':
                         _nextWidget = // card page

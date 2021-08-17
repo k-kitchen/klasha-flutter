@@ -137,7 +137,6 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                         },
                       ).toList(),
                       onChanged: (val) {
-                        log('new value is $val');
                         setState(() {
                           _networkValue = val;
                         });
@@ -175,8 +174,6 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
           if (_currentPage == 0)
             PayWithKlashaButton(
               onPressed: () async {
-                log('DORM KEY IS $_formKey');
-                print('DORM KEY current state IS ${_formKey.currentState}');
                 if (_formKey.currentState.validate()) {
                   transactionReference = 'klasha-mobile-money-checkout-${DateTime.now().microsecondsSinceEpoch}';
                   MobileMoneyRequestBody mobileMoneyRequestBody =
@@ -205,7 +202,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                     );
                   } else {
                     KlashaDialogs.showStatusDialog(context, apiResponse.message);
-                    log('something went wrong, try again');
+                    // log('something went wrong, try again');
                   }
                 }
               },
