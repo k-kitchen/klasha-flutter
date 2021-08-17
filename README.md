@@ -6,6 +6,14 @@ A Flutter plugin for making payments via Klasha Checkout Technology
 
 Klasha Flutter SDK allows you to build a quick, simple and excellent payment experience in your Flutter app. We provide powerful and customizable UI screens and elements that can be used out-of-the-box to collect your users' payment details via the Klasha Checkout Technology.
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/klasha-apps/klasha-flutter/master/screenshots/bank_transfer.png" alt="Bank Transfer Checkout" width="230px" hspace="30"/>  <img src="https://raw.githubusercontent.com/klasha-apps/klasha-flutter/master/screenshots/card.png" alt="Card Checkout" width="230px"/>
+</p>
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/klasha-apps/klasha-flutter/master/screenshots/mobile_money.png" alt="Mobile Money Checkout" width="230px" hspace="30"/>  <img src="https://raw.githubusercontent.com/klasha-apps/klasha-flutter/master/screenshots/mpesa.png" alt="Mpesa Checkout" width="230px"/>
+</p>
+
 ## Installing
 
 In the `pubspec.yaml` of your flutter project, add the following dependency:

@@ -183,7 +183,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     );
                   } else {
                     KlashaDialogs.showStatusDialog(context, apiResponse.message);
-                    log('something went wrong, try again');
+                    // log('something went wrong, try again');
                   }
                 }
               },
@@ -230,7 +230,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     );
                   } else if (!apiResponse.status) {
                     KlashaDialogs.showStatusDialog(context, apiResponse.message);
-                    log('something went wrong, try again');
+                    // log('something went wrong, try again');
                   }
                 }
 
@@ -268,7 +268,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                         transactionReference: transactionReference,
                       ),
                     );
-                    log('something went wrong, try again');
+                    // log('something went wrong, try again');
                   }
                 }
                 // if (_currentPage != 2)

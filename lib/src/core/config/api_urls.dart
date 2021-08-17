@@ -19,8 +19,7 @@ class ApiUrls {
   static const String mobileMoneyUrl = '/pay/GHS/mobilemoney';
 
   // verify payment
-  static String verifyPaymentUrl(String countryCode) =>
-      '/pay/$countryCode/payment/verify';
+  static String verifyPaymentUrl(String countryCode) => '/pay/$countryCode/payment/verify';
 
   static void getBaseUrl(Environment environment) {
     switch (environment) {

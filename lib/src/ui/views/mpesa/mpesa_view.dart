@@ -141,7 +141,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                     );
                   } else {
                     KlashaDialogs.showStatusDialog(context, apiResponse.message);
-                    log('something went wrong, try again');
+                    // log('something went wrong, try again');
                   }
                 }
 
