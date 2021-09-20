@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   var _formKey = GlobalKey<FormState>();
   CheckoutCurrency _checkoutCurrency;
 
-  void _launchKlashaPay() async {
+  Future<void> _launchKlashaPay() async {
     if (_formKey.currentState.validate()) {
       KlashaCheckout.checkout(
         context,
@@ -174,6 +174,7 @@ class _HomePageState extends State<HomePage> {
                 height: 30,
               ),
 
+              // ignore: deprecated_member_use
               FlatButton(
                 height: 55,
                 minWidth: double.infinity,
@@ -195,10 +196,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   String validateEmail(String email) {
-    String source =
+    const String source =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-    RegExp regExp = new RegExp(source);
+    final RegExp regExp = RegExp(source);
     if (email.trim().isEmpty) {
       return 'Email is required';
     } else if (!regExp.hasMatch(email)) {

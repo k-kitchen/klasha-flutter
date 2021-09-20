@@ -4,25 +4,25 @@ class CardNumberInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    var text = newValue.text;
+    final text = newValue.text;
 
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
 
-    var buffer = new StringBuffer();
+    final buffer = StringBuffer();
     for (int i = 0; i < text.length; i++) {
       buffer.write(text[i]);
-      var nonZeroIndex = i + 1;
+      final nonZeroIndex = i + 1;
       if (nonZeroIndex % 4 == 0 && nonZeroIndex != text.length) {
         buffer.write(' ');
       }
     }
 
-    var string = buffer.toString();
+    final string = buffer.toString();
     return newValue.copyWith(
         text: string,
-        selection: new TextSelection.collapsed(offset: string.length));
+        selection: TextSelection.collapsed(offset: string.length));
   }
 }
 
@@ -32,18 +32,18 @@ class CardMonthInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    var text = newValue.text;
+    final text = newValue.text;
 
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
 
-    var buffer = new StringBuffer();
+    final buffer = StringBuffer();
     for (int i = 0; i < text.length; i++) {
       buffer.write(text[i]);
-      var nonZeroIndex = i + 1;
+      final nonZeroIndex = i + 1;
 
-      if (nonZeroIndex % 2 == 0 &&
+      if (nonZeroIndex.isEven &&
           ((!_isDeletion(previousText, text) && nonZeroIndex != 4) ||
               (nonZeroIndex != text.length))) {
         buffer.write('/');
@@ -51,10 +51,10 @@ class CardMonthInputFormatter extends TextInputFormatter {
     }
 
     previousText = text;
-    var string = buffer.toString();
+    final string = buffer.toString();
     return newValue.copyWith(
         text: string,
-        selection: new TextSelection.collapsed(offset: string.length));
+        selection: TextSelection.collapsed(offset: string.length));
   }
 }
 

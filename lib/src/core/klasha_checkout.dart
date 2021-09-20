@@ -53,7 +53,7 @@ class KlashaCheckout {
     );
   }
 
-  static _validateEmailAndAmount(String email, int amount) {
+  static void _validateEmailAndAmount(String email, int amount) {
     if (email == null) {
       throw KlashaCheckoutError('An email needs to be provided');
     }

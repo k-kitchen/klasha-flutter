@@ -13,18 +13,6 @@ class MpesaRequestBody {
     this.option,
   });
 
-  String currency;
-  int rate;
-  String amount;
-  String sourceCurrency;
-  bool rememberMe;
-  String fullName;
-  String phoneNumber;
-  String email;
-  String redirectUrl;
-  String txRef;
-  String option;
-
   factory MpesaRequestBody.fromJson(Map<String, dynamic> json) =>
       MpesaRequestBody(
         currency: json["currency"],
@@ -40,17 +28,29 @@ class MpesaRequestBody {
         option: json["option"],
       );
 
+  String currency;
+  int rate;
+  String amount;
+  String sourceCurrency;
+  bool rememberMe;
+  String fullName;
+  String phoneNumber;
+  String email;
+  String redirectUrl;
+  String txRef;
+  String option;
+
   Map<String, dynamic> toJson() => {
-    "currency": currency,
-    "rate": rate,
-    "amount": amount,
-    "sourceCurrency": sourceCurrency,
-    "rememberMe": rememberMe,
-    "fullname": fullName,
-    "phone_number": phoneNumber,
-    "email": email,
-    "redirect_url": redirectUrl,
-    "tx_ref": txRef,
-    "option": option,
-  };
+        "currency": currency,
+        "rate": rate,
+        "amount": amount,
+        "sourceCurrency": sourceCurrency,
+        "rememberMe": rememberMe,
+        "fullname": fullName,
+        "phone_number": phoneNumber,
+        "email": email,
+        "redirect_url": redirectUrl,
+        "tx_ref": txRef,
+        "option": option,
+      };
 }

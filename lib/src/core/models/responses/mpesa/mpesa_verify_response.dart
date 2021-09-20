@@ -7,12 +7,6 @@ class MpesaVerifyResponse {
     this.status,
   });
 
-  String txRef;
-  double amount;
-  String processorResponse;
-  String message;
-  String status;
-
   factory MpesaVerifyResponse.fromJson(Map<String, dynamic> json) =>
       MpesaVerifyResponse(
         txRef: json["tx_ref"],
@@ -21,6 +15,12 @@ class MpesaVerifyResponse {
         message: json["message"],
         status: json["status"],
       );
+
+  String txRef;
+  double amount;
+  String processorResponse;
+  String message;
+  String status;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,

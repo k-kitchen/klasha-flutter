@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/config/api_response.dart';
@@ -109,10 +107,10 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
           ),
           if (_currentPage == 0)
             PayWithKlashaButton(
-              onPressed: () async {
+              onButtonPressed: () async {
                 if (_formKey.currentState.validate()) {
                   transactionReference =  'klasha-mpesa-checkout-${DateTime.now().microsecondsSinceEpoch}';
-                  MpesaRequestBody mpesaRequestBody = MpesaRequestBody(
+                  final MpesaRequestBody mpesaRequestBody = MpesaRequestBody(
                     currency: 'KES',
                     amount: '1000',
                     rate: 1,
@@ -126,21 +124,21 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                     option: 'mpesa',
                   );
 
-                  KlashaDialogs.showLoadingDialog(context);
+                  await KlashaDialogs.showLoadingDialog(context);
 
-                  ApiResponse apiResponse =
+                  final ApiResponse apiResponse =
                   await MpesaServiceImpl().paywithMpesa(mpesaRequestBody);
 
                   Navigator.pop(context);
 
                   if (apiResponse.status) {
                     _mpesaCheckoutResponse = apiResponse.data;
-                    _pageController.nextPage(
+                    await _pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    await KlashaDialogs.showStatusDialog(context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
@@ -151,9 +149,9 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
             KlashaPrimaryButton(
               text: 'I have dialed the code',
               onPressed: () async {
-                KlashaDialogs.showLoadingDialog(context);
+                await KlashaDialogs.showLoadingDialog(context);
 
-                ApiResponse apiResponse = await MpesaServiceImpl().verifyPayment(
+                final ApiResponse apiResponse = await MpesaServiceImpl().verifyPayment(
                   "${_mpesaCheckoutResponse.data.id}",
                   "mpesa_order_id_${_mpesaCheckoutResponse.data.id}",
                 );

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String transactionReference;
 
-  String _fullName;
+  // String _fullName;
   String _email;
   String _phoneNumber;
 
@@ -125,7 +124,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                         (String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: new Text(
+                            child: Text(
                               value,
                               style: TextStyle(
                                 fontSize: 14,
@@ -157,7 +156,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 _MobileMoneyInputForm(
-                  onFullNameChanged: (val) => _fullName = val,
+                  // onFullNameChanged: (val) => _fullName = val,
                   onEmailChanged: (val) => _email = val,
                   onPhoneNumberChanged: (val) => _phoneNumber = val,
                   formKey: _formKey,
@@ -173,10 +172,10 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
           ),
           if (_currentPage == 0)
             PayWithKlashaButton(
-              onPressed: () async {
+              onButtonPressed: () async {
                 if (_formKey.currentState.validate()) {
                   transactionReference = 'klasha-mobile-money-checkout-${DateTime.now().microsecondsSinceEpoch}';
-                  MobileMoneyRequestBody mobileMoneyRequestBody =
+                  final MobileMoneyRequestBody mobileMoneyRequestBody =
                   MobileMoneyRequestBody(
                       txRef: transactionReference,
                       amount: 1000,
@@ -186,9 +185,9 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                       narration: 'mobile-money-payment',
                       network: _networkValue);
 
-                  KlashaDialogs.showLoadingDialog(context);
+                  await KlashaDialogs.showLoadingDialog(context);
 
-                  ApiResponse apiResponse = await MobileMoneyServiceImpl()
+                  final ApiResponse apiResponse = await MobileMoneyServiceImpl()
                       .mobileMoneyPay(mobileMoneyRequestBody);
 
                   Navigator.pop(context);
@@ -196,12 +195,12 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   if (apiResponse.status) {
                     _mobileMoneyResponse = apiResponse.data;
 
-                    _pageController.nextPage(
+                    await _pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    await KlashaDialogs.showStatusDialog(context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
@@ -211,9 +210,9 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
             KlashaPrimaryButton(
               text: 'I have dialed the code',
               onPressed: () async {
-                KlashaDialogs.showLoadingDialog(context);
+                await KlashaDialogs.showLoadingDialog(context);
 
-                ApiResponse apiResponse =
+                final ApiResponse apiResponse =
                     await MobileMoneyServiceImpl().verifyPayment(
                   "${_mobileMoneyResponse.data.id}",
                   "mobile_money_order_id${_mobileMoneyResponse.data.id}",

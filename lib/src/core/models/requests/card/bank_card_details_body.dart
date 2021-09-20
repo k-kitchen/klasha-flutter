@@ -16,21 +16,6 @@ class BankCardDetailsBody {
     this.txRef,
   });
 
-  String cardNumber;
-  String cvv;
-  String expiryMonth;
-  String expiryYear;
-  String currency;
-  int rate;
-  String amount;
-  String sourceCurrency;
-  bool rememberMe;
-  String fullName;
-  String phoneNumber;
-  String email;
-  String redirectUrl;
-  String txRef;
-
   factory BankCardDetailsBody.fromJson(Map<String, dynamic> json) =>
       BankCardDetailsBody(
         cardNumber: json["card_number"],
@@ -48,6 +33,21 @@ class BankCardDetailsBody {
         redirectUrl: json["redirect_url"],
         txRef: json["tx_ref"],
       );
+
+  String cardNumber;
+  String cvv;
+  String expiryMonth;
+  String expiryYear;
+  String currency;
+  int rate;
+  String amount;
+  String sourceCurrency;
+  bool rememberMe;
+  String fullName;
+  String phoneNumber;
+  String email;
+  String redirectUrl;
+  String txRef;
 
   Map<String, dynamic> toJson() => {
         "card_number": cardNumber,

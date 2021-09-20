@@ -7,12 +7,6 @@ class MobileMoneyVerifyResponse {
     this.status,
   });
 
-  String txRef;
-  double amount;
-  String processorResponse;
-  String message;
-  String status;
-
   factory MobileMoneyVerifyResponse.fromJson(Map<String, dynamic> json) =>
       MobileMoneyVerifyResponse(
         txRef: json["tx_ref"],
@@ -21,6 +15,12 @@ class MobileMoneyVerifyResponse {
         message: json["message"],
         status: json["status"],
       );
+      
+  String txRef;
+  double amount;
+  String processorResponse;
+  String message;
+  String status;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,

@@ -6,11 +6,6 @@ class MpesaCheckoutResponse {
     this.status,
   });
 
-  String txRef;
-  MpesaData data;
-  String message;
-  String status;
-
   factory MpesaCheckoutResponse.fromJson(Map<String, dynamic> json) =>
       MpesaCheckoutResponse(
         txRef: json["tx_ref"],
@@ -18,6 +13,11 @@ class MpesaCheckoutResponse {
         message: json["message"],
         status: json["status"],
       );
+
+  String txRef;
+  MpesaData data;
+  String message;
+  String status;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,
@@ -52,28 +52,6 @@ class MpesaData {
     this.customer,
   });
 
-  double id;
-  String txRef;
-  String flwRef;
-  String deviceFingerprint;
-  double amount;
-  double chargedAmount;
-  double appFee;
-  double merchantFee;
-  String processorResponse;
-  String authModel;
-  String currency;
-  String ip;
-  String narration;
-  String status;
-  String authUrl;
-  String paymentType;
-  String fraudStatus;
-  String chargeType;
-  DateTime createdAt;
-  double accountId;
-  Customer customer;
-
   factory MpesaData.fromJson(Map<String, dynamic> json) => MpesaData(
         id: json["id"],
         txRef: json["tx_ref"],
@@ -97,6 +75,28 @@ class MpesaData {
         accountId: json["account_id"],
         customer: Customer.fromJson(json["customer"]),
       );
+
+  double id;
+  String txRef;
+  String flwRef;
+  String deviceFingerprint;
+  double amount;
+  double chargedAmount;
+  double appFee;
+  double merchantFee;
+  String processorResponse;
+  String authModel;
+  String currency;
+  String ip;
+  String narration;
+  String status;
+  String authUrl;
+  String paymentType;
+  String fraudStatus;
+  String chargeType;
+  DateTime createdAt;
+  double accountId;
+  Customer customer;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -132,12 +132,6 @@ class Customer {
     this.createdAt,
   });
 
-  double id;
-  String phoneNumber;
-  String name;
-  String email;
-  DateTime createdAt;
-
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         id: json["id"],
         phoneNumber: json["phone_number"],
@@ -145,6 +139,12 @@ class Customer {
         email: json["email"],
         createdAt: DateTime.parse(json["created_at"]),
       );
+
+  double id;
+  String phoneNumber;
+  String name;
+  String email;
+  DateTime createdAt;
 
   Map<String, dynamic> toJson() => {
         "id": id,

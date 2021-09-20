@@ -1,8 +1,4 @@
 class ValidateCardPaymentBody {
-  String otp;
-  String flwRef;
-  String type;
-
   ValidateCardPaymentBody({
     this.otp,
     this.flwRef,
@@ -15,8 +11,12 @@ class ValidateCardPaymentBody {
     type = json['type'];
   }
 
+  String otp;
+  String flwRef;
+  String type;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['otp'] = this.otp;
     data['flw_ref'] = this.flwRef;
     data['type'] = this.type;

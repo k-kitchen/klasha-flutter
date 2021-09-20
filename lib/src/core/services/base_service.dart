@@ -56,6 +56,7 @@ mixin KlashaBaseService {
       return jsonDecode(response.body);
     } else {
       // log('base service, http ok if check NOT passed');
+      return {};
     }
   }
 

@@ -7,12 +7,6 @@ class ValidateBankCardResponse {
     this.status,
   });
 
-  String txRef;
-  double amount;
-  String processorResponse;
-  String message;
-  String status;
-
   factory ValidateBankCardResponse.fromJson(Map<String, dynamic> json) =>
       ValidateBankCardResponse(
         txRef: json["tx_ref"],
@@ -21,6 +15,12 @@ class ValidateBankCardResponse {
         message: json["message"],
         status: json["status"],
       );
+
+  String txRef;
+  double amount;
+  String processorResponse;
+  String message;
+  String status;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,

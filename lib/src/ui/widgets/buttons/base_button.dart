@@ -30,6 +30,7 @@ class KlashaBaseButton extends StatelessWidget {
     return SizedBox(
       height: 50,
       width: double.infinity,
+      // ignore: deprecated_member_use
       child: RaisedButton(
         textColor: textColor ?? appColors.white,
         onPressed: onPressed,
@@ -43,16 +44,15 @@ class KlashaBaseButton extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: child == null
-            ? Text(
-                buttonText,
-                style: TextStyle(
-                  fontSize: 17,
-                  color: textColor ?? appColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              )
-            : child,
+        child: child ??
+            Text(
+              buttonText,
+              style: TextStyle(
+                fontSize: 17,
+                color: textColor ?? appColors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
       ),
     );
   }

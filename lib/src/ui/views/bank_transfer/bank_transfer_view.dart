@@ -35,8 +35,8 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
     super.dispose();
   }
 
-  void _fetchBankDetails() async {
-    BankTransferBody bankTransferBody = BankTransferBody(
+  Future<void> _fetchBankDetails() async {
+    final BankTransferBody bankTransferBody = BankTransferBody(
       txRef:
           'klasha-fund-wallet-from-bank-transfer-${DateTime.now().microsecondsSinceEpoch}',
       email: widget.email,

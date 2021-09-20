@@ -3,16 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 
 class KlashaInputField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final List<TextInputFormatter> inputFormatters;
-  final TextInputAction textInputAction;
-  final TextInputType keyboardType;
-  final FocusNode focusNode;
-  final Function(String) validator;
-  final Function(String) onChanged;
-
-  const KlashaInputField({
+   const KlashaInputField({
     Key key,
     this.controller,
     this.hintText,
@@ -23,6 +14,15 @@ class KlashaInputField extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
   }) : super(key: key);
+
+  final TextEditingController controller;
+  final String hintText;
+  final List<TextInputFormatter> inputFormatters;
+  final TextInputAction textInputAction;
+  final TextInputType keyboardType;
+  final FocusNode focusNode;
+  final Function(String) validator;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +54,7 @@ class KlashaInputField extends StatelessWidget {
 }
 
 class KlashaOutlinedInputField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final String labeltext;
-  final List<TextInputFormatter> inputFormatters;
-  final TextInputAction textInputAction;
-  final FocusNode focusNode;
-  final Function(String) validator;
-
-  const KlashaOutlinedInputField({
+    const KlashaOutlinedInputField({
     Key key,
     this.controller,
     this.hintText,
@@ -72,6 +64,14 @@ class KlashaOutlinedInputField extends StatelessWidget {
     this.focusNode,
     this.validator,
   }) : super(key: key);
+  
+  final TextEditingController controller;
+  final String hintText;
+  final String labeltext;
+  final List<TextInputFormatter> inputFormatters;
+  final TextInputAction textInputAction;
+  final FocusNode focusNode;
+  final Function(String) validator;
 
   @override
   Widget build(BuildContext context) {

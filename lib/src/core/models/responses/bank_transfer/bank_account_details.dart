@@ -1,12 +1,4 @@
 class BankAccountDetails {
-  String transferReference;
-  String transferAccount;
-  String transferBank;
-  String accountExpiration;
-  String transferNote;
-  double transferAmount;
-  String mode;
-
   BankAccountDetails({
     this.transferReference,
     this.transferAccount,
@@ -27,8 +19,16 @@ class BankAccountDetails {
     mode = json['mode'];
   }
 
+  String transferReference;
+  String transferAccount;
+  String transferBank;
+  String accountExpiration;
+  String transferNote;
+  double transferAmount;
+  String mode;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['transfer_reference'] = this.transferReference;
     data['transfer_account'] = this.transferAccount;
     data['transfer_bank'] = this.transferBank;

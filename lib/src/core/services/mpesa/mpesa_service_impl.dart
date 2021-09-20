@@ -1,31 +1,29 @@
-import 'dart:developer';
-
 import 'package:klasha_checkout/src/core/core.dart';
 
 class MpesaServiceImpl extends MpesaService with KlashaBaseService {
   @override
   Future<ApiResponse> paywithMpesa(MpesaRequestBody mpesaRequestBody) async {
-    ApiResponse<MpesaCheckoutResponse> apiResponse = ApiResponse(status: true);
+    final ApiResponse<MpesaCheckoutResponse> apiResponse = ApiResponse(status: true);
 
     final String url = ApiUrls.baseUrl + ApiUrls.mpesaUrl;
 
     final requestBody = mpesaRequestBody.toJson();
 
-    Map<String, dynamic> decodedResponseBody = await getApiResponse(
+    final Map<String, dynamic> decodedResponseBody = await getApiResponse(
       authorization: 'authorization',
       url: url,
       requestType: RequestType.post,
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    final Map decodedResponseMap = decodedResponseBody;
 
     if (decodedResponseMap['status'] == 'error') {
       apiResponse.status = false;
       apiResponse.message = decodedResponseMap['message'];
 
     } else {
-      MpesaCheckoutResponse mpesaCheckoutResponse = MpesaCheckoutResponse.fromJson(decodedResponseMap);
+      final MpesaCheckoutResponse mpesaCheckoutResponse = MpesaCheckoutResponse.fromJson(decodedResponseMap);
       // log('mpesa service => mpesa payment here = $mpesaCheckoutResponse');
 
       apiResponse.data = mpesaCheckoutResponse;
@@ -37,7 +35,7 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
 
   @override
   Future<ApiResponse> verifyPayment(String tnxId, String orderId) async {
-    ApiResponse<MpesaVerifyResponse> apiResponse = ApiResponse(status: true);
+    final ApiResponse<MpesaVerifyResponse> apiResponse = ApiResponse(status: true);
 
     final String url = ApiUrls.baseUrl + ApiUrls.verifyPaymentUrl('KES');
 
@@ -46,21 +44,21 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
       'orderId': orderId,
     };
 
-    Map<String, dynamic> decodedResponseBody = await getApiResponse(
+    final Map<String, dynamic> decodedResponseBody = await getApiResponse(
       authorization: 'authorization',
       url: url,
       requestType: RequestType.post,
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    final Map decodedResponseMap = decodedResponseBody;
 
     if (decodedResponseMap['status'] == 'error') {
       apiResponse.status = false;
       apiResponse.message = decodedResponseMap['message'];
 
     } else {
-      MpesaVerifyResponse mpesaVerifyResponse = MpesaVerifyResponse.fromJson(decodedResponseMap);
+      final MpesaVerifyResponse mpesaVerifyResponse = MpesaVerifyResponse.fromJson(decodedResponseMap);
       // log('mpesa service => mpesa verify payment here = $mpesaVerifyResponse');
 
       apiResponse.data = mpesaVerifyResponse;

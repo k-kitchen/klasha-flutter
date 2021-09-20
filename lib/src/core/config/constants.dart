@@ -7,4 +7,4 @@ enum CheckoutCurrency { NGN, KES, GHS }
 
 enum Environment { TEST, LIVE }
 
-typedef void OnCheckoutResponse<KlashaCheckoutResponse>(KlashaCheckoutResponse response);
+typedef OnCheckoutResponse<KlashaCheckoutResponse> = void Function(KlashaCheckoutResponse response);

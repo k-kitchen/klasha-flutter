@@ -12,11 +12,11 @@ class CheckoutOptionsView extends StatelessWidget {
   final Function(String) onCheckoutSelected;
   final CheckoutCurrency checkoutCurrency;
 
-  List<String> _paymentNames = [
+  final List<String> _paymentNames = [
     'Card',
   ];
 
-  List<String> _paymentImages = [
+  final List<String> _paymentImages = [
     KlashaAssets.ic_card,
   ];
 

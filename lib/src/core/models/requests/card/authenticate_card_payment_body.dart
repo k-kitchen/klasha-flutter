@@ -1,13 +1,4 @@
 class AuthenticateCardPaymentBody {
-  String mode;
-  String pin;
-  String txRef;
-  String city;
-  String address;
-  String state;
-  String country;
-  String zipcode;
-
   AuthenticateCardPaymentBody({
     this.mode,
     this.pin,
@@ -30,8 +21,17 @@ class AuthenticateCardPaymentBody {
     zipcode = json['zipcode'];
   }
 
+  String mode;
+  String pin;
+  String txRef;
+  String city;
+  String address;
+  String state;
+  String country;
+  String zipcode;
+
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['mode'] = this.mode;
     data['pin'] = this.pin;
     data['tx_ref'] = this.txRef;

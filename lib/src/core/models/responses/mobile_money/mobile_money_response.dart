@@ -7,12 +7,6 @@ class MobileMoneyResponse {
     this.txRef,
   });
 
-  String status;
-  String message;
-  MobileMoneyData data;
-  MobileMoneyMeta meta;
-  String txRef;
-
   factory MobileMoneyResponse.fromJson(Map<String, dynamic> json) =>
       MobileMoneyResponse(
         status: json["status"],
@@ -21,6 +15,12 @@ class MobileMoneyResponse {
         meta: MobileMoneyMeta.fromJson(json["meta"]),
         txRef: json["tx_ref"],
       );
+
+  String status;
+  String message;
+  MobileMoneyData data;
+  MobileMoneyMeta meta;
+  String txRef;
 
   Map<String, dynamic> toJson() => {
         "status": status,
@@ -55,28 +55,8 @@ class MobileMoneyData {
     this.customer,
   });
 
-  double id;
-  String txRef;
-  String flwRef;
-  String deviceFingerprint;
-  double amount;
-  double chargedAmount;
-  double appFee;
-  double merchantFee;
-  String processorResponse;
-  String authModel;
-  String currency;
-  String ip;
-  String narration;
-  String status;
-  String paymentType;
-  String fraudStatus;
-  String chargeType;
-  DateTime createdAt;
-  double accountId;
-  MobileMoneyCustomer customer;
-
-  factory MobileMoneyData.fromJson(Map<String, dynamic> json) => MobileMoneyData(
+  factory MobileMoneyData.fromJson(Map<String, dynamic> json) =>
+      MobileMoneyData(
         id: json["id"],
         txRef: json["tx_ref"],
         flwRef: json["flw_ref"],
@@ -98,6 +78,27 @@ class MobileMoneyData {
         accountId: json["account_id"],
         customer: MobileMoneyCustomer.fromJson(json["customer"]),
       );
+
+  double id;
+  String txRef;
+  String flwRef;
+  String deviceFingerprint;
+  double amount;
+  double chargedAmount;
+  double appFee;
+  double merchantFee;
+  String processorResponse;
+  String authModel;
+  String currency;
+  String ip;
+  String narration;
+  String status;
+  String paymentType;
+  String fraudStatus;
+  String chargeType;
+  DateTime createdAt;
+  double accountId;
+  MobileMoneyCustomer customer;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -132,19 +133,20 @@ class MobileMoneyCustomer {
     this.createdAt,
   });
 
-  double id;
-  String phoneNumber;
-  String name;
-  String email;
-  DateTime createdAt;
-
-  factory MobileMoneyCustomer.fromJson(Map<String, dynamic> json) => MobileMoneyCustomer(
+  factory MobileMoneyCustomer.fromJson(Map<String, dynamic> json) =>
+      MobileMoneyCustomer(
         id: json["id"],
         phoneNumber: json["phone_number"],
         name: json["name"],
         email: json["email"],
         createdAt: DateTime.parse(json["created_at"]),
       );
+
+  double id;
+  String phoneNumber;
+  String name;
+  String email;
+  DateTime createdAt;
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -160,11 +162,12 @@ class MobileMoneyMeta {
     this.authorization,
   });
 
-  MobileMoneyAuthorization authorization;
-
-  factory MobileMoneyMeta.fromJson(Map<String, dynamic> json) => MobileMoneyMeta(
+  factory MobileMoneyMeta.fromJson(Map<String, dynamic> json) =>
+      MobileMoneyMeta(
         authorization: MobileMoneyAuthorization.fromJson(json["authorization"]),
       );
+
+  MobileMoneyAuthorization authorization;
 
   Map<String, dynamic> toJson() => {
         "authorization": authorization.toJson(),
@@ -176,11 +179,12 @@ class MobileMoneyAuthorization {
     this.instruction,
   });
 
-  String instruction;
-
-  factory MobileMoneyAuthorization.fromJson(Map<String, dynamic> json) => MobileMoneyAuthorization(
+  factory MobileMoneyAuthorization.fromJson(Map<String, dynamic> json) =>
+      MobileMoneyAuthorization(
         instruction: json["instruction"],
       );
+
+  String instruction;
 
   Map<String, dynamic> toJson() => {
         "instruction": instruction,

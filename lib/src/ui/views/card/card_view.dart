@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/config/api_response.dart';
@@ -132,16 +130,16 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
           ),
           if (_currentPage == 0)
             PayWithKlashaButton(
-              onPressed: () async {
+              onButtonPressed: () async {
                 if (_formKey.currentState.validate()) {
                   transactionReference =  'klasha-add-bank-card-${DateTime.now().microsecondsSinceEpoch}';
-                  String formattedCardNumber =
+                  final String formattedCardNumber =
                       _cardNumber.replaceAll(RegExp(r"[^0-9]"), '');
-                  String cardExpiryYear =
+                  final String cardExpiryYear =
                       _cardExpiry.split(RegExp(r'(\/)')).last;
-                  String cardExpiryMonth =
+                  final String cardExpiryMonth =
                       _cardExpiry.split(RegExp(r'(\/)')).first;
-                  BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
+                  final BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
                       cardNumber: formattedCardNumber,
                       expiryMonth: cardExpiryMonth,
                       expiryYear: cardExpiryYear,
@@ -158,16 +156,16 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       txRef: transactionReference,
                   );
 
-                  KlashaDialogs.showLoadingDialog(context);
+                  await KlashaDialogs.showLoadingDialog(context);
 
-                  ApiResponse<AddBankCardResponse> apiResponse =
+                  final ApiResponse<AddBankCardResponse> apiResponse =
                       await CardServiceImpl().addBankCard(bankCardDetailsBody);
 
                   Navigator.pop(context);
 
                   if (apiResponse.status) {
                     _addBankCardResponse = apiResponse.data;
-                    _pageController.nextPage(
+                    await _pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
@@ -182,7 +180,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       ),
                     );
                   } else {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    await KlashaDialogs.showStatusDialog(context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
@@ -194,16 +192,16 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
               onPressed: () async {
                 // authenticate payment
                 if (_currentPage == 1) {
-                  AuthenticateCardPaymentBody authenticateCardPaymentBody =
+                  final AuthenticateCardPaymentBody authenticateCardPaymentBody =
                       AuthenticateCardPaymentBody(
                     mode: 'pin',
                     pin: _transactionPin,
                     txRef: _addBankCardResponse.txRef,
                   );
 
-                  KlashaDialogs.showLoadingDialog(context);
+                  await KlashaDialogs.showLoadingDialog(context);
 
-                  ApiResponse<AuthenticateBankCardResponse> apiResponse =
+                  final ApiResponse<AuthenticateBankCardResponse> apiResponse =
                       await CardServiceImpl()
                           .authenticateCardPayment(authenticateCardPaymentBody);
 
@@ -213,7 +211,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       apiResponse.data.status == 'pending') {
                     _otpMessage = apiResponse.data.message;
                     _authenticateBankCardResponse = apiResponse.data;
-                    _pageController.nextPage(
+                    await _pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
@@ -229,23 +227,23 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       ),
                     );
                   } else if (!apiResponse.status) {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    await KlashaDialogs.showStatusDialog(context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
 
                 // validate payment
                 if (_currentPage == 2) {
-                  ValidateCardPaymentBody validateCardPaymentBody =
+                  final ValidateCardPaymentBody validateCardPaymentBody =
                       ValidateCardPaymentBody(
                     flwRef: _authenticateBankCardResponse.flwRef,
                     otp: _otp,
                     type: 'card',
                   );
 
-                  KlashaDialogs.showLoadingDialog(context);
+                  await KlashaDialogs.showLoadingDialog(context);
 
-                  ApiResponse<ValidateBankCardResponse> apiResponse =
+                  final ApiResponse<ValidateBankCardResponse> apiResponse =
                       await CardServiceImpl()
                           .validateCardPayment(validateCardPaymentBody);
 
@@ -300,10 +298,6 @@ class _CardInputForm extends StatelessWidget {
   final Function(String) onCardExpiryChanged;
   final Function(String) onCardCvvChanged;
   final GlobalKey<FormState> formKey;
-
-  bool _isFormValid() {
-    return formKey.currentState.validate();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -4,17 +4,17 @@ import 'package:klasha_checkout/src/shared/shared.dart';
 import 'base_button.dart';
 
 class PayWithKlashaButton extends KlashaBaseButton {
-  final VoidCallback onPressed;
-
-  const PayWithKlashaButton({
+    const PayWithKlashaButton({
     Key key,
-    @required this.onPressed,
+    @required this.onButtonPressed,
   }) : super(key: key);
+
+  final VoidCallback onButtonPressed;
 
   @override
   Widget build(BuildContext context) {
     return KlashaBaseButton(
-      onPressed: onPressed,
+      onPressed: onButtonPressed,
       borderColor: appColors.primary,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -53,12 +53,6 @@ class PayWithKlashaButton extends KlashaBaseButton {
 }
 
 class KlashaPrimaryButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
-
   const KlashaPrimaryButton({
     Key key,
     @required this.text,
@@ -67,6 +61,12 @@ class KlashaPrimaryButton extends StatelessWidget {
     this.textColor,
     this.borderColor,
   }) : super(key: key);
+
+  final String text;
+  final VoidCallback onPressed;
+  final Color buttonColor;
+  final Color textColor;
+  final Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +81,8 @@ class KlashaPrimaryButton extends StatelessWidget {
 }
 
 class KlashaOutlineButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
 
-  const KlashaOutlineButton({
+    const KlashaOutlineButton({
     Key key,
     @required this.text,
     @required this.onPressed,
@@ -96,8 +91,15 @@ class KlashaOutlineButton extends StatelessWidget {
     this.borderColor,
   }) : super(key: key);
 
+  final String text;
+  final VoidCallback onPressed;
+  final Color buttonColor;
+  final Color textColor;
+  final Color borderColor;
+
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return FlatButton(
       height: 50,
       minWidth: 140,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final appColors = const ThemeModel();
+const appColors = ThemeModel();
 
 class ThemeModel {
   const ThemeModel({

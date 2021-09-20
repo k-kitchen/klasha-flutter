@@ -9,14 +9,6 @@ class MobileMoneyRequestBody {
     this.network,
   });
 
-  String txRef;
-  int amount;
-  String email;
-  String phoneNumber;
-  String currency;
-  String narration;
-  String network;
-
   factory MobileMoneyRequestBody.fromJson(Map<String, dynamic> json) =>
       MobileMoneyRequestBody(
         txRef: json["tx_ref"],
@@ -27,6 +19,14 @@ class MobileMoneyRequestBody {
         narration: json["narration"],
         network: json["network"],
       );
+
+  String txRef;
+  int amount;
+  String email;
+  String phoneNumber;
+  String currency;
+  String narration;
+  String network;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,
