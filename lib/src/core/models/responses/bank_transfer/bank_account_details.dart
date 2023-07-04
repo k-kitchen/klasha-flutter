@@ -1,11 +1,11 @@
 class BankAccountDetails {
-  String transferReference;
-  String transferAccount;
-  String transferBank;
-  String accountExpiration;
-  String transferNote;
-  double transferAmount;
-  String mode;
+  String? transferReference;
+  String? transferAccount;
+  String? transferBank;
+  String? accountExpiration;
+  String? transferNote;
+  double? transferAmount;
+  String? mode;
 
   BankAccountDetails({
     this.transferReference,

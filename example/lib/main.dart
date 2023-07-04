@@ -41,9 +41,11 @@ class _HomePageState extends State<HomePage> {
         amount: int.parse(_amount),
         checkoutCurrency: _checkoutCurrency,
         onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
-          print('checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
+          print(
+              'checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
           print('checkout response status is ${klashaCheckoutResponse.status}');
-          print('checkout response message is ${klashaCheckoutResponse.message}');
+          print(
+              'checkout response message is ${klashaCheckoutResponse.message}');
         },
       );
     }
@@ -67,9 +69,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFfaf1f0),
       appBar: AppBar(
         elevation: 0.0,
-        title: Text(
-          'Klasha Checkout Demo',
-        ),
+        title: Text('Klasha Checkout Demo'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
@@ -79,13 +79,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 25,
-              ),
-              // customer email
-              Text(
-                'Customer Email',
-              ),
+              const SizedBox(height: 25),
+              Text('Customer Email'),
               SizedBox(height: 5),
               TextFormField(
                 onChanged: (val) => setState(() => _email = val),
@@ -102,14 +97,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 validator: validateEmail,
               ),
-
-              const SizedBox(
-                height: 25,
-              ),
-
-              Text(
-                'Currency',
-              ),
+              const SizedBox(height: 25),
+              Text('Currency'),
               SizedBox(height: 5),
               RadioListTile(
                 value: CheckoutCurrency.NGN,
@@ -135,15 +124,8 @@ class _HomePageState extends State<HomePage> {
                 controlAffinity: ListTileControlAffinity.leading,
                 contentPadding: EdgeInsets.zero,
               ),
-
-              const SizedBox(
-                height: 25,
-              ),
-
-              // amount
-              Text(
-                'Amount',
-              ),
+              const SizedBox(height: 25),
+              Text('Amount'),
               SizedBox(height: 5),
               TextFormField(
                 onChanged: (val) => setState(() => _amount = val),
@@ -158,22 +140,12 @@ class _HomePageState extends State<HomePage> {
                   filled: true,
                   fillColor: Color(0xFFFCE5E3),
                 ),
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (val) {
-                  if (val.isEmpty) {
-                    return 'Amount is required';
-                  } else {
-                    return null;
-                  }
+                  return val?.isEmpty ?? true ? 'Amount is required' : null;
                 },
               ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
+              const SizedBox(height: 30),
               FlatButton(
                 height: 55,
                 minWidth: double.infinity,
@@ -194,14 +166,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String validateEmail(String email) {
+  String? validateEmail(String? email) {
     String source =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(source);
-    if (email.trim().isEmpty) {
+    if (email?.trim().isEmpty ?? true) {
       return 'Email is required';
-    } else if (!regExp.hasMatch(email)) {
+    } else if (!regExp.hasMatch(email!)) {
       return 'Enter a valid email address';
     } else {
       return null;
