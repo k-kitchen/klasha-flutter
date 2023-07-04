@@ -11,7 +11,7 @@ mixin KlashaBaseService {
   final http.Client _client = http.Client();
 
   Future<Map<String, dynamic>> getApiResponse({
-    @required String authorization,
+    required String authorization,
     RequestType requestType,
     String url,
     Map<String, dynamic> requestBody,

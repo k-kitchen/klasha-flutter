@@ -4,10 +4,10 @@ import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 
 class PaymentStatusView extends StatefulWidget {
   const PaymentStatusView({
-    Key key,
-    @required this.paymentStatus,
+    super.key,
+    required this.paymentStatus,
     this.onAction,
-  }) : super(key: key);
+  });
 
   final VoidCallback onAction;
   final bool paymentStatus;

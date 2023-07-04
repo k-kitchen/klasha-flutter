@@ -13,7 +13,7 @@ class KlashaInputField extends StatelessWidget {
   final Function(String) onChanged;
 
   const KlashaInputField({
-    Key key,
+    super.key,
     this.controller,
     this.hintText,
     this.inputFormatters,
@@ -22,7 +22,7 @@ class KlashaInputField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.keyboardType,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class KlashaOutlinedInputField extends StatelessWidget {
   final Function(String) validator;
 
   const KlashaOutlinedInputField({
-    Key key,
+    super.key,
     this.controller,
     this.hintText,
     this.labeltext,
@@ -71,7 +71,7 @@ class KlashaOutlinedInputField extends StatelessWidget {
     this.textInputAction,
     this.focusNode,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

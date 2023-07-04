@@ -15,7 +15,7 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class CheckoutViewWrapper extends StatefulWidget {
   const CheckoutViewWrapper({
-    Key key,
+    super.key,
     this.onCheckoutResponse,
     this.email,
     this.amount,
@@ -23,7 +23,7 @@ class CheckoutViewWrapper extends StatefulWidget {
     this.onPageChanged,
     this.checkoutCurrency,
     this.environment,
-  }) : super(key: key);
+  });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final String email;
@@ -149,12 +149,12 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
 
 class _PaymentTypeEntry extends StatelessWidget {
   const _PaymentTypeEntry({
-    Key key,
+    super.key,
     this.paymentName,
     this.assetName,
     this.onTap,
     this.isSelected,
-  }) : super(key: key);
+  });
 
   final String paymentName;
   final String assetName;

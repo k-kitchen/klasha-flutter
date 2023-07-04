@@ -10,13 +10,13 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class KlashaCheckoutBaseView extends StatefulWidget {
   const KlashaCheckoutBaseView({
-    Key key,
+    super.key,
     this.email,
     this.amount,
     this.checkoutCurrency,
     this.onComplete,
     this.environment,
-  }) : super(key: key);
+  });
 
   final String email;
   final int amount;

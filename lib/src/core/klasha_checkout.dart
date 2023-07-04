@@ -20,8 +20,8 @@ class KlashaCheckout {
   ///
   static void checkout(
     BuildContext context, {
-    @required String email,
-    @required int amount,
+    required String email,
+    required int amount,
     CheckoutCurrency checkoutCurrency = CheckoutCurrency.NGN,
     Environment environment = Environment.TEST,
     OnCheckoutResponse<KlashaCheckoutResponse> onComplete,

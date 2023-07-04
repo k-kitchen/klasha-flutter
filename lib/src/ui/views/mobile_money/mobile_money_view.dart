@@ -11,11 +11,11 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class MobileMoneyView extends StatefulWidget {
   const MobileMoneyView({
-    Key key,
+    super.key,
     this.onCheckoutResponse,
     this.amount,
     this.email,
-  }) : super(key: key);
+  });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final String email;
@@ -248,12 +248,12 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
 
 class _MobileMoneyInputForm extends StatelessWidget {
   const _MobileMoneyInputForm({
-    Key key,
+    super.key,
     this.onFullNameChanged,
     this.onEmailChanged,
     this.onPhoneNumberChanged,
     this.formKey,
-  }) : super(key: key);
+  });
 
   final Function(String) onFullNameChanged;
   final Function(String) onEmailChanged;
@@ -363,9 +363,9 @@ class _MobileMoneyInputForm extends StatelessWidget {
 
 class _CodeDialedSection extends StatelessWidget {
   const _CodeDialedSection({
-    Key key,
+    super.key,
     this.phoneNumber,
-  }) : super(key: key);
+  });
 
   final String phoneNumber;
 

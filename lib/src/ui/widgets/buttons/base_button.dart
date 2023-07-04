@@ -3,7 +3,7 @@ import 'package:klasha_checkout/src/shared/shared.dart';
 
 class KlashaBaseButton extends StatelessWidget {
   const KlashaBaseButton({
-    Key key,
+    super.key,
     this.onPressed,
     this.buttonText,
     this.buttonColor,
@@ -13,7 +13,7 @@ class KlashaBaseButton extends StatelessWidget {
     this.disabledButtonColor,
     this.borderColor,
     this.child,
-  }) : super(key: key);
+  });
 
   final VoidCallback onPressed;
   final String buttonText;

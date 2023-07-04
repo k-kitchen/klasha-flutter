@@ -8,10 +8,10 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class BankTransferCheckoutView extends StatefulWidget {
   const BankTransferCheckoutView({
-    Key key,
+    super.key,
     this.email,
     this.amount,
-  }) : super(key: key);
+  });
 
   final String email;
   final int amount;
@@ -133,10 +133,10 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
 
 class _BankAccountDetailsView extends StatelessWidget {
   const _BankAccountDetailsView({
-    Key key,
-    @required this.bankAccountNumber,
-    @required this.bankName,
-  }) : super(key: key);
+    super.key,
+    required this.bankAccountNumber,
+    required this.bankName,
+  });
 
   final String bankAccountNumber;
   final String bankName;
@@ -241,10 +241,10 @@ class _BankAccountDetailsView extends StatelessWidget {
 
 class _RetryView extends StatelessWidget {
   const _RetryView({
-    Key key,
+    super.key,
     this.message,
     this.onRetry,
-  }) : super(key: key);
+  });
 
   final String message;
   final VoidCallback onRetry;

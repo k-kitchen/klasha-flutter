@@ -11,12 +11,12 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class CardCheckoutView extends StatefulWidget {
   const CardCheckoutView({
-    Key key,
+    super.key,
     this.onCheckoutResponse,
     this.amount,
     this.email,
     this.checkoutCurrency,
-  }) : super(key: key);
+  });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final String email;
@@ -289,12 +289,12 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
 
 class _CardInputForm extends StatelessWidget {
   const _CardInputForm({
-    Key key,
+    super.key,
     this.onCardNumberChanged,
     this.onCardExpiryChanged,
     this.onCardCvvChanged,
     this.formKey,
-  }) : super(key: key);
+  });
 
   final Function(String) onCardNumberChanged;
   final Function(String) onCardExpiryChanged;
@@ -411,9 +411,9 @@ class _CardInputForm extends StatelessWidget {
 
 class _TransactionPinForm extends StatelessWidget {
   const _TransactionPinForm({
-    Key key,
+    super.key,
     this.onTransactionPinChanged,
-  }) : super(key: key);
+  });
 
   final Function(String) onTransactionPinChanged;
 
@@ -448,10 +448,10 @@ class _TransactionPinForm extends StatelessWidget {
 
 class _OTPForm extends StatelessWidget {
   const _OTPForm({
-    Key key,
+    super.key,
     this.onOtpChanged,
     this.message,
-  }) : super(key: key);
+  });
 
   final Function(String) onOtpChanged;
   final String message;

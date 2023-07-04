@@ -12,11 +12,11 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class MpesaCheckoutView extends StatefulWidget {
 
   const MpesaCheckoutView({
-    Key key,
+    super.key,
     this.onCheckoutResponse,
     this.email,
     this.amount,
-  }) : super(key: key);
+  });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final String email;
@@ -187,12 +187,12 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
 
 class _MpesaInputForm extends StatelessWidget {
   const _MpesaInputForm({
-    Key key,
+    super.key,
     this.onFullNameChanged,
     this.onEmailChanged,
     this.onPhoneNumberChanged,
     this.formKey,
-  }) : super(key: key);
+  });
 
   final Function(String) onFullNameChanged;
   final Function(String) onEmailChanged;
@@ -302,9 +302,9 @@ class _MpesaInputForm extends StatelessWidget {
 
 class _CodeDialedSection extends StatelessWidget {
   const _CodeDialedSection({
-    Key key,
+    super.key,
     this.phoneNumber,
-  }) : super(key: key);
+  });
 
   final String phoneNumber;
 

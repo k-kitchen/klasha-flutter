@@ -4,10 +4,10 @@ import 'package:klasha_checkout/src/shared/shared.dart';
 
 class CheckoutOptionsView extends StatelessWidget {
   CheckoutOptionsView({
-    Key key,
+    super.key,
     this.onCheckoutSelected,
     this.checkoutCurrency,
-  }) : super(key: key);
+  });
 
   final Function(String) onCheckoutSelected;
   final CheckoutCurrency checkoutCurrency;
@@ -75,11 +75,11 @@ class CheckoutOptionsView extends StatelessWidget {
 
 class _CheckoutOptionEntry extends StatelessWidget {
   const _CheckoutOptionEntry({
-    Key key,
+    super.key,
     this.name,
     this.assetName,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final String name;
   final String assetName;

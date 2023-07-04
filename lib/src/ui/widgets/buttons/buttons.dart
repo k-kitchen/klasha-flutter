@@ -7,9 +7,9 @@ class PayWithKlashaButton extends KlashaBaseButton {
   final VoidCallback onPressed;
 
   const PayWithKlashaButton({
-    Key key,
-    @required this.onPressed,
-  }) : super(key: key);
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +60,13 @@ class KlashaPrimaryButton extends StatelessWidget {
   final Color borderColor;
 
   const KlashaPrimaryButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
+    super.key,
+    required this.text,
+    required this.onPressed,
     this.buttonColor,
     this.textColor,
     this.borderColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +88,13 @@ class KlashaOutlineButton extends StatelessWidget {
   final Color borderColor;
 
   const KlashaOutlineButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
+    super.key,
+    required this.text,
+    required this.onPressed,
     this.buttonColor,
     this.textColor,
     this.borderColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +124,9 @@ class KlashaOutlineButton extends StatelessWidget {
 
 class KlashaCloseButton extends StatelessWidget {
   const KlashaCloseButton({
-    Key key,
+    super.key,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
 
@@ -152,9 +152,9 @@ class KlashaCloseButton extends StatelessWidget {
 
 class KlashaBackButton extends StatelessWidget {
   const KlashaBackButton({
-    Key key,
+    super.key,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final VoidCallback onTap;
 
