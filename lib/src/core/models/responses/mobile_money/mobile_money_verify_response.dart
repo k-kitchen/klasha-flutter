@@ -7,11 +7,11 @@ class MobileMoneyVerifyResponse {
     this.status,
   });
 
-  String txRef;
-  double amount;
-  String processorResponse;
-  String message;
-  String status;
+  String? txRef;
+  double? amount;
+  String? processorResponse;
+  String? message;
+  String? status;
 
   factory MobileMoneyVerifyResponse.fromJson(Map<String, dynamic> json) =>
       MobileMoneyVerifyResponse(

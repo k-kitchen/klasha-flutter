@@ -13,17 +13,17 @@ class MpesaRequestBody {
     this.option,
   });
 
-  String currency;
-  int rate;
-  String amount;
-  String sourceCurrency;
-  bool rememberMe;
-  String fullName;
-  String phoneNumber;
-  String email;
-  String redirectUrl;
-  String txRef;
-  String option;
+  String? currency;
+  int? rate;
+  String? amount;
+  String? sourceCurrency;
+  bool? rememberMe;
+  String? fullName;
+  String? phoneNumber;
+  String? email;
+  String? redirectUrl;
+  String? txRef;
+  String? option;
 
   factory MpesaRequestBody.fromJson(Map<String, dynamic> json) =>
       MpesaRequestBody(

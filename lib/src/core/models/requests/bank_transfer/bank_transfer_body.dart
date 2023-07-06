@@ -8,12 +8,12 @@ class BankTransferBody {
     this.narration,
   });
 
-  String txRef;
-  int amount;
-  String email;
-  String phoneNumber;
-  String currency;
-  String narration;
+  String? txRef;
+  int? amount;
+  String? email;
+  String? phoneNumber;
+  String? currency;
+  String? narration;
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,
