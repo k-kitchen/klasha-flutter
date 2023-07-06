@@ -1,7 +1,7 @@
 class ValidateCardPaymentBody {
-  String otp;
-  String flwRef;
-  String type;
+  String? otp;
+  String? flwRef;
+  String? type;
 
   ValidateCardPaymentBody({
     this.otp,
