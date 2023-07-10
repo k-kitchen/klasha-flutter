@@ -134,7 +134,8 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
             PayWithKlashaButton(
               onPressed: () async {
                 if (_formKey.currentState.validate()) {
-                  transactionReference =  'klasha-add-bank-card-${DateTime.now().microsecondsSinceEpoch}';
+                  transactionReference =
+                      'klasha-add-bank-card-${DateTime.now().microsecondsSinceEpoch}';
                   String formattedCardNumber =
                       _cardNumber.replaceAll(RegExp(r"[^0-9]"), '');
                   String cardExpiryYear =
@@ -142,20 +143,20 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   String cardExpiryMonth =
                       _cardExpiry.split(RegExp(r'(\/)')).first;
                   BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
-                      cardNumber: formattedCardNumber,
-                      expiryMonth: cardExpiryMonth,
-                      expiryYear: cardExpiryYear,
-                      cvv: _cardCvv,
-                      currency: 'NGN',
-                      amount: '1000',
-                      rate: 1,
-                      sourceCurrency: 'NGN',
-                      rememberMe: false,
-                      redirectUrl: 'https://dashboard.klasha.com/woocommerce',
-                      phoneNumber: 'phone_number',
-                      email: 'test@test.com',
-                      fullName: 'Full Name',
-                      txRef: transactionReference,
+                    cardNumber: formattedCardNumber,
+                    expiryMonth: cardExpiryMonth,
+                    expiryYear: cardExpiryYear,
+                    cvv: _cardCvv,
+                    currency: 'NGN',
+                    amount: '1000',
+                    rate: 1,
+                    sourceCurrency: 'NGN',
+                    rememberMe: false,
+                    redirectUrl: 'https://dashboard.klasha.com/woocommerce',
+                    phoneNumber: 'phone_number',
+                    email: 'test@test.com',
+                    fullName: 'Full Name',
+                    txRef: transactionReference,
                   );
 
                   KlashaDialogs.showLoadingDialog(context);
@@ -182,7 +183,8 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       ),
                     );
                   } else {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    KlashaDialogs.showStatusDialog(
+                        context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
@@ -229,7 +231,8 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       ),
                     );
                   } else if (!apiResponse.status) {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
+                    KlashaDialogs.showStatusDialog(
+                        context, apiResponse.message);
                     // log('something went wrong, try again');
                   }
                 }
@@ -264,7 +267,8 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     widget.onCheckoutResponse(
                       KlashaCheckoutResponse(
                         status: false,
-                        message: apiResponse.message ?? 'Payment Not Successful',
+                        message:
+                            apiResponse.message ?? 'Payment Not Successful',
                         transactionReference: transactionReference,
                       ),
                     );
@@ -293,16 +297,16 @@ class _CardInputForm extends StatelessWidget {
     this.onCardNumberChanged,
     this.onCardExpiryChanged,
     this.onCardCvvChanged,
-    this.formKey,
+    required this.formKey,
   });
 
-  final Function(String) onCardNumberChanged;
-  final Function(String) onCardExpiryChanged;
-  final Function(String) onCardCvvChanged;
+  final Function(String)? onCardNumberChanged;
+  final Function(String)? onCardExpiryChanged;
+  final Function(String)? onCardCvvChanged;
   final GlobalKey<FormState> formKey;
 
-  bool _isFormValid() {
-    return formKey.currentState.validate();
+  bool? _isFormValid() {
+    return formKey.currentState?.validate();
   }
 
   @override
@@ -415,7 +419,7 @@ class _TransactionPinForm extends StatelessWidget {
     this.onTransactionPinChanged,
   });
 
-  final Function(String) onTransactionPinChanged;
+  final Function(String)? onTransactionPinChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -430,9 +434,7 @@ class _TransactionPinForm extends StatelessWidget {
             color: appColors.subText,
           ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         KlashaInputField(
           onChanged: onTransactionPinChanged,
           hintText: 'Pin',
@@ -450,10 +452,10 @@ class _OTPForm extends StatelessWidget {
   const _OTPForm({
     super.key,
     this.onOtpChanged,
-    this.message,
+    required this.message,
   });
 
-  final Function(String) onOtpChanged;
+  final Function(String)? onOtpChanged;
   final String message;
 
   @override
@@ -470,20 +472,13 @@ class _OTPForm extends StatelessWidget {
             color: appColors.subText,
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Text(
           message,
-          style: TextStyle(
-            fontSize: 15,
-            color: appColors.subText,
-          ),
+          style: TextStyle(fontSize: 15, color: appColors.subText),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         KlashaInputField(
           onChanged: onOtpChanged,
           hintText: 'OTP',
