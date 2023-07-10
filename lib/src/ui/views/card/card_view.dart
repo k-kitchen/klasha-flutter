@@ -28,8 +28,8 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
   late PageController pageController;
   int currentPage = 0;
   String? cardNumber, cardExpiry, cardCvv, transactionPin, otp;
-  AddBankCardResponse _addBankCardResponse;
-  AuthenticateBankCardResponse _authenticateBankCardResponse;
+  AddBankCardResponse addBankCardResponse;
+  AuthenticateBankCardResponse authBankCardResponse;
   var formKey = GlobalKey<FormState>();
   String otpMessage = '';
   String? currencyName;
@@ -152,7 +152,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   Navigator.pop(context);
 
                   if (apiResponse.status) {
-                    _addBankCardResponse = apiResponse.data;
+                    addBankCardResponse = apiResponse.data;
                     pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
@@ -184,7 +184,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       AuthenticateCardPaymentBody(
                     mode: 'pin',
                     pin: transactionPin,
-                    txRef: _addBankCardResponse.txRef,
+                    txRef: addBankCardResponse.txRef,
                   );
 
                   KlashaDialogs.showLoadingDialog(context);
@@ -198,7 +198,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   if (apiResponse.status ||
                       apiResponse.data.status == 'pending') {
                     otpMessage = apiResponse.data.message;
-                    _authenticateBankCardResponse = apiResponse.data;
+                    authBankCardResponse = apiResponse.data;
                     pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
@@ -224,7 +224,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                 if (currentPage == 2) {
                   ValidateCardPaymentBody validateCardPaymentBody =
                       ValidateCardPaymentBody(
-                    flwRef: _authenticateBankCardResponse.flwRef,
+                    flwRef: authBankCardResponse.flwRef,
                     otp: otp,
                     type: 'card',
                   );
