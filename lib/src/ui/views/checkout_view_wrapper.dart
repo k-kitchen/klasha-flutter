@@ -9,13 +9,13 @@ import 'package:klasha_checkout/src/ui/views/mpesa/mpesa_view.dart';
 class CheckoutViewWrapper extends StatefulWidget {
   const CheckoutViewWrapper({
     super.key,
-    this.onCheckoutResponse,
-    this.email,
-    this.amount,
-    this.bodyPageController,
-    this.onPageChanged,
-    this.checkoutCurrency,
-    this.environment,
+    required this.onCheckoutResponse,
+    required this.email,
+    required this.amount,
+    required this.bodyPageController,
+    required this.onPageChanged,
+    required this.checkoutCurrency,
+    required this.environment,
   });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
@@ -34,12 +34,10 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
   // PageController _bodyPageController;
   int _currentIndex = 0;
 
-  Widget _nextWidget;
+  Widget? nextWidget;
 
   void _onPageChanged(int newPage) {
-    setState(
-      () => _currentIndex = newPage,
-    );
+    setState(() => _currentIndex = newPage);
     widget.onPageChanged(_currentIndex);
   }
 
@@ -60,7 +58,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                   onCheckoutSelected: (checkoutName) {
                     switch (checkoutName) {
                       case 'Card':
-                        _nextWidget = // card page
+                        nextWidget = // card page
                             CardCheckoutView(
                           onCheckoutResponse: widget.onCheckoutResponse,
                           email: widget.email,
@@ -69,7 +67,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                         );
                         break;
                       case 'Mpesa':
-                        _nextWidget = // mpesa page
+                        nextWidget = // mpesa page
                             MpesaCheckoutView(
                           onCheckoutResponse: widget.onCheckoutResponse,
                           email: widget.email,
@@ -77,7 +75,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                         );
                         break;
                       case 'Mobile Money':
-                        _nextWidget = // mobile money
+                        nextWidget = // mobile money
                             MobileMoneyView(
                           onCheckoutResponse: widget.onCheckoutResponse,
                           email: widget.email,
@@ -85,7 +83,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                         );
                         break;
                       case 'Bank Transfer':
-                        _nextWidget =
+                        nextWidget =
                             // transfer page
                             BankTransferCheckoutView(
                           email: widget.email,
@@ -100,7 +98,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                     );
                   },
                 ),
-                if (_nextWidget != null) _nextWidget,
+                if (nextWidget != null) nextWidget!,
               ],
             ),
           ),

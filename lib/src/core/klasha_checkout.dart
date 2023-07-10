@@ -24,7 +24,7 @@ class KlashaCheckout {
     required int amount,
     CheckoutCurrency checkoutCurrency = CheckoutCurrency.NGN,
     Environment environment = Environment.TEST,
-    OnCheckoutResponse<KlashaCheckoutResponse> onComplete,
+    required OnCheckoutResponse<KlashaCheckoutResponse> onComplete,
   }) {
     _validateEmailAndAmount(email, amount);
     showModalBottomSheet(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
@@ -11,11 +9,11 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class KlashaCheckoutBaseView extends StatefulWidget {
   const KlashaCheckoutBaseView({
     super.key,
-    this.email,
-    this.amount,
-    this.checkoutCurrency,
-    this.onComplete,
-    this.environment,
+    required this.email,
+    required this.amount,
+    required this.checkoutCurrency,
+    required this.onComplete,
+    required this.environment,
   });
 
   final String email;
@@ -29,10 +27,10 @@ class KlashaCheckoutBaseView extends StatefulWidget {
 }
 
 class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
-  KlashaCheckoutResponse _klashaCheckoutResponse;
+  KlashaCheckoutResponse? _klashaCheckoutResponse;
   int _currentIndex = 0;
 
-  PageController _bodyPageController;
+  late PageController _bodyPageController;
 
   @override
   void initState() {
@@ -94,10 +92,6 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
               ],
             ),
           ),
-
-          // pay with klasha
-          // PayWithKlasha(),
-
           Expanded(
             child: AnimatedSwitcher(
               duration: Duration(milliseconds: 500),
@@ -123,9 +117,9 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                       environment: widget.environment,
                     )
                   : PaymentStatusView(
-                      paymentStatus: _klashaCheckoutResponse.status,
+                      paymentStatus: _klashaCheckoutResponse!.status,
                       onAction: () {
-                        if (_klashaCheckoutResponse.status) {
+                        if (_klashaCheckoutResponse!.status) {
                           Navigator.pop(context);
                         } else {
                           _klashaCheckoutResponse = null;
@@ -135,12 +129,8 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                     ),
             ),
           ),
-
           SecuredByKlasha(),
-
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
         ],
       ),
     );
