@@ -5,20 +5,16 @@ import 'package:klasha_checkout/src/shared/shared.dart';
 class CheckoutOptionsView extends StatelessWidget {
   CheckoutOptionsView({
     super.key,
-    this.onCheckoutSelected,
-    this.checkoutCurrency,
+    required this.onCheckoutSelected,
+    required this.checkoutCurrency,
   });
 
   final Function(String) onCheckoutSelected;
   final CheckoutCurrency checkoutCurrency;
 
-  List<String> _paymentNames = [
-    'Card',
-  ];
+  List<String> _paymentNames = ['Card'];
 
-  List<String> _paymentImages = [
-    KlashaAssets.ic_card,
-  ];
+  List<String> _paymentImages = [KlashaAssets.ic_card];
 
   void _filterCheckoutOptions() {
     switch (checkoutCurrency) {
@@ -61,9 +57,7 @@ class CheckoutOptionsView extends StatelessWidget {
               child: _CheckoutOptionEntry(
                 name: _paymentNames[index],
                 assetName: _paymentImages[index],
-                onTap: () {
-                  onCheckoutSelected(_paymentNames[index]);
-                },
+                onTap: () => onCheckoutSelected(_paymentNames[index]),
               ),
             ),
           ),
@@ -75,14 +69,14 @@ class CheckoutOptionsView extends StatelessWidget {
 
 class _CheckoutOptionEntry extends StatelessWidget {
   const _CheckoutOptionEntry({
-    this.name,
-    this.assetName,
+    required this.name,
+    required this.assetName,
     this.onTap,
   });
 
   final String name;
   final String assetName;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -106,9 +100,7 @@ class _CheckoutOptionEntry extends StatelessWidget {
               fit: BoxFit.cover,
               package: KlashaStrings.packageName,
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             Text(
               name,
               style: TextStyle(
