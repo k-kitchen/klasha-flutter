@@ -34,32 +34,35 @@ mixin KlashaBaseService {
         );
         break;
       case RequestType.put:
-        // TODO(timilehinjegede): Handle put request type.
+        response = await _client.put(
+          uri,
+          body: jsonEncode(requestBody),
+          headers: _headers,
+        );
         break;
       case RequestType.delete:
-        // TODO(timilehinjegede): Handle delete request type.
+        response = await _client.delete(
+          uri,
+          headers: _headers,
+        );
         break;
       default:
         throw Exception('Request Type not implemented');
     }
 
-    if(response == null) throw Exception('Response is empty');
-
     final int statusCode = response.statusCode;
     log('base service => response body = ${response.body}; response status code = ${response.statusCode}');
 
     if (statusCode == HttpStatus.ok) {
-      // log('base service, http ok if check passed');
       return jsonDecode(response.body);
     } else {
-      // log('base service, http ok if check NOT passed');
+      throw Exception('Request failed with status: $statusCode');
     }
   }
 
   Map<String, String> _getHeaders(String authorization) {
     return {
       HttpHeaders.contentTypeHeader: 'application/json',
-      // HttpHeaders.acceptHeader: 'application/x-www-form-urlencoded',
       'x-auth-token': 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4=',
     };
   }
