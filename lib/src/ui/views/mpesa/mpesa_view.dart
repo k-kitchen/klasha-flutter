@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/core/services/mpesa/mpesa_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
+import 'package:klasha_checkout/src/ui/user_contact_form.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 import 'package:klasha_checkout/src/ui/widgets/code_dialed_section.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
@@ -10,9 +10,9 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class MpesaCheckoutView extends StatefulWidget {
   const MpesaCheckoutView({
     super.key,
-    this.onCheckoutResponse,
-    this.email,
-    this.amount,
+    required this.onCheckoutResponse,
+    required this.email,
+    required this.amount,
   });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
@@ -24,32 +24,27 @@ class MpesaCheckoutView extends StatefulWidget {
 }
 
 class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
-  PageController _pageController;
-  int _currentPage = 0;
-  MpesaCheckoutResponse _mpesaCheckoutResponse;
+  late PageController pageController;
+  int currentPage = 0;
+  MpesaCheckoutResponse? mpesaCheckoutResponse;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String transactionReference;
 
-  String _fullName;
-  String _email;
-  String _phoneNumber;
+  String? fullName, email, phoneNumber, transactionReference;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
   void _onPageChanged(int newPage) {
-    setState(() {
-      _currentPage = newPage;
-    });
+    setState(() => currentPage = newPage);
   }
 
   @override
@@ -68,9 +63,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 5),
           Text(
             'KES ${KlashaUtils.formatCurrencyInput(widget.amount.toString(), true)}',
             style: TextStyle(
@@ -79,33 +72,29 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Expanded(
             child: PageView(
-              controller: _pageController,
+              controller: pageController,
               onPageChanged: _onPageChanged,
               clipBehavior: Clip.none,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                _MpesaInputForm(
-                  onFullNameChanged: (val) => _fullName = val,
-                  onEmailChanged: (val) => _email = val,
-                  onPhoneNumberChanged: (val) => _phoneNumber = val,
+                UserContactForm(
+                  onFullNameChanged: (val) => fullName = val,
+                  onEmailChanged: (val) => email = val,
+                  onPhoneNumberChanged: (val) => phoneNumber = val,
                   formKey: _formKey,
                 ),
-                CodeDialedSection(phoneNumber: _phoneNumber),
+                CodeDialedSection(phoneNumber: phoneNumber),
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          if (_currentPage == 0)
+          const SizedBox(height: 20),
+          if (currentPage == 0)
             PayWithKlashaButton(
               onPressed: () async {
-                if (_formKey.currentState.validate()) {
+                if (_formKey.currentState?.validate() ?? false) {
                   transactionReference =
                       'klasha-mpesa-checkout-${DateTime.now().microsecondsSinceEpoch}';
                   MpesaRequestBody mpesaRequestBody = MpesaRequestBody(
@@ -116,8 +105,8 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                     rememberMe: false,
                     redirectUrl: 'https://dashboard.klasha.com/woocommerce',
                     phoneNumber: 'phone_number',
-                    email: _email,
-                    fullName: _fullName,
+                    email: email,
+                    fullName: fullName,
                     txRef: transactionReference,
                     option: 'mpesa',
                   );
@@ -130,29 +119,37 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                   Navigator.pop(context);
 
                   if (apiResponse.status) {
-                    _mpesaCheckoutResponse = apiResponse.data;
-                    _pageController.nextPage(
+                    mpesaCheckoutResponse = apiResponse.data;
+                    pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   } else {
                     KlashaDialogs.showStatusDialog(
-                        context, apiResponse.message);
-                    // log('something went wrong, try again');
+                      context,
+                      apiResponse.message,
+                    );
                   }
                 }
               },
             ),
-          if (_currentPage == 1)
+          if (currentPage == 1)
             KlashaPrimaryButton(
               text: 'I have dialed the code',
               onPressed: () async {
+                if (mpesaCheckoutResponse?.data?.id == null) {
+                  KlashaDialogs.showStatusDialog(
+                    context,
+                    'Something went wrong, please try again',
+                  );
+                  return;
+                }
                 KlashaDialogs.showLoadingDialog(context);
 
                 ApiResponse apiResponse =
                     await MpesaServiceImpl().verifyPayment(
-                  "${_mpesaCheckoutResponse.data.id}",
-                  "mpesa_order_id_${_mpesaCheckoutResponse.data.id}",
+                  "${mpesaCheckoutResponse!.data!.id}",
+                  "mpesa_order_id_${mpesaCheckoutResponse!.data!.id}",
                 );
 
                 Navigator.pop(context);
@@ -168,123 +165,6 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                 );
               },
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MpesaInputForm extends StatelessWidget {
-  const _MpesaInputForm({
-    super.key,
-    this.onFullNameChanged,
-    this.onEmailChanged,
-    this.onPhoneNumberChanged,
-    this.formKey,
-  });
-
-  final Function(String) onFullNameChanged;
-  final Function(String) onEmailChanged;
-  final Function(String) onPhoneNumberChanged;
-  final GlobalKey<FormState> formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Full Name',
-            style: TextStyle(
-              fontSize: 14,
-              color: appColors.subText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          KlashaInputField(
-            onChanged: onFullNameChanged,
-            hintText: 'John Doe',
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\d+')),
-            ],
-            validator: (input) =>
-                KlashaUtils.validateRequiredFields(input, 'Full Name'),
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.text,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: appColors.subText,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    KlashaInputField(
-                      onChanged: onEmailChanged,
-                      hintText: 'john@gmail.com',
-                      validator: KlashaUtils.validateEmail,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Phone number',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: appColors.subText,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    KlashaInputField(
-                      onChanged: onPhoneNumberChanged,
-                      hintText: '0123456789',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(12),
-                      ],
-                      validator: (input) => KlashaUtils.validateRequiredFields(
-                          input, 'Phone Number'),
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );

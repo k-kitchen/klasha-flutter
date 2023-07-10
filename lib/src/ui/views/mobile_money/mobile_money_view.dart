@@ -26,8 +26,8 @@ class MobileMoneyView extends StatefulWidget {
 }
 
 class _MobileMoneyViewState extends State<MobileMoneyView> {
-  late PageController _pageController;
-  int _currentPage = 0;
+  late PageController pageController;
+  int currentPage = 0;
   MobileMoneyResponse? mobileMoneyResponse;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -38,17 +38,17 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    pageController = PageController();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
   void _onPageChanged(int newPage) {
-    setState(() => _currentPage = newPage);
+    setState(() => currentPage = newPage);
   }
 
   @override
@@ -84,7 +84,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   ),
                 ],
               ),
-              if (_currentPage == 0)
+              if (currentPage == 0)
                 Container(
                   height: 40,
                   width: 100,
@@ -139,7 +139,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
           const SizedBox(height: 20),
           Expanded(
             child: PageView(
-              controller: _pageController,
+              controller: pageController,
               onPageChanged: _onPageChanged,
               clipBehavior: Clip.none,
               physics: NeverScrollableScrollPhysics(),
@@ -155,7 +155,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
             ),
           ),
           const SizedBox(height: 20),
-          if (_currentPage == 0)
+          if (currentPage == 0)
             PayWithKlashaButton(
               onPressed: () async {
                 if (_formKey.currentState?.validate() ?? false) {
@@ -181,7 +181,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   if (apiResponse.status) {
                     mobileMoneyResponse = apiResponse.data;
 
-                    _pageController.nextPage(
+                    pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
@@ -194,11 +194,17 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                 }
               },
             ),
-          if (_currentPage == 1)
+          if (currentPage == 1)
             KlashaPrimaryButton(
               text: 'I have dialed the code',
               onPressed: () async {
-                if (mobileMoneyResponse?.data?.id == null) return;
+                if (mobileMoneyResponse?.data?.id == null) {
+                  KlashaDialogs.showStatusDialog(
+                    context,
+                    'Something went wrong, please try again',
+                  );
+                  return;
+                }
 
                 KlashaDialogs.showLoadingDialog(context);
 
