@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       title: 'Klasha Checkout Demo',
       theme: ThemeData(
         primaryColor: Color(0xFFE85243),
-        accentColor: Color(0xFFE85243),
       ),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
@@ -28,17 +27,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _email;
-  String _amount;
-  var _formKey = GlobalKey<FormState>();
+  String? email, amount;
+  var formKey = GlobalKey<FormState>();
   CheckoutCurrency _checkoutCurrency = CheckoutCurrency.NGN;
 
   void _launchKlashaPay() async {
-    if (_formKey.currentState.validate()) {
+    if ((formKey.currentState?.validate() ?? false) &&
+        email != null &&
+        amount != null) {
       KlashaCheckout.checkout(
         context,
-        email: _email,
-        amount: int.parse(_amount),
+        email: email!,
+        amount: int.parse(amount!),
         checkoutCurrency: _checkoutCurrency,
         onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
           print(
@@ -51,10 +51,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _onRadioChanged(CheckoutCurrency checkoutCurrency) {
-    setState(
-      () => _checkoutCurrency = checkoutCurrency,
-    );
+  void _onRadioChanged(CheckoutCurrency? checkoutCurrency) {
+    if (checkoutCurrency == null) return;
+    setState(() => _checkoutCurrency = checkoutCurrency);
   }
 
   @override
@@ -68,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
         child: Form(
-          key: _formKey,
+          key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               Text('Customer Email'),
               SizedBox(height: 5),
               TextFormField(
-                onChanged: (val) => setState(() => _email = val),
+                onChanged: (val) => setState(() => email = val),
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -122,7 +121,7 @@ class _HomePageState extends State<HomePage> {
               Text('Amount'),
               SizedBox(height: 5),
               TextFormField(
-                onChanged: (val) => setState(() => _amount = val),
+                onChanged: (val) => setState(() => amount = val),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -149,9 +148,7 @@ class _HomePageState extends State<HomePage> {
                 textColor: Colors.white,
                 color: Color(0xFFE85243),
                 onPressed: _launchKlashaPay,
-                child: Text(
-                  'Checkout',
-                ),
+                child: Text('Checkout'),
               ),
             ],
           ),
