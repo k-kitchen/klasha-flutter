@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   String _email;
   String _amount;
   var _formKey = GlobalKey<FormState>();
-  CheckoutCurrency _checkoutCurrency;
+  CheckoutCurrency _checkoutCurrency = CheckoutCurrency.NGN;
 
   void _launchKlashaPay() async {
     if (_formKey.currentState.validate()) {
@@ -49,12 +49,6 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _checkoutCurrency = CheckoutCurrency.NGN;
   }
 
   void _onRadioChanged(CheckoutCurrency checkoutCurrency) {

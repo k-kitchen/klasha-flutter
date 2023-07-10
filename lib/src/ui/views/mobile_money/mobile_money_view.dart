@@ -6,6 +6,7 @@ import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout/src/ui/widgets/code_dialed_section.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class MobileMoneyView extends StatefulWidget {
@@ -149,7 +150,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   onPhoneNumberChanged: (val) => phoneNumber = val,
                   formKey: _formKey,
                 ),
-                _CodeDialedSection(phoneNumber: phoneNumber),
+                CodeDialedSection(phoneNumber: phoneNumber),
               ],
             ),
           ),
@@ -342,32 +343,4 @@ class _MobileMoneyInputForm extends StatelessWidget {
   }
 }
 
-class _CodeDialedSection extends StatelessWidget {
-  const _CodeDialedSection({required this.phoneNumber});
 
-  final String? phoneNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Dial Code',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: appColors.subText,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Please dial the code that was sent to the mobile number $phoneNumber',
-          style: TextStyle(fontSize: 15, color: appColors.subText),
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-}

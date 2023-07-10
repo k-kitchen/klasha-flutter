@@ -16,7 +16,7 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
     if (decodedResponseMap['status'] == 'error') {
       apiResponse.status = false;
@@ -51,7 +51,7 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
     if (decodedResponseMap['status'] == 'error') {
       apiResponse.status = false;
