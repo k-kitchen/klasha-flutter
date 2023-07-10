@@ -75,7 +75,6 @@ class CheckoutOptionsView extends StatelessWidget {
 
 class _CheckoutOptionEntry extends StatelessWidget {
   const _CheckoutOptionEntry({
-    super.key,
     this.name,
     this.assetName,
     this.onTap,

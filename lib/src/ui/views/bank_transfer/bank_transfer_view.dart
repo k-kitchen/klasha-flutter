@@ -9,8 +9,8 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class BankTransferCheckoutView extends StatefulWidget {
   const BankTransferCheckoutView({
     super.key,
-    this.email,
-    this.amount,
+    required this.email,
+    required this.amount,
   });
 
   final String email;
@@ -22,17 +22,12 @@ class BankTransferCheckoutView extends StatefulWidget {
 }
 
 class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
-  Future<ApiResponse> _futureBankDetails;
+  late Future<ApiResponse<BankAccountDetails>> futureBankDetails;
 
   @override
   void initState() {
     super.initState();
     _fetchBankDetails();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void _fetchBankDetails() async {
@@ -46,9 +41,9 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
       currency: 'NGN',
     );
 
-    _futureBankDetails =
+    futureBankDetails =
         BankTransferServiceImpl().getBankAccountDetails(bankTransferBody);
-    setState(() => null);
+    setState(() {});
   }
 
   @override
@@ -66,9 +61,7 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 5),
           Text(
             'NGN ${widget.amount}',
             style: TextStyle(
@@ -77,12 +70,10 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Expanded(
             child: FutureBuilder<ApiResponse<BankAccountDetails>>(
-              future: _futureBankDetails,
+              future: futureBankDetails,
               builder: (BuildContext context,
                   AsyncSnapshot<ApiResponse<BankAccountDetails>> snapshot) {
                 Widget widgetToShow;
@@ -93,31 +84,26 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
                         width: 25.0,
                         height: 25.0,
                         margin: const EdgeInsets.symmetric(vertical: 30.0),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 3.0,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 3.0),
                       ),
                     );
                     break;
                   case ConnectionState.done:
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data?.data != null) {
                       widgetToShow = _BankAccountDetailsView(
-                        bankAccountNumber: snapshot.data.data.transferAccount,
-                        bankName: snapshot.data.data.transferBank,
+                        bankAccountNumber:
+                            snapshot.data!.data!.transferAccount!,
+                        bankName: snapshot.data!.data!.transferBank!,
                       );
                     } else {
                       widgetToShow = Center(
-                        child: _RetryView(
-                          onRetry: _fetchBankDetails,
-                        ),
+                        child: _RetryView(onRetry: _fetchBankDetails),
                       );
                     }
                     break;
                   default:
                     widgetToShow = Center(
-                      child: _RetryView(
-                        onRetry: _fetchBankDetails,
-                      ),
+                      child: _RetryView(onRetry: _fetchBankDetails),
                     );
                     break;
                 }
@@ -133,7 +119,6 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
 
 class _BankAccountDetailsView extends StatelessWidget {
   const _BankAccountDetailsView({
-    super.key,
     required this.bankAccountNumber,
     required this.bankName,
   });
@@ -148,23 +133,14 @@ class _BankAccountDetailsView extends StatelessWidget {
       children: [
         Text(
           'Make your transfer to this account',
-          style: TextStyle(
-            fontSize: 15,
-            color: appColors.subText,
-          ),
+          style: TextStyle(fontSize: 15, color: appColors.subText),
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         KlashaOutlinedInputField(
           labeltext: 'Bank name',
-          controller: TextEditingController(
-            text: bankName,
-          ),
+          controller: TextEditingController(text: bankName),
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         Row(
           children: [
             Expanded(
@@ -175,15 +151,11 @@ class _BankAccountDetailsView extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 20,
-            ),
+            const SizedBox(width: 20),
             InkWell(
               onTap: () async {
                 await Clipboard.setData(
-                  ClipboardData(
-                    text: bankAccountNumber,
-                  ),
+                  ClipboardData(text: bankAccountNumber),
                 ).whenComplete(
                   () => KlashaDialogs.showStatusDialog(
                     context,
@@ -225,9 +197,7 @@ class _BankAccountDetailsView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         KlashaOutlinedInputField(
           labeltext: 'Account Name',
           controller: TextEditingController(
@@ -240,14 +210,9 @@ class _BankAccountDetailsView extends StatelessWidget {
 }
 
 class _RetryView extends StatelessWidget {
-  const _RetryView({
-    super.key,
-    this.message,
-    this.onRetry,
-  });
+  const _RetryView({this.onRetry});
 
-  final String message;
-  final VoidCallback onRetry;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -255,16 +220,9 @@ class _RetryView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'Something went wrong,',
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        KlashaOutlineButton(
-          text: 'Retry',
-          onPressed: onRetry,
-        ),
+        Text('Something went wrong'),
+        const SizedBox(height: 20),
+        KlashaOutlineButton(text: 'Retry', onPressed: onRetry),
       ],
     );
   }

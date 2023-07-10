@@ -273,7 +273,6 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
 
 class _CardInputForm extends StatelessWidget {
   const _CardInputForm({
-    super.key,
     this.onCardNumberChanged,
     this.onCardExpiryChanged,
     this.onCardCvvChanged,
@@ -394,10 +393,7 @@ class _CardInputForm extends StatelessWidget {
 }
 
 class _TransactionPinForm extends StatelessWidget {
-  const _TransactionPinForm({
-    super.key,
-    this.onTransactionPinChanged,
-  });
+  const _TransactionPinForm({this.onTransactionPinChanged});
 
   final Function(String)? onTransactionPinChanged;
 
@@ -430,7 +426,6 @@ class _TransactionPinForm extends StatelessWidget {
 
 class _OTPForm extends StatelessWidget {
   const _OTPForm({
-    super.key,
     this.onOtpChanged,
     required this.message,
   });

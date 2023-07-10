@@ -78,7 +78,7 @@ class KlashaPrimaryButton extends StatelessWidget {
 
 class KlashaOutlineButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color? buttonColor;
   final Color? textColor;
   final Color? borderColor;
@@ -86,7 +86,7 @@ class KlashaOutlineButton extends StatelessWidget {
   const KlashaOutlineButton({
     super.key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.buttonColor,
     this.textColor,
     this.borderColor,
