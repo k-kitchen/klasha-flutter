@@ -94,24 +94,23 @@ class KlashaOutlineButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      height: 50,
-      minWidth: 140,
-      onPressed: onPressed,
-      color: buttonColor ?? appColors.white,
-      textColor: textColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(
-          color: appColors.grey,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 50,
+        constraints: BoxConstraints(minWidth: 140),
+        decoration: BoxDecoration(
+          color: buttonColor ?? appColors.white,
+          border: Border.all(color: appColors.grey),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 17,
-          color: textColor ?? appColors.text,
-          fontWeight: FontWeight.w600,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 17,
+            color: textColor ?? appColors.text,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

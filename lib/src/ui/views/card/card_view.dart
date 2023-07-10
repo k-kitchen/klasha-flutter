@@ -286,10 +286,6 @@ class _CardInputForm extends StatelessWidget {
   final Function(String)? onCardCvvChanged;
   final GlobalKey<FormState> formKey;
 
-  bool? _isFormValid() {
-    return formKey.currentState?.validate();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(

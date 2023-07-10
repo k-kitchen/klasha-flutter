@@ -139,16 +139,20 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               const SizedBox(height: 30),
-              FlatButton(
-                height: 55,
-                minWidth: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+              GestureDetector(
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFFE85243),
+                  ),
+                  child: Text(
+                    'Checkout',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                textColor: Colors.white,
-                color: Color(0xFFE85243),
-                onPressed: _launchKlashaPay,
-                child: Text('Checkout'),
+                onTap: _launchKlashaPay,
               ),
             ],
           ),
