@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:klasha_checkout/src/core/core.dart';
 
 class CardServiceImpl extends CardService with KlashaBaseService {

@@ -4,12 +4,12 @@ class KlashaUtils {
   /// contains utils liek validations, card validations, strings utils, e.t.c
   ///
   ///
-  static String? validateEmail(String email) {
+  static String? validateEmail(String? email) {
     String source =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(source);
-    if (email.trim().isEmpty) {
+    if (email == null || email.trim().isEmpty) {
       return 'Email is required';
     } else if (!regExp.hasMatch(email)) {
       return 'Enter a valid email address';
@@ -18,7 +18,11 @@ class KlashaUtils {
     }
   }
 
-  static String formatCurrencyInput(String amount,[bool ignoreSymbol = false, int decimalDigits = 2]) {
+  static String formatCurrencyInput(
+    String amount, [
+    bool ignoreSymbol = false,
+    int decimalDigits = 2,
+  ]) {
     final formatter = NumberFormat.currency(
       locale: "en_NG",
       name: 'NGN',
@@ -33,8 +37,8 @@ class KlashaUtils {
     return formatter.format(amountDouble);
   }
 
-  static String? validateRequiredFields(String input, String fieldName) {
-    if (input.trim().isEmpty) {
+  static String? validateRequiredFields(String? input, String fieldName) {
+    if (input == null || input.trim().isEmpty) {
       return 'Invalid $fieldName';
     } else {
       return null;

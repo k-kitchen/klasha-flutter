@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -12,9 +11,9 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class MobileMoneyView extends StatefulWidget {
   const MobileMoneyView({
     super.key,
-    this.onCheckoutResponse,
-    this.amount,
-    this.email,
+    required this.onCheckoutResponse,
+    required this.amount,
+    required this.email,
   });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
@@ -26,15 +25,12 @@ class MobileMoneyView extends StatefulWidget {
 }
 
 class _MobileMoneyViewState extends State<MobileMoneyView> {
-  PageController _pageController;
+  late PageController _pageController;
   int _currentPage = 0;
-  MobileMoneyResponse _mobileMoneyResponse;
+  MobileMoneyResponse? mobileMoneyResponse;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String transactionReference;
 
-  String _fullName;
-  String _email;
-  String _phoneNumber;
+  String? fullName, email, phoneNumber, transactionReference;
 
   String _networkValue = 'Dash';
 
@@ -51,9 +47,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
   }
 
   void _onPageChanged(int newPage) {
-    setState(() {
-      _currentPage = newPage;
-    });
+    setState(() => _currentPage = newPage);
   }
 
   @override
@@ -78,9 +72,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
+                  const SizedBox(height: 5),
                   Text(
                     'GHS ${KlashaUtils.formatCurrencyInput(widget.amount.toString(), true)}',
                     style: TextStyle(
@@ -97,9 +89,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   width: 100,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(
-                      color: appColors.grey,
-                    ),
+                    border: Border.all(color: appColors.grey),
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 6.0),
                   child: Center(
@@ -137,18 +127,15 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                         },
                       ).toList(),
                       onChanged: (val) {
-                        setState(() {
-                          _networkValue = val;
-                        });
+                        if (val == null) return;
+                        setState(() => _networkValue = val);
                       },
                     ),
                   ),
                 ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Expanded(
             child: PageView(
               controller: _pageController,
@@ -157,34 +144,31 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 _MobileMoneyInputForm(
-                  onFullNameChanged: (val) => _fullName = val,
-                  onEmailChanged: (val) => _email = val,
-                  onPhoneNumberChanged: (val) => _phoneNumber = val,
+                  onFullNameChanged: (val) => fullName = val,
+                  onEmailChanged: (val) => email = val,
+                  onPhoneNumberChanged: (val) => phoneNumber = val,
                   formKey: _formKey,
                 ),
-                _CodeDialedSection(
-                  phoneNumber: _phoneNumber,
-                ),
+                _CodeDialedSection(phoneNumber: phoneNumber),
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           if (_currentPage == 0)
             PayWithKlashaButton(
               onPressed: () async {
-                if (_formKey.currentState.validate()) {
-                  transactionReference = 'klasha-mobile-money-checkout-${DateTime.now().microsecondsSinceEpoch}';
+                if (_formKey.currentState?.validate() ?? false) {
+                  transactionReference =
+                      'klasha-mobile-money-checkout-${DateTime.now().microsecondsSinceEpoch}';
                   MobileMoneyRequestBody mobileMoneyRequestBody =
-                  MobileMoneyRequestBody(
-                      txRef: transactionReference,
-                      amount: 1000,
-                      email: _email,
-                      phoneNumber: _phoneNumber,
-                      currency: 'GHS',
-                      narration: 'mobile-money-payment',
-                      network: _networkValue);
+                      MobileMoneyRequestBody(
+                          txRef: transactionReference,
+                          amount: 1000,
+                          email: email,
+                          phoneNumber: phoneNumber,
+                          currency: 'GHS',
+                          narration: 'mobile-money-payment',
+                          network: _networkValue);
 
                   KlashaDialogs.showLoadingDialog(context);
 
@@ -194,15 +178,17 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   Navigator.pop(context);
 
                   if (apiResponse.status) {
-                    _mobileMoneyResponse = apiResponse.data;
+                    mobileMoneyResponse = apiResponse.data;
 
                     _pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
                   } else {
-                    KlashaDialogs.showStatusDialog(context, apiResponse.message);
-                    // log('something went wrong, try again');
+                    KlashaDialogs.showStatusDialog(
+                      context,
+                      apiResponse.message,
+                    );
                   }
                 }
               },
@@ -211,12 +197,14 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
             KlashaPrimaryButton(
               text: 'I have dialed the code',
               onPressed: () async {
+                if (mobileMoneyResponse?.data?.id == null) return;
+
                 KlashaDialogs.showLoadingDialog(context);
 
                 ApiResponse apiResponse =
                     await MobileMoneyServiceImpl().verifyPayment(
-                  "${_mobileMoneyResponse.data.id}",
-                  "mobile_money_order_id${_mobileMoneyResponse.data.id}",
+                  "${mobileMoneyResponse!.data!.id}",
+                  "mobile_money_order_id${mobileMoneyResponse!.data!.id}",
                 );
 
                 Navigator.pop(context);
@@ -248,11 +236,10 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
 
 class _MobileMoneyInputForm extends StatelessWidget {
   const _MobileMoneyInputForm({
-    super.key,
-    this.onFullNameChanged,
-    this.onEmailChanged,
-    this.onPhoneNumberChanged,
-    this.formKey,
+    required this.onFullNameChanged,
+    required this.onEmailChanged,
+    required this.onPhoneNumberChanged,
+    required this.formKey,
   });
 
   final Function(String) onFullNameChanged;
@@ -277,22 +264,19 @@ class _MobileMoneyInputForm extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 5),
           KlashaInputField(
             onChanged: onFullNameChanged,
             hintText: 'John Doe',
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\d+')),
             ],
-            validator: (input) =>  KlashaUtils.validateRequiredFields(input, 'Full Name'),
+            validator: (input) =>
+                KlashaUtils.validateRequiredFields(input, 'Full Name'),
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.text,
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -308,9 +292,7 @@ class _MobileMoneyInputForm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     KlashaInputField(
                       onChanged: onEmailChanged,
                       hintText: 'john@gmail.com',
@@ -321,9 +303,7 @@ class _MobileMoneyInputForm extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,9 +316,7 @@ class _MobileMoneyInputForm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    const SizedBox(height: 5),
                     KlashaInputField(
                       onChanged: onPhoneNumberChanged,
                       textInputAction: TextInputAction.done,
@@ -348,7 +326,10 @@ class _MobileMoneyInputForm extends StatelessWidget {
                         FilteringTextInputFormatter.digitsOnly,
                         LengthLimitingTextInputFormatter(12),
                       ],
-                      validator: (input) =>  KlashaUtils.validateRequiredFields(input, 'Phone Number'),
+                      validator: (input) => KlashaUtils.validateRequiredFields(
+                        input,
+                        'Phone Number',
+                      ),
                     ),
                   ],
                 ),
@@ -362,12 +343,9 @@ class _MobileMoneyInputForm extends StatelessWidget {
 }
 
 class _CodeDialedSection extends StatelessWidget {
-  const _CodeDialedSection({
-    super.key,
-    this.phoneNumber,
-  });
+  const _CodeDialedSection({required this.phoneNumber});
 
-  final String phoneNumber;
+  final String? phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -383,15 +361,10 @@ class _CodeDialedSection extends StatelessWidget {
             color: appColors.subText,
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Text(
           'Please dial the code that was sent to the mobile number $phoneNumber',
-          style: TextStyle(
-            fontSize: 15,
-            color: appColors.subText,
-          ),
+          style: TextStyle(fontSize: 15, color: appColors.subText),
           textAlign: TextAlign.center,
         ),
       ],

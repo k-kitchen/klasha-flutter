@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 enum RequestType { get, post, put, delete }
@@ -12,9 +11,9 @@ mixin KlashaBaseService {
 
   Future<Map<String, dynamic>> getApiResponse({
     required String authorization,
-    RequestType requestType,
-    String url,
-    Map<String, dynamic> requestBody,
+    required RequestType requestType,
+    required String url,
+    required Map<String, dynamic> requestBody,
   }) async {
     final _headers = _getHeaders(authorization);
     final uri = Uri.parse(url);
@@ -22,21 +21,17 @@ mixin KlashaBaseService {
 
     switch (requestType) {
       case RequestType.get:
-        if (url != null) {
-          response = await _client.get(
-            uri,
-            headers: _headers,
-          );
-        }
+        response = await _client.get(
+          uri,
+          headers: _headers,
+        );
         break;
       case RequestType.post:
-        if (url != null && requestBody != null) {
-          response = await _client.post(
-            uri,
-            body: jsonEncode(requestBody),
-            headers: _headers,
-          );
-        }
+        response = await _client.post(
+          uri,
+          body: jsonEncode(requestBody),
+          headers: _headers,
+        );
         break;
       case RequestType.put:
         // TODO(timilehinjegede): Handle put request type.

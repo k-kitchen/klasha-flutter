@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/shared/assets.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/shared/strings.dart';
 
 class PayWithKlasha extends StatelessWidget {
   @override

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:klasha_checkout/src/core/core.dart';
 
 class MpesaServiceImpl extends MpesaService with KlashaBaseService {
