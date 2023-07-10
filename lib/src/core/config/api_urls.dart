@@ -2,7 +2,7 @@ import 'package:klasha_checkout/klasha_checkout.dart';
 
 class ApiUrls {
   // base url
-  static String baseUrl;
+  static late String baseUrl;
 
   // bank transfer urls
   static const String bankTransferUrl = '/pay/NGN/banktransfer';
