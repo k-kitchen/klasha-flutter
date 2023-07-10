@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
+import 'package:klasha_checkout/src/ui/user_contact_form.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 import 'package:klasha_checkout/src/ui/widgets/code_dialed_section.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
@@ -144,7 +144,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
               clipBehavior: Clip.none,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                _MobileMoneyInputForm(
+                UserContactForm(
                   onFullNameChanged: (val) => fullName = val,
                   onEmailChanged: (val) => email = val,
                   onPhoneNumberChanged: (val) => phoneNumber = val,
@@ -234,113 +234,3 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
     );
   }
 }
-
-class _MobileMoneyInputForm extends StatelessWidget {
-  const _MobileMoneyInputForm({
-    required this.onFullNameChanged,
-    required this.onEmailChanged,
-    required this.onPhoneNumberChanged,
-    required this.formKey,
-  });
-
-  final Function(String) onFullNameChanged;
-  final Function(String) onEmailChanged;
-  final Function(String) onPhoneNumberChanged;
-  final GlobalKey<FormState> formKey;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Full Name',
-            style: TextStyle(
-              fontSize: 14,
-              color: appColors.subText,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 5),
-          KlashaInputField(
-            onChanged: onFullNameChanged,
-            hintText: 'John Doe',
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\d+')),
-            ],
-            validator: (input) =>
-                KlashaUtils.validateRequiredFields(input, 'Full Name'),
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.text,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: appColors.subText,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    KlashaInputField(
-                      onChanged: onEmailChanged,
-                      hintText: 'john@gmail.com',
-                      validator: KlashaUtils.validateEmail,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 15),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Phone number',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: appColors.subText,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    KlashaInputField(
-                      onChanged: onPhoneNumberChanged,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      hintText: '0123456789',
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(12),
-                      ],
-                      validator: (input) => KlashaUtils.validateRequiredFields(
-                        input,
-                        'Phone Number',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
