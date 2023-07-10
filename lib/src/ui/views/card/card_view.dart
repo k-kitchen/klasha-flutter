@@ -28,10 +28,10 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
   late PageController pageController;
   int currentPage = 0;
   String? cardNumber, cardExpiry, cardCvv, transactionPin, otp;
-  AddBankCardResponse addBankCardResponse;
-  AuthenticateBankCardResponse authBankCardResponse;
+  AddBankCardResponse? addBankCardResponse;
+  AuthenticateBankCardResponse? authBankCardResponse;
   var formKey = GlobalKey<FormState>();
-  String otpMessage = '';
+  String? otpMessage = '';
   String? currencyName;
   String? transactionReference;
 
@@ -109,7 +109,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                 ),
                 _OTPForm(
                   onOtpChanged: (val) => otp = val,
-                  message: otpMessage,
+                  message: otpMessage ?? '',
                 ),
               ],
             ),
@@ -184,7 +184,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       AuthenticateCardPaymentBody(
                     mode: 'pin',
                     pin: transactionPin,
-                    txRef: addBankCardResponse.txRef,
+                    txRef: addBankCardResponse?.txRef,
                   );
 
                   KlashaDialogs.showLoadingDialog(context);
@@ -196,14 +196,14 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   Navigator.pop(context);
 
                   if (apiResponse.status ||
-                      apiResponse.data.status == 'pending') {
-                    otpMessage = apiResponse.data.message;
+                      apiResponse.data?.status == 'pending') {
+                    otpMessage = apiResponse.data?.message;
                     authBankCardResponse = apiResponse.data;
                     pageController.nextPage(
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     );
-                  } else if (apiResponse.data.status != 'pending' &&
+                  } else if (apiResponse.data?.status != 'pending' &&
                       apiResponse.status) {
                     /// payment is successful
                     ///
@@ -216,7 +216,9 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     );
                   } else if (!apiResponse.status) {
                     KlashaDialogs.showStatusDialog(
-                        context, apiResponse.message);
+                      context,
+                      apiResponse.message,
+                    );
                   }
                 }
 
@@ -224,7 +226,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                 if (currentPage == 2) {
                   ValidateCardPaymentBody validateCardPaymentBody =
                       ValidateCardPaymentBody(
-                    flwRef: authBankCardResponse.flwRef,
+                    flwRef: authBankCardResponse?.flwRef,
                     otp: otp,
                     type: 'card',
                   );

@@ -76,7 +76,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
   }
 
   @override
-  Future<ApiResponse> validateCardPayment(
+  Future<ApiResponse<ValidateBankCardResponse>> validateCardPayment(
     ValidateCardPaymentBody validateCardPaymentBody,
   ) async {
     ApiResponse<ValidateBankCardResponse> apiResponse =

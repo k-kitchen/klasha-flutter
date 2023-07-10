@@ -17,7 +17,7 @@ mixin KlashaBaseService {
   }) async {
     final _headers = _getHeaders(authorization);
     final uri = Uri.parse(url);
-    http.Response response;
+    http.Response? response;
 
     switch (requestType) {
       case RequestType.get:
@@ -42,6 +42,8 @@ mixin KlashaBaseService {
       default:
         throw Exception('Request Type not implemented');
     }
+
+    if(response == null) throw Exception('Response is empty');
 
     final int statusCode = response.statusCode;
     log('base service => response body = ${response.body}; response status code = ${response.statusCode}');

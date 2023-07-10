@@ -19,7 +19,7 @@ class KlashaBaseButton extends StatelessWidget {
   final String? buttonText;
   final Color? buttonColor;
   final Color? textColor;
-  final double? radius;
+  final double radius;
   final Color? disabledTextColor;
   final Color? borderColor;
   final Color? disabledButtonColor;

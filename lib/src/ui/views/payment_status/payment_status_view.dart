@@ -9,7 +9,7 @@ class PaymentStatusView extends StatefulWidget {
     this.onAction,
   });
 
-  final VoidCallback onAction;
+  final VoidCallback? onAction;
   final bool paymentStatus;
 
   @override
