@@ -30,27 +30,34 @@ class KlashaBaseButton extends StatelessWidget {
     return SizedBox(
       height: 50,
       width: double.infinity,
-      child: RaisedButton(
-        textColor: textColor ?? appColors.white,
-        onPressed: onPressed,
-        color: buttonColor ?? appColors.primary,
-        disabledColor: disabledButtonColor ?? appColors.primary.withOpacity(.5),
-        disabledTextColor: disabledTextColor ?? appColors.white.withOpacity(.5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(
-            color: borderColor ?? appColors.grey,
-            width: 1,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return states.contains(MaterialState.disabled)
+                  ? disabledButtonColor ?? appColors.primary.withOpacity(.5)
+                  : buttonColor ?? appColors.primary;
+            },
+          ),
+          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              return states.contains(MaterialState.disabled)
+                  ? disabledTextColor ?? appColors.white.withOpacity(.5)
+                  : textColor ?? appColors.white;
+            },
+          ),
+          side: MaterialStateProperty.all(
+            BorderSide(color: borderColor ?? appColors.grey, width: 1),
+          ),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
           ),
         ),
+        onPressed: onPressed,
         child: child == null
             ? Text(
                 buttonText ?? '',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: textColor ?? appColors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
               )
             : child,
       ),
