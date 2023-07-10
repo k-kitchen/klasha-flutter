@@ -25,10 +25,10 @@ class ApiUrls {
   static void getBaseUrl(Environment environment) {
     switch (environment) {
       case Environment.TEST:
-        baseUrl = 'http://dev.kcookery.com';
+        baseUrl = 'https://dev.kcookery.com';
         break;
       case Environment.LIVE:
-        baseUrl = 'http://prod.kcookery.com';
+        baseUrl = 'https://prod.kcookery.com';
         break;
     }
   }
