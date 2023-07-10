@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:klasha_checkout/src/core/config/api_response.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/core/services/mpesa/mpesa_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
@@ -160,23 +157,15 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
 
                 Navigator.pop(context);
 
-                if (apiResponse.status) {
-                  widget.onCheckoutResponse(
-                    KlashaCheckoutResponse(
-                      status: true,
-                      message: 'Payment Successful',
-                      transactionReference: transactionReference,
-                    ),
-                  );
-                } else {
-                  widget.onCheckoutResponse(
-                    KlashaCheckoutResponse(
-                      status: false,
-                      message: apiResponse.message ?? 'Payment Not Successful',
-                      transactionReference: transactionReference,
-                    ),
-                  );
-                }
+                widget.onCheckoutResponse(
+                  KlashaCheckoutResponse(
+                    status: apiResponse.status,
+                    message: apiResponse.status
+                        ? 'Payment Successful'
+                        : apiResponse.message ?? 'Payment Not Successful',
+                    transactionReference: transactionReference,
+                  ),
+                );
               },
             ),
         ],

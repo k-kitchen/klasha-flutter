@@ -26,9 +26,7 @@ class PayWithKlashaButton extends KlashaBaseButton {
             fit: BoxFit.cover,
             package: KlashaStrings.packageName,
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Text(
             KlashaStrings.payWith,
             style: TextStyle(
@@ -36,9 +34,7 @@ class PayWithKlashaButton extends KlashaBaseButton {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Image.asset(
             KlashaAssets.ic_klasha_white,
             height: 15,
@@ -55,9 +51,9 @@ class PayWithKlashaButton extends KlashaBaseButton {
 class KlashaPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? borderColor;
 
   const KlashaPrimaryButton({
     super.key,
@@ -83,9 +79,9 @@ class KlashaPrimaryButton extends StatelessWidget {
 class KlashaOutlineButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? borderColor;
 
   const KlashaOutlineButton({
     super.key,
@@ -128,7 +124,7 @@ class KlashaCloseButton extends StatelessWidget {
     this.onTap,
   });
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -141,22 +137,16 @@ class KlashaCloseButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: appColors.primaryLight,
         ),
-        child: Icon(
-          Icons.close_rounded,
-          color: appColors.primary,
-        ),
+        child: Icon(Icons.close_rounded, color: appColors.primary),
       ),
     );
   }
 }
 
 class KlashaBackButton extends StatelessWidget {
-  const KlashaBackButton({
-    super.key,
-    this.onTap,
-  });
+  const KlashaBackButton({super.key, this.onTap});
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -164,19 +154,11 @@ class KlashaBackButton extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(
-            Icons.arrow_back_ios_rounded,
-            color: appColors.white,
-          ),
-          SizedBox(
-            width: 3,
-          ),
+          Icon(Icons.arrow_back_ios_rounded, color: appColors.white),
+          SizedBox(width: 3),
           Text(
             'Back',
-            style: TextStyle(
-              fontSize: 16,
-              color: appColors.white,
-            ),
+            style: TextStyle(fontSize: 16, color: appColors.white),
           ),
         ],
       ),
