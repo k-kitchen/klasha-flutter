@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
-import '../shared/shared.dart';
+import '../../shared/shared.dart';
 
 class UserContactForm extends StatelessWidget {
   const UserContactForm({

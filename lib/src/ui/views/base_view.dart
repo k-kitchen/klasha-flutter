@@ -47,19 +47,19 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
+    return Material(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             height: 50,
             width: double.infinity,
             decoration: BoxDecoration(
+              color: appColors.primary,
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15.0),
                 topLeft: Radius.circular(15.0),
               ),
-              color: appColors.primary,
             ),
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: Row(
@@ -68,7 +68,6 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                 if (_currentIndex == 0)
                   SizedBox.shrink()
                 else
-                  // back button
                   KlashaBackButton(
                     onTap: () {
                       _bodyPageController.previousPage(
@@ -77,8 +76,6 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                       );
                     },
                   ),
-
-                // close button
                 KlashaCloseButton(
                   onTap: () {
                     Navigator.pop(context);

@@ -30,7 +30,6 @@ class KlashaCheckout {
     showModalBottomSheet(
       context: context,
       enableDrag: false,
-      isScrollControlled: true,
       isDismissible: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
