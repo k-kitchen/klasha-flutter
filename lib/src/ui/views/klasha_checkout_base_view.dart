@@ -88,6 +88,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                         setState(() {});
                       },
                     ),
+              const SizedBox(height: 15),
               SecuredByKlasha(),
               const SizedBox(height: 40),
             ],
