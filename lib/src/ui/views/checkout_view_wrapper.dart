@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/ui/views/bank_transfer/bank_transfer_view.dart';
-import 'package:klasha_checkout/src/ui/views/card/card_view.dart';
-import 'package:klasha_checkout/src/ui/views/checkout_options/checkout_options_view.dart';
-import 'package:klasha_checkout/src/ui/views/mobile_money/mobile_money_view.dart';
-import 'package:klasha_checkout/src/ui/views/mpesa/mpesa_view.dart';
+import 'package:klasha_checkout/src/ui/views/bank_transfer_view.dart';
+import 'package:klasha_checkout/src/ui/views/card_checkout_view.dart';
+import 'package:klasha_checkout/src/ui/views/checkout_options_view.dart';
+import 'package:klasha_checkout/src/ui/views/mobile_money_view.dart';
+import 'package:klasha_checkout/src/ui/views/mpesa_view.dart';
 
 class CheckoutViewWrapper extends StatefulWidget {
   const CheckoutViewWrapper({

@@ -111,10 +111,6 @@ class KlashaUtils {
     return fourDigitsYear < now.year;
   }
 
-  static bool isValidMonth(int? month) {
-    return month != null && month > 0 && month < 13;
-  }
-
   static bool hasMonthPassed(int? year, int? month) {
     if (year == null || month == null) return true;
     var now = DateTime.now();

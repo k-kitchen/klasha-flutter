@@ -16,9 +16,7 @@ class SecuredByKlasha extends StatelessWidget {
           color: appColors.text,
           package: KlashaStrings.packageName,
         ),
-        const SizedBox(
-          width: 5,
-        ),
+        const SizedBox(width: 5),
         Text(
           KlashaStrings.securedBy,
           style: TextStyle(
@@ -26,9 +24,7 @@ class SecuredByKlasha extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(
-          width: 5,
-        ),
+        const SizedBox(width: 5),
         Image.asset(
           KlashaAssets.ic_klasha,
           height: 15,

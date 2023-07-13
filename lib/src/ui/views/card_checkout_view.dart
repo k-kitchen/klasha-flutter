@@ -92,26 +92,28 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
             ),
           ),
           const SizedBox(height: 20),
-          PageView(
-            controller: pageController,
-            onPageChanged: _onPageChanged,
-            clipBehavior: Clip.none,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              _CardInputForm(
-                onCardNumberChanged: (val) => cardNumber = val,
-                onCardExpiryChanged: (val) => cardExpiry = val,
-                onCardCvvChanged: (val) => cardCvv = val,
-                formKey: formKey,
-              ),
-              _TransactionPinForm(
-                onTransactionPinChanged: (val) => transactionPin = val,
-              ),
-              _OTPForm(
-                onOtpChanged: (val) => otp = val,
-                message: otpMessage ?? '',
-              ),
-            ],
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              onPageChanged: _onPageChanged,
+              clipBehavior: Clip.none,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                _CardInputForm(
+                  onCardNumberChanged: (val) => cardNumber = val,
+                  onCardExpiryChanged: (val) => cardExpiry = val,
+                  onCardCvvChanged: (val) => cardCvv = val,
+                  formKey: formKey,
+                ),
+                _TransactionPinForm(
+                  onTransactionPinChanged: (val) => transactionPin = val,
+                ),
+                _OTPForm(
+                  onOtpChanged: (val) => otp = val,
+                  message: otpMessage ?? '',
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 20),
           if (currentPage == 0)

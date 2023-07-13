@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/views/payment_status/payment_status_view.dart';
+import 'package:klasha_checkout/src/ui/views/payment_status_view.dart';
 import 'package:klasha_checkout/src/ui/views/views.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
@@ -58,41 +58,35 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
           children: [
             buildHeader(context),
             Expanded(
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 500),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return ScaleTransition(scale: animation, child: child);
-                },
-                child: _klashaCheckoutResponse == null
-                    ? CheckoutViewWrapper(
-                        email: widget.email,
-                        amount: widget.amount,
-                        checkoutCurrency: widget.checkoutCurrency,
-                        onCheckoutResponse: (KlashaCheckoutResponse response) {
-                          _klashaCheckoutResponse = response;
-                          widget.onComplete(response);
-                          setState(() {});
-                        },
-                        bodyPageController: _bodyPageController,
-                        onPageChanged: (newIndex) {
-                          setState(() {});
+              child: _klashaCheckoutResponse == null
+                  ? CheckoutViewWrapper(
+                      email: widget.email,
+                      amount: widget.amount,
+                      checkoutCurrency: widget.checkoutCurrency,
+                      onCheckoutResponse: (KlashaCheckoutResponse response) {
+                        _klashaCheckoutResponse = response;
+                        widget.onComplete(response);
+                        setState(() {});
+                      },
+                      bodyPageController: _bodyPageController,
+                      onPageChanged: (newIndex) {
+                        setState(() {});
 
-                          _currentIndex = newIndex;
-                        },
-                        environment: widget.environment,
-                      )
-                    : PaymentStatusView(
-                        paymentStatus: _klashaCheckoutResponse!.status,
-                        onAction: () {
-                          if (_klashaCheckoutResponse!.status) {
-                            Navigator.pop(context);
-                          } else {
-                            _klashaCheckoutResponse = null;
-                          }
-                          setState(() {});
-                        },
-                      ),
-              ),
+                        _currentIndex = newIndex;
+                      },
+                      environment: widget.environment,
+                    )
+                  : PaymentStatusView(
+                      paymentStatus: _klashaCheckoutResponse!.status,
+                      onAction: () {
+                        if (_klashaCheckoutResponse!.status) {
+                          Navigator.pop(context);
+                        } else {
+                          _klashaCheckoutResponse = null;
+                        }
+                        setState(() {});
+                      },
+                    ),
             ),
             SecuredByKlasha(),
             const SizedBox(height: 10),

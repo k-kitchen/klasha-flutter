@@ -43,6 +43,7 @@ class CheckoutOptionsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 20),
           Text(
             'Checkout Options',
             style: TextStyle(
