@@ -52,8 +52,7 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
           onCheckoutSelected: (checkoutName) {
             switch (checkoutName) {
               case 'Card':
-                nextWidget = // card page
-                    CardCheckoutView(
+                nextWidget = CardCheckoutView(
                   onCheckoutResponse: widget.onCheckoutResponse,
                   email: widget.email,
                   amount: widget.amount,
@@ -61,25 +60,21 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
                 );
                 break;
               case 'Mpesa':
-                nextWidget = // mpesa page
-                    MpesaCheckoutView(
+                nextWidget = MpesaCheckoutView(
                   onCheckoutResponse: widget.onCheckoutResponse,
                   email: widget.email,
                   amount: widget.amount,
                 );
                 break;
               case 'Mobile Money':
-                nextWidget = // mobile money
-                    MobileMoneyView(
+                nextWidget = MobileMoneyView(
                   onCheckoutResponse: widget.onCheckoutResponse,
                   email: widget.email,
                   amount: widget.amount,
                 );
                 break;
               case 'Bank Transfer':
-                nextWidget =
-                    // transfer page
-                    BankTransferCheckoutView(
+                nextWidget = BankTransferCheckoutView(
                   email: widget.email,
                   amount: widget.amount,
                 );

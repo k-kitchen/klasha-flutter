@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/config/config.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
+import 'package:klasha_checkout/src/ui/widgets/checkout_options_entry.dart';
 
 class CheckoutOptionsView extends StatelessWidget {
   CheckoutOptionsView({
@@ -40,6 +41,7 @@ class CheckoutOptionsView extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             'Checkout Options',
@@ -54,7 +56,7 @@ class CheckoutOptionsView extends StatelessWidget {
             _paymentNames.length,
             (index) => Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
-              child: _CheckoutOptionEntry(
+              child: CheckoutOptionEntry(
                 name: _paymentNames[index],
                 assetName: _paymentImages[index],
                 onTap: () => onCheckoutSelected(_paymentNames[index]),
@@ -62,55 +64,6 @@ class CheckoutOptionsView extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _CheckoutOptionEntry extends StatelessWidget {
-  const _CheckoutOptionEntry({
-    required this.name,
-    required this.assetName,
-    this.onTap,
-  });
-
-  final String name;
-  final String assetName;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: 65,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          color: appColors.primaryLight,
-        ),
-        padding: EdgeInsets.only(left: 15.0),
-        child: Row(
-          children: [
-            Image.asset(
-              assetName,
-              height: 25,
-              width: 25,
-              color: appColors.primary,
-              fit: BoxFit.cover,
-              package: KlashaStrings.packageName,
-            ),
-            const SizedBox(width: 10),
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: 16,
-                color: appColors.primary,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
