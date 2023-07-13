@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/config/config.dart';
-import 'package:klasha_checkout/src/ui/views/base_view.dart';
+import 'package:klasha_checkout/src/ui/views/klasha_checkout_base_view.dart';
 
 /// Make payment using the KlashaCheckout payment options.
 class KlashaCheckout {
