@@ -260,11 +260,6 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     );
                   }
                 }
-                // if (_currentPage != 2)
-                //   _pageController.nextPage(
-                //     duration: Duration(milliseconds: 300),
-                //     curve: Curves.easeInOut,
-                //   );
               },
             ),
           const SizedBox(height: 4),

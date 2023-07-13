@@ -68,8 +68,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
           AuthenticateBankCardResponse.fromJson(decodedResponseMap);
 
       apiResponse.data = authenticateBankCardResponse;
-      apiResponse.message =
-          'Please enter the OTP sent to your mobile number 080****** and email te**@rave**.com';
+      apiResponse.message = authenticateBankCardResponse.message;
     }
 
     return apiResponse;

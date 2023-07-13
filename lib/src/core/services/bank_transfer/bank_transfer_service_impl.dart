@@ -21,8 +21,6 @@ class BankTransferServiceImpl extends BankTransferService
     var decodedResponseMap = decodedResponseBody['meta']['authorization'];
 
     BankAccountDetails bankAccountDetails = BankAccountDetails.fromJson(decodedResponseMap);
-    // log('bank transfer service => get bank details response = $bankAccountDetails');
-
     apiResponse.data = bankAccountDetails;
     apiResponse.message = 'Retrieved bank details successful';
 

@@ -19,44 +19,26 @@ mixin KlashaBaseService {
     final uri = Uri.parse(url);
     http.Response? response;
 
-    switch (requestType) {
-      case RequestType.get:
-        response = await _client.get(
-          uri,
-          headers: _headers,
-        );
-        break;
-      case RequestType.post:
-        response = await _client.post(
+    response = switch (requestType) {
+      RequestType.get => await _client.get(uri, headers: _headers),
+      RequestType.post => await _client.post(
           uri,
           body: jsonEncode(requestBody),
           headers: _headers,
-        );
-        break;
-      case RequestType.put:
-        response = await _client.put(
+        ),
+      RequestType.put => await _client.put(
           uri,
           body: jsonEncode(requestBody),
           headers: _headers,
-        );
-        break;
-      case RequestType.delete:
-        response = await _client.delete(
-          uri,
-          headers: _headers,
-        );
-        break;
-      default:
-        throw Exception('Request Type not implemented');
-    }
+        ),
+      RequestType.delete => response =
+          await _client.delete(uri, headers: _headers),
+    };
 
-    final int statusCode = response.statusCode;
-    log('base service => response body = ${response.body}; response status code = ${response.statusCode}');
-
-    if (statusCode == HttpStatus.ok) {
+    if (response.statusCode == HttpStatus.ok) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Request failed with status: $statusCode');
+      throw Exception('Request failed with status: ${response.statusCode}.');
     }
   }
 
