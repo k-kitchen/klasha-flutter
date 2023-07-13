@@ -109,6 +109,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
         ),
       ),
       padding: EdgeInsets.symmetric(horizontal: 15.0),
+      margin: EdgeInsets.only(bottom: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -97,8 +97,8 @@ class KlashaOutlineButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: 50,
-        constraints: BoxConstraints(minWidth: 140),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: buttonColor ?? appColors.white,
           border: Border.all(color: appColors.grey),
