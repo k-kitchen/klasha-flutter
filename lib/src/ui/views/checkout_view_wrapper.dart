@@ -43,67 +43,57 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      reverse: true,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 375,
-            child: PageView(
-              controller: widget.bodyPageController,
-              onPageChanged: _onPageChanged,
-              children: [
-                CheckoutOptionsView(
+    return PageView(
+      controller: widget.bodyPageController,
+      onPageChanged: _onPageChanged,
+      children: [
+        CheckoutOptionsView(
+          checkoutCurrency: widget.checkoutCurrency,
+          onCheckoutSelected: (checkoutName) {
+            switch (checkoutName) {
+              case 'Card':
+                nextWidget = // card page
+                    CardCheckoutView(
+                  onCheckoutResponse: widget.onCheckoutResponse,
+                  email: widget.email,
+                  amount: widget.amount,
                   checkoutCurrency: widget.checkoutCurrency,
-                  onCheckoutSelected: (checkoutName) {
-                    switch (checkoutName) {
-                      case 'Card':
-                        nextWidget = // card page
-                            CardCheckoutView(
-                          onCheckoutResponse: widget.onCheckoutResponse,
-                          email: widget.email,
-                          amount: widget.amount,
-                          checkoutCurrency: widget.checkoutCurrency,
-                        );
-                        break;
-                      case 'Mpesa':
-                        nextWidget = // mpesa page
-                            MpesaCheckoutView(
-                          onCheckoutResponse: widget.onCheckoutResponse,
-                          email: widget.email,
-                          amount: widget.amount,
-                        );
-                        break;
-                      case 'Mobile Money':
-                        nextWidget = // mobile money
-                            MobileMoneyView(
-                          onCheckoutResponse: widget.onCheckoutResponse,
-                          email: widget.email,
-                          amount: widget.amount,
-                        );
-                        break;
-                      case 'Bank Transfer':
-                        nextWidget =
-                            // transfer page
-                            BankTransferCheckoutView(
-                          email: widget.email,
-                          amount: widget.amount,
-                        );
-                        break;
-                    }
-                    setState(() => null);
-                    widget.bodyPageController.nextPage(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                ),
-                if (nextWidget != null) nextWidget!,
-              ],
-            ),
-          ),
-        ],
-      ),
+                );
+                break;
+              case 'Mpesa':
+                nextWidget = // mpesa page
+                    MpesaCheckoutView(
+                  onCheckoutResponse: widget.onCheckoutResponse,
+                  email: widget.email,
+                  amount: widget.amount,
+                );
+                break;
+              case 'Mobile Money':
+                nextWidget = // mobile money
+                    MobileMoneyView(
+                  onCheckoutResponse: widget.onCheckoutResponse,
+                  email: widget.email,
+                  amount: widget.amount,
+                );
+                break;
+              case 'Bank Transfer':
+                nextWidget =
+                    // transfer page
+                    BankTransferCheckoutView(
+                  email: widget.email,
+                  amount: widget.amount,
+                );
+                break;
+            }
+            setState(() => null);
+            widget.bodyPageController.nextPage(
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+        if (nextWidget != null) nextWidget!,
+      ],
     );
   }
 }

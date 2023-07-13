@@ -40,63 +40,64 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
   }
 
   @override
-  void dispose() {
-    // _bodyPageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.sizeOf(context).height * 0.75,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          buildHeader(context),
-          AnimatedSwitcher(
-            duration: Duration(milliseconds: 500),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return ScaleTransition(scale: animation, child: child);
-            },
-            child: _klashaCheckoutResponse == null
-                ? CheckoutViewWrapper(
-                    email: widget.email,
-                    amount: widget.amount,
-                    checkoutCurrency: widget.checkoutCurrency,
-                    onCheckoutResponse: (KlashaCheckoutResponse response) {
-                      _klashaCheckoutResponse = response;
-                      widget.onComplete(response);
-                      setState(() {});
-                    },
-                    bodyPageController: _bodyPageController,
-                    onPageChanged: (newIndex) {
-                      setState(() {});
-
-                      _currentIndex = newIndex;
-                    },
-                    environment: widget.environment,
-                  )
-                : PaymentStatusView(
-                    paymentStatus: _klashaCheckoutResponse!.status,
-                    onAction: () {
-                      if (_klashaCheckoutResponse!.status) {
-                        Navigator.pop(context);
-                      } else {
-                        _klashaCheckoutResponse = null;
-                      }
-                      setState(() {});
-                    },
-                  ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
           ),
-          SecuredByKlasha(),
-          const SizedBox(height: 10),
-        ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            buildHeader(context),
+            Expanded(
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 500),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return ScaleTransition(scale: animation, child: child);
+                },
+                child: _klashaCheckoutResponse == null
+                    ? CheckoutViewWrapper(
+                        email: widget.email,
+                        amount: widget.amount,
+                        checkoutCurrency: widget.checkoutCurrency,
+                        onCheckoutResponse: (KlashaCheckoutResponse response) {
+                          _klashaCheckoutResponse = response;
+                          widget.onComplete(response);
+                          setState(() {});
+                        },
+                        bodyPageController: _bodyPageController,
+                        onPageChanged: (newIndex) {
+                          setState(() {});
+
+                          _currentIndex = newIndex;
+                        },
+                        environment: widget.environment,
+                      )
+                    : PaymentStatusView(
+                        paymentStatus: _klashaCheckoutResponse!.status,
+                        onAction: () {
+                          if (_klashaCheckoutResponse!.status) {
+                            Navigator.pop(context);
+                          } else {
+                            _klashaCheckoutResponse = null;
+                          }
+                          setState(() {});
+                        },
+                      ),
+              ),
+            ),
+            SecuredByKlasha(),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

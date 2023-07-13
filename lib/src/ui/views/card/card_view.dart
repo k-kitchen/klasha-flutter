@@ -72,6 +72,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
       padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 30.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             widget.email,
@@ -91,28 +92,26 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
             ),
           ),
           const SizedBox(height: 20),
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              onPageChanged: _onPageChanged,
-              clipBehavior: Clip.none,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                _CardInputForm(
-                  onCardNumberChanged: (val) => cardNumber = val,
-                  onCardExpiryChanged: (val) => cardExpiry = val,
-                  onCardCvvChanged: (val) => cardCvv = val,
-                  formKey: formKey,
-                ),
-                _TransactionPinForm(
-                  onTransactionPinChanged: (val) => transactionPin = val,
-                ),
-                _OTPForm(
-                  onOtpChanged: (val) => otp = val,
-                  message: otpMessage ?? '',
-                ),
-              ],
-            ),
+          PageView(
+            controller: pageController,
+            onPageChanged: _onPageChanged,
+            clipBehavior: Clip.none,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              _CardInputForm(
+                onCardNumberChanged: (val) => cardNumber = val,
+                onCardExpiryChanged: (val) => cardExpiry = val,
+                onCardCvvChanged: (val) => cardCvv = val,
+                formKey: formKey,
+              ),
+              _TransactionPinForm(
+                onTransactionPinChanged: (val) => transactionPin = val,
+              ),
+              _OTPForm(
+                onOtpChanged: (val) => otp = val,
+                message: otpMessage ?? '',
+              ),
+            ],
           ),
           const SizedBox(height: 20),
           if (currentPage == 0)
