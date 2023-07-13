@@ -81,7 +81,7 @@ class MpesaData {
         deviceFingerprint: json["device_fingerprint"],
         amount: json["amount"],
         chargedAmount: json["charged_amount"],
-        appFee: json["app_fee"] != null ? json["app_fee"].toDouble : null,
+        appFee: json["app_fee"] != null ? json["app_fee"] : null,
         merchantFee: json["merchant_fee"],
         processorResponse: json["processor_response"],
         authModel: json["auth_model"],

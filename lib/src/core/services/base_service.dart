@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -31,8 +30,7 @@ mixin KlashaBaseService {
           body: jsonEncode(requestBody),
           headers: _headers,
         ),
-      RequestType.delete => response =
-          await _client.delete(uri, headers: _headers),
+      RequestType.delete => await _client.delete(uri, headers: _headers),
     };
 
     if (response.statusCode == HttpStatus.ok) {
