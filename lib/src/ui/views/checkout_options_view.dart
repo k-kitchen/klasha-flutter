@@ -37,8 +37,8 @@ class CheckoutOptionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _filterCheckoutOptions();
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

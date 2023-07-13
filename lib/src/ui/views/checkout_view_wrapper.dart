@@ -12,7 +12,7 @@ class CheckoutViewWrapper extends StatefulWidget {
     required this.onCheckoutResponse,
     required this.email,
     required this.amount,
-    required this.bodyPageController,
+    required this.pageController,
     required this.onPageChanged,
     required this.checkoutCurrency,
     required this.environment,
@@ -21,7 +21,7 @@ class CheckoutViewWrapper extends StatefulWidget {
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final String email;
   final int amount;
-  final PageController bodyPageController;
+  final PageController pageController;
   final Function(int) onPageChanged;
   final CheckoutCurrency checkoutCurrency;
   final Environment environment;
@@ -31,64 +31,66 @@ class CheckoutViewWrapper extends StatefulWidget {
 }
 
 class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
-  // PageController _bodyPageController;
-  int _currentIndex = 0;
+  int currentIndex = 0;
 
   Widget? nextWidget;
 
   void _onPageChanged(int newPage) {
-    setState(() => _currentIndex = newPage);
-    widget.onPageChanged(_currentIndex);
+    setState(() => currentIndex = newPage);
+    widget.onPageChanged(currentIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: widget.bodyPageController,
-      onPageChanged: _onPageChanged,
-      children: [
-        CheckoutOptionsView(
-          checkoutCurrency: widget.checkoutCurrency,
-          onCheckoutSelected: (checkoutName) {
-            switch (checkoutName) {
-              case 'Card':
-                nextWidget = CardCheckoutView(
-                  onCheckoutResponse: widget.onCheckoutResponse,
-                  email: widget.email,
-                  amount: widget.amount,
-                  checkoutCurrency: widget.checkoutCurrency,
-                );
-                break;
-              case 'Mpesa':
-                nextWidget = MpesaCheckoutView(
-                  onCheckoutResponse: widget.onCheckoutResponse,
-                  email: widget.email,
-                  amount: widget.amount,
-                );
-                break;
-              case 'Mobile Money':
-                nextWidget = MobileMoneyView(
-                  onCheckoutResponse: widget.onCheckoutResponse,
-                  email: widget.email,
-                  amount: widget.amount,
-                );
-                break;
-              case 'Bank Transfer':
-                nextWidget = BankTransferCheckoutView(
-                  email: widget.email,
-                  amount: widget.amount,
-                );
-                break;
-            }
-            setState(() => null);
-            widget.bodyPageController.nextPage(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
-          },
-        ),
-        if (nextWidget != null) nextWidget!,
-      ],
+    return SizedBox(
+      height: 400,
+      child: PageView(
+        controller: widget.pageController,
+        onPageChanged: _onPageChanged,
+        children: [
+          CheckoutOptionsView(
+            checkoutCurrency: widget.checkoutCurrency,
+            onCheckoutSelected: (checkoutName) {
+              switch (checkoutName) {
+                case 'Card':
+                  nextWidget = CardCheckoutView(
+                    onCheckoutResponse: widget.onCheckoutResponse,
+                    email: widget.email,
+                    amount: widget.amount,
+                    checkoutCurrency: widget.checkoutCurrency,
+                  );
+                  break;
+                case 'Mpesa':
+                  nextWidget = MpesaCheckoutView(
+                    onCheckoutResponse: widget.onCheckoutResponse,
+                    email: widget.email,
+                    amount: widget.amount,
+                  );
+                  break;
+                case 'Mobile Money':
+                  nextWidget = MobileMoneyView(
+                    onCheckoutResponse: widget.onCheckoutResponse,
+                    email: widget.email,
+                    amount: widget.amount,
+                  );
+                  break;
+                case 'Bank Transfer':
+                  nextWidget = BankTransferCheckoutView(
+                    email: widget.email,
+                    amount: widget.amount,
+                  );
+                  break;
+              }
+              setState(() => null);
+              widget.pageController.nextPage(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+              );
+            },
+          ),
+          if (nextWidget != null) nextWidget!,
+        ],
+      ),
     );
   }
 }

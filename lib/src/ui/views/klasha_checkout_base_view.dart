@@ -27,15 +27,15 @@ class KlashaCheckoutBaseView extends StatefulWidget {
 }
 
 class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
-  KlashaCheckoutResponse? _klashaCheckoutResponse;
-  int _currentIndex = 0;
+  KlashaCheckoutResponse? checkoutResponse;
+  int currentIndex = 0;
 
-  late PageController _bodyPageController;
+  late PageController pageController;
 
   @override
   void initState() {
     super.initState();
-    _bodyPageController = PageController();
+    pageController = PageController();
     ApiUrls.getBaseUrl(widget.environment);
   }
 
@@ -43,7 +43,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.sizeOf(context).height * 0.75,
+        maxHeight: MediaQuery.sizeOf(context).height * 0.8,
       ),
       child: Container(
         decoration: const BoxDecoration(
@@ -53,44 +53,45 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
             topRight: Radius.circular(15),
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            buildHeader(context),
-            Expanded(
-              child: _klashaCheckoutResponse == null
+        child: SingleChildScrollView(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              buildHeader(context),
+              checkoutResponse == null
                   ? CheckoutViewWrapper(
                       email: widget.email,
                       amount: widget.amount,
                       checkoutCurrency: widget.checkoutCurrency,
                       onCheckoutResponse: (KlashaCheckoutResponse response) {
-                        _klashaCheckoutResponse = response;
+                        checkoutResponse = response;
                         widget.onComplete(response);
                         setState(() {});
                       },
-                      bodyPageController: _bodyPageController,
+                      pageController: pageController,
                       onPageChanged: (newIndex) {
                         setState(() {});
-
-                        _currentIndex = newIndex;
+                        currentIndex = newIndex;
                       },
                       environment: widget.environment,
                     )
                   : PaymentStatusView(
-                      paymentStatus: _klashaCheckoutResponse!.status,
+                      paymentStatus: checkoutResponse!.status,
                       onAction: () {
-                        if (_klashaCheckoutResponse!.status) {
+                        if (checkoutResponse!.status) {
                           Navigator.pop(context);
                         } else {
-                          _klashaCheckoutResponse = null;
+                          checkoutResponse = null;
                         }
                         setState(() {});
                       },
                     ),
-            ),
-            SecuredByKlasha(),
-            const SizedBox(height: 10),
-          ],
+              SecuredByKlasha(),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );
@@ -111,11 +112,11 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _currentIndex == 0
+          currentIndex == 0
               ? SizedBox.shrink()
               : KlashaBackButton(
                   onTap: () {
-                    _bodyPageController.previousPage(
+                    pageController.previousPage(
                       duration: Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     );
@@ -124,7 +125,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
           KlashaCloseButton(
             onTap: () {
               Navigator.pop(context);
-              _klashaCheckoutResponse = KlashaCheckoutResponse(
+              checkoutResponse = KlashaCheckoutResponse(
                 message: 'User Cancelled',
                 status: false,
                 transactionReference: '',
