@@ -31,22 +31,14 @@ class KlashaCheckout {
       context: context,
       enableDrag: false,
       isDismissible: false,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15.0),
-          topLeft: Radius.circular(15.0),
-        ),
-      ),
+      isScrollControlled: true,
       builder: (context) {
-        return SafeArea(
-          bottom: true,
-          child: KlashaCheckoutBaseView(
-            email: email,
-            amount: amount,
-            checkoutCurrency: checkoutCurrency,
-            onComplete: onComplete,
-            environment: environment,
-          ),
+        return KlashaCheckoutBaseView(
+          email: email,
+          amount: amount,
+          checkoutCurrency: checkoutCurrency,
+          onComplete: onComplete,
+          environment: environment,
         );
       },
     );

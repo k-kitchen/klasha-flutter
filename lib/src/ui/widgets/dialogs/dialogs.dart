@@ -17,9 +17,7 @@ class KlashaDialogs {
             width: 80,
             child: Platform.isIOS
                 ? CupertinoActivityIndicator()
-                : Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                : Center(child: CircularProgressIndicator()),
           ),
         );
       },

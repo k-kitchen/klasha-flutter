@@ -14,4 +14,9 @@ class KlashaCheckoutResponse {
 
   /// Transaction reference for the just carried out transaction
   final String? transactionReference;
+
+  @override
+  String toString() {
+    return 'KlashaCheckoutResponse(message: $message, status: $status, transactionReference: $transactionReference)';
+  }
 }
