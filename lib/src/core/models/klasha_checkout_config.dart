@@ -1,13 +1,13 @@
 import 'package:klasha_checkout/klasha_checkout.dart';
 
-class CheckoutConfig {
+class KlashaCheckoutConfig {
   String email, phone, authToken;
   int amount;
   CheckoutCurrency checkoutCurrency;
   Environment environment;
   OnCheckoutResponse<KlashaCheckoutResponse> onComplete;
 
-  CheckoutConfig({
+  KlashaCheckoutConfig({
     required this.email,
     required this.phone,
     required this.amount,

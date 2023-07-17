@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/klasha_checkout.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/ui/views/klasha_checkout_base_view.dart';
 
 /// Make payment using the KlashaCheckout payment options.
@@ -21,7 +20,7 @@ class KlashaCheckout {
   ///
   static void checkout(
     BuildContext context, {
-    required CheckoutConfig config,
+    required KlashaCheckoutConfig config,
   }) {
     _validateEmail(config.email);
     globalAuthToken = config.authToken;

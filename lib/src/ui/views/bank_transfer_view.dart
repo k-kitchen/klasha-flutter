@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/bank_transfer/bank_transfer_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
@@ -13,7 +12,7 @@ class BankTransferCheckoutView extends StatefulWidget {
     required this.config,
   });
 
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
 
   @override
   _BankTransferCheckoutViewState createState() =>
@@ -37,7 +36,7 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
       amount: widget.config.amount,
       phoneNumber: widget.config.phone,
       narration: 'Bank Transfer to fund wallet',
-      currency: 'NGN',
+      currency: widget.config.checkoutCurrency.name,
     );
 
     futureBankDetails =
@@ -62,7 +61,7 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            'NGN ${widget.config.amount}',
+            '${widget.config.checkoutCurrency.name} ${widget.config.amount}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -199,9 +198,7 @@ class _BankAccountDetailsView extends StatelessWidget {
         const SizedBox(height: 20),
         KlashaOutlinedInputField(
           labeltext: 'Account Name',
-          controller: TextEditingController(
-            text: 'Klasha',
-          ),
+          controller: TextEditingController(text: 'Klasha'),
         ),
       ],
     );

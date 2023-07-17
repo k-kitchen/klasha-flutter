@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/mpesa/mpesa_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/user_contact_form.dart';
@@ -15,7 +14,7 @@ class MpesaCheckoutView extends StatefulWidget {
     required this.onCheckoutResponse,
   });
 
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
 
   @override
@@ -64,7 +63,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            'KES ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
+            '${widget.config.checkoutCurrency.name} ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -97,10 +96,10 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                   transactionReference =
                       'klasha-mpesa-checkout-${DateTime.now().microsecondsSinceEpoch}';
                   MpesaRequestBody mpesaRequestBody = MpesaRequestBody(
-                    currency: 'KES',
-                    amount: '1000',
+                    currency: widget.config.checkoutCurrency.name,
+                    amount: widget.config.amount.toString(),
                     rate: 1,
-                    sourceCurrency: 'KES',
+                    sourceCurrency: widget.config.checkoutCurrency.name,
                     rememberMe: false,
                     redirectUrl: 'https://dashboard.klasha.com/woocommerce',
                     phoneNumber: 'phone_number',

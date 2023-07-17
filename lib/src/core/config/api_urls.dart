@@ -28,7 +28,7 @@ class ApiUrls {
         baseUrl = 'https://dev.kcookery.com';
         break;
       case Environment.LIVE:
-        baseUrl = 'https://prod.kcookery.com';
+        baseUrl = 'https://gate.klasapps.com';
         break;
     }
   }

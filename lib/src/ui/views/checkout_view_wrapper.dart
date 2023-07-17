@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/ui/views/bank_transfer_view.dart';
 import 'package:klasha_checkout/src/ui/views/card_checkout_view.dart';
 import 'package:klasha_checkout/src/ui/views/checkout_options_view.dart';
@@ -16,7 +15,7 @@ class CheckoutViewWrapper extends StatefulWidget {
     required this.onPageChanged,
   });
 
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
   final PageController pageController;
   final Function(int) onPageChanged;

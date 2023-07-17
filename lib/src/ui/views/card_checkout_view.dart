@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/card/card_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
@@ -15,7 +14,7 @@ class CardCheckoutView extends StatefulWidget {
   });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
 
   @override
   _CardCheckoutViewState createState() => _CardCheckoutViewState();
@@ -29,34 +28,18 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
   AuthenticateBankCardResponse? authBankCardResponse;
   var formKey = GlobalKey<FormState>();
   String? otpMessage = '';
-  String? currencyName;
   String? transactionReference;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController();
-    _getCurrencyNameFromEnum();
   }
 
   @override
   void dispose() {
     pageController.dispose();
     super.dispose();
-  }
-
-  void _getCurrencyNameFromEnum() {
-    switch (widget.config.checkoutCurrency) {
-      case CheckoutCurrency.NGN:
-        currencyName = 'NGN';
-        break;
-      case CheckoutCurrency.KES:
-        currencyName = 'KES';
-        break;
-      case CheckoutCurrency.GHS:
-        currencyName = 'GHS';
-        break;
-    }
   }
 
   void _onPageChanged(int newPage) {
@@ -81,7 +64,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            '$currencyName ${widget.config.amount.toString()}',
+            '${widget.config.checkoutCurrency.name} ${widget.config.amount.toString()}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -130,14 +113,14 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     expiryMonth: cardExpiryMonth,
                     expiryYear: cardExpiryYear,
                     cvv: cardCvv,
-                    currency: 'NGN',
-                    amount: '1000',
+                    currency: widget.config.checkoutCurrency.name,
+                    amount: widget.config.amount.toString(),
                     rate: 1,
-                    sourceCurrency: 'NGN',
+                    sourceCurrency: widget.config.checkoutCurrency.name,
                     rememberMe: false,
                     redirectUrl: 'https://dashboard.klasha.com/woocommerce',
                     phoneNumber: 'phone_number',
-                    email: 'test@test.com',
+                    email: widget.config.email,
                     fullName: 'Full Name',
                     txRef: transactionReference,
                   );

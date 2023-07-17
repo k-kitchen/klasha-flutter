@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/klasha_checkout.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         amount != null) {
       KlashaCheckout.checkout(
         context,
-        config: CheckoutConfig(
+        config: KlashaCheckoutConfig(
           email: email!,
           amount: int.parse(amount!),
           phone: '+23472837777',

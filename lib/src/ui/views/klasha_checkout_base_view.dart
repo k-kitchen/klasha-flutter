@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/views/payment_status_view.dart';
 import 'package:klasha_checkout/src/ui/views/views.dart';
@@ -10,7 +9,7 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class KlashaCheckoutBaseView extends StatefulWidget {
   const KlashaCheckoutBaseView(this.config, {super.key});
 
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
 
   @override
   _KlashaCheckoutBaseViewState createState() => _KlashaCheckoutBaseViewState();

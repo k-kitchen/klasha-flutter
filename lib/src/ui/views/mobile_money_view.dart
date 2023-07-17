@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/user_contact_form.dart';
@@ -17,7 +16,7 @@ class MobileMoneyView extends StatefulWidget {
     required this.onCheckoutResponse,
   });
 
-  final CheckoutConfig config;
+  final KlashaCheckoutConfig config;
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
 
   @override
@@ -162,13 +161,14 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                       'klasha-mobile-money-checkout-${DateTime.now().microsecondsSinceEpoch}';
                   MobileMoneyRequestBody mobileMoneyRequestBody =
                       MobileMoneyRequestBody(
-                          txRef: transactionReference,
-                          amount: 1000,
-                          email: email,
-                          phoneNumber: phoneNumber,
-                          currency: 'GHS',
-                          narration: 'mobile-money-payment',
-                          network: _networkValue);
+                    txRef: transactionReference,
+                    amount: widget.config.amount,
+                    email: email,
+                    phoneNumber: phoneNumber,
+                    currency: widget.config.checkoutCurrency.name,
+                    narration: 'mobile-money-payment',
+                    network: _networkValue,
+                  );
 
                   KlashaDialogs.showLoadingDialog(context);
 
