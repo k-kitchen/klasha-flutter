@@ -1,7 +1,7 @@
 import 'package:klasha_checkout/klasha_checkout.dart';
 
 class KlashaCheckoutConfig {
-  String email, phone, authToken;
+  String email, authToken;
   int amount;
   CheckoutCurrency checkoutCurrency;
   Environment environment;
@@ -9,7 +9,6 @@ class KlashaCheckoutConfig {
 
   KlashaCheckoutConfig({
     required this.email,
-    required this.phone,
     required this.amount,
     required this.checkoutCurrency,
     this.environment = Environment.TEST,

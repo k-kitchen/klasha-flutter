@@ -113,9 +113,9 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   String? formattedCardNumber =
                       cardNumber?.replaceAll(RegExp(r"[^0-9]"), '');
                   String? cardExpiryYear =
-                      cardExpiry?.split(RegExp(r'(\/)')).last;
+                      cardExpiry?.split(RegExp(r'(/)')).last;
                   String? cardExpiryMonth =
-                      cardExpiry?.split(RegExp(r'(\/)')).first;
+                      cardExpiry?.split(RegExp(r'(/)')).first;
                   BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
                     cardNumber: formattedCardNumber,
                     expiryMonth: cardExpiryMonth,

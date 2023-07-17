@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
         config: KlashaCheckoutConfig(
           email: email!,
           amount: int.parse(amount!),
-          phone: '+23472837777',
           checkoutCurrency: _checkoutCurrency,
           onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
             print(
