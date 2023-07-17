@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/klasha_checkout.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,17 +38,21 @@ class _HomePageState extends State<HomePage> {
         amount != null) {
       KlashaCheckout.checkout(
         context,
-        email: email!,
-        amount: int.parse(amount!),
-        checkoutCurrency: _checkoutCurrency,
-        onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
-          print(
-              'checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
-          print('checkout response status is ${klashaCheckoutResponse.status}');
-          print(
-              'checkout response message is ${klashaCheckoutResponse.message}');
-        },
-        authToken: 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4='
+        config: CheckoutConfig(
+          email: email!,
+          amount: int.parse(amount!),
+          phone: '+23472837777',
+          checkoutCurrency: _checkoutCurrency,
+          onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
+            print(
+                'checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
+            print(
+                'checkout response status is ${klashaCheckoutResponse.status}');
+            print(
+                'checkout response message is ${klashaCheckoutResponse.message}');
+          },
+          authToken: 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4=',
+        ),
       );
     }
   }

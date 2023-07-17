@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/mpesa/mpesa_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/user_contact_form.dart';
@@ -10,14 +11,12 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class MpesaCheckoutView extends StatefulWidget {
   const MpesaCheckoutView({
     super.key,
+    required this.config,
     required this.onCheckoutResponse,
-    required this.email,
-    required this.amount,
   });
 
+  final CheckoutConfig config;
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
-  final String email;
-  final int amount;
 
   @override
   _MpesaCheckoutViewState createState() => _MpesaCheckoutViewState();
@@ -56,7 +55,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            widget.email,
+            widget.config.email,
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -65,7 +64,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            'KES ${KlashaUtils.formatCurrencyInput(widget.amount.toString(), true)}',
+            'KES ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,

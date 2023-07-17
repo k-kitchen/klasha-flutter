@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/views/payment_status_view.dart';
 import 'package:klasha_checkout/src/ui/views/views.dart';
@@ -7,20 +8,9 @@ import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
 class KlashaCheckoutBaseView extends StatefulWidget {
-  const KlashaCheckoutBaseView({
-    super.key,
-    required this.email,
-    required this.amount,
-    required this.checkoutCurrency,
-    required this.onComplete,
-    required this.environment,
-  });
+  const KlashaCheckoutBaseView(this.config, {super.key});
 
-  final String email;
-  final int amount;
-  final CheckoutCurrency checkoutCurrency;
-  final OnCheckoutResponse<KlashaCheckoutResponse> onComplete;
-  final Environment environment;
+  final CheckoutConfig config;
 
   @override
   _KlashaCheckoutBaseViewState createState() => _KlashaCheckoutBaseViewState();
@@ -36,7 +26,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
   void initState() {
     super.initState();
     pageController = PageController();
-    ApiUrls.getBaseUrl(widget.environment);
+    ApiUrls.getBaseUrl(widget.config.environment);
   }
 
   @override
@@ -62,12 +52,10 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
               buildHeader(context),
               checkoutResponse == null
                   ? CheckoutViewWrapper(
-                      email: widget.email,
-                      amount: widget.amount,
-                      checkoutCurrency: widget.checkoutCurrency,
+                      config: widget.config,
                       onCheckoutResponse: (KlashaCheckoutResponse response) {
                         checkoutResponse = response;
-                        widget.onComplete(response);
+                        widget.config.onComplete(response);
                         setState(() {});
                       },
                       pageController: pageController,
@@ -75,7 +63,6 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                         setState(() {});
                         currentIndex = newIndex;
                       },
-                      environment: widget.environment,
                     )
                   : PaymentStatusView(
                       paymentStatus: checkoutResponse!.status,

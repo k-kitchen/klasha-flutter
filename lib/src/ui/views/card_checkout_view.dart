@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/card/card_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
@@ -10,15 +11,11 @@ class CardCheckoutView extends StatefulWidget {
   const CardCheckoutView({
     super.key,
     required this.onCheckoutResponse,
-    required this.amount,
-    required this.email,
-    required this.checkoutCurrency,
+    required this.config,
   });
 
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
-  final String email;
-  final int amount;
-  final CheckoutCurrency checkoutCurrency;
+  final CheckoutConfig config;
 
   @override
   _CardCheckoutViewState createState() => _CardCheckoutViewState();
@@ -49,7 +46,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
   }
 
   void _getCurrencyNameFromEnum() {
-    switch (widget.checkoutCurrency) {
+    switch (widget.config.checkoutCurrency) {
       case CheckoutCurrency.NGN:
         currencyName = 'NGN';
         break;
@@ -75,7 +72,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            widget.email,
+            widget.config.email,
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -84,7 +81,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            '$currencyName ${widget.amount.toString()}',
+            '$currencyName ${widget.config.amount.toString()}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,

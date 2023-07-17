@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/bank_transfer/bank_transfer_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
@@ -9,12 +10,10 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class BankTransferCheckoutView extends StatefulWidget {
   const BankTransferCheckoutView({
     super.key,
-    required this.email,
-    required this.amount,
+    required this.config,
   });
 
-  final String email;
-  final int amount;
+  final CheckoutConfig config;
 
   @override
   _BankTransferCheckoutViewState createState() =>
@@ -34,9 +33,9 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
     BankTransferBody bankTransferBody = BankTransferBody(
       txRef:
           'klasha-fund-wallet-from-bank-transfer-${DateTime.now().microsecondsSinceEpoch}',
-      email: widget.email,
-      amount: widget.amount,
-      phoneNumber: '+23472837777',
+      email: widget.config.email,
+      amount: widget.config.amount,
+      phoneNumber: widget.config.phone,
       narration: 'Bank Transfer to fund wallet',
       currency: 'NGN',
     );
@@ -54,7 +53,7 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.email,
+            widget.config.email,
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,
@@ -63,7 +62,7 @@ class _BankTransferCheckoutViewState extends State<BankTransferCheckoutView> {
           ),
           const SizedBox(height: 5),
           Text(
-            'NGN ${widget.amount}',
+            'NGN ${widget.config.amount}',
             style: TextStyle(
               fontSize: 17,
               color: appColors.text,

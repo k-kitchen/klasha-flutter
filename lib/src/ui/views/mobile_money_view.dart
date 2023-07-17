@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout/src/core/models/checkout_config.dart';
 import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/user_contact_form.dart';
@@ -12,14 +13,12 @@ import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 class MobileMoneyView extends StatefulWidget {
   const MobileMoneyView({
     super.key,
+    required this.config,
     required this.onCheckoutResponse,
-    required this.amount,
-    required this.email,
   });
 
+  final CheckoutConfig config;
   final OnCheckoutResponse<KlashaCheckoutResponse> onCheckoutResponse;
-  final String email;
-  final int amount;
 
   @override
   _MobileMoneyViewState createState() => _MobileMoneyViewState();
@@ -66,7 +65,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.email,
+                    widget.config.email,
                     style: TextStyle(
                       fontSize: 17,
                       color: appColors.text,
@@ -75,7 +74,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'GHS ${KlashaUtils.formatCurrencyInput(widget.amount.toString(), true)}',
+                    'GHS ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
                     style: TextStyle(
                       fontSize: 17,
                       color: appColors.text,
