@@ -3,6 +3,18 @@ import 'package:klasha_checkout/src/core/config/config.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
 import 'package:klasha_checkout/src/ui/widgets/checkout_options_entry.dart';
 
+enum CheckoutType {
+  Card('Card', KlashaAssets.ic_card),
+  Mpesa('Mpesa', KlashaAssets.ic_mpesa),
+  BankTransfer('Bank Transfer', KlashaAssets.ic_transfer),
+  MobileMoney('Mobile Money', KlashaAssets.ic_mpesa);
+
+  final String name;
+  final String icon;
+
+  const CheckoutType(this.name, this.icon);
+}
+
 class CheckoutOptionsView extends StatelessWidget {
   CheckoutOptionsView({
     super.key,
@@ -10,26 +22,21 @@ class CheckoutOptionsView extends StatelessWidget {
     required this.checkoutCurrency,
   });
 
-  final Function(String) onCheckoutSelected;
+  final Function(CheckoutType) onCheckoutSelected;
   final CheckoutCurrency checkoutCurrency;
 
-  List<String> _paymentNames = ['Card'];
-
-  List<String> _paymentImages = [KlashaAssets.ic_card];
+  var _paymentTypes = [CheckoutType.Card];
 
   void _filterCheckoutOptions() {
     switch (checkoutCurrency) {
       case CheckoutCurrency.NGN:
-        _paymentNames.insert(1, 'Bank Transfer');
-        _paymentImages.insert(1, KlashaAssets.ic_transfer);
+        _paymentTypes.insert(1, CheckoutType.BankTransfer);
         break;
       case CheckoutCurrency.KES:
-        _paymentNames.insert(1, 'Mpesa');
-        _paymentImages.insert(1, KlashaAssets.ic_mpesa);
+        _paymentTypes.insert(1, CheckoutType.Mpesa);
         break;
       case CheckoutCurrency.GHS:
-        _paymentNames.insert(1, 'Mobile Money');
-        _paymentImages.insert(1, KlashaAssets.ic_mpesa);
+        _paymentTypes.insert(1, CheckoutType.MobileMoney);
         break;
     }
   }
@@ -54,13 +61,13 @@ class CheckoutOptionsView extends StatelessWidget {
           ),
           SizedBox(height: 20),
           ...List.generate(
-            _paymentNames.length,
+            _paymentTypes.length,
             (index) => Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
               child: CheckoutOptionEntry(
-                name: _paymentNames[index],
-                assetName: _paymentImages[index],
-                onTap: () => onCheckoutSelected(_paymentNames[index]),
+                name: _paymentTypes[index].name,
+                assetName: _paymentTypes[index].icon,
+                onTap: () => onCheckoutSelected(_paymentTypes[index]),
               ),
             ),
           ),

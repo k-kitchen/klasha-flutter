@@ -44,30 +44,23 @@ class _CheckoutViewWrapperState extends State<CheckoutViewWrapper> {
         children: [
           CheckoutOptionsView(
             checkoutCurrency: widget.config.checkoutCurrency,
-            onCheckoutSelected: (checkoutName) {
-              switch (checkoutName) {
-                case 'Card':
-                  nextWidget = CardCheckoutView(
+            onCheckoutSelected: (type) {
+              nextWidget = switch (type) {
+                CheckoutType.Card => CardCheckoutView(
                     config: widget.config,
                     onCheckoutResponse: widget.onCheckoutResponse,
-                  );
-                  break;
-                case 'Mpesa':
-                  nextWidget = MpesaCheckoutView(
+                  ),
+                CheckoutType.Mpesa => MpesaCheckoutView(
                     config: widget.config,
                     onCheckoutResponse: widget.onCheckoutResponse,
-                  );
-                  break;
-                case 'Mobile Money':
-                  nextWidget = MobileMoneyView(
+                  ),
+                CheckoutType.MobileMoney => MobileMoneyView(
                     config: widget.config,
                     onCheckoutResponse: widget.onCheckoutResponse,
-                  );
-                  break;
-                case 'Bank Transfer':
-                  nextWidget = BankTransferCheckoutView(config: widget.config);
-                  break;
-              }
+                  ),
+                CheckoutType.BankTransfer =>
+                  BankTransferCheckoutView(config: widget.config),
+              };
               setState(() => null);
               widget.pageController.nextPage(
                 duration: Duration(milliseconds: 500),
