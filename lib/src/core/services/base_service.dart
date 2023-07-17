@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 enum RequestType { get, post, put, delete }
 
+late String globalAuthToken;
+
 mixin KlashaBaseService {
   final http.Client _client = http.Client();
 
@@ -43,7 +45,7 @@ mixin KlashaBaseService {
   Map<String, String> _getHeaders(String authorization) {
     return {
       HttpHeaders.contentTypeHeader: 'application/json',
-      'x-auth-token': 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4=',
+      'x-auth-token': globalAuthToken,
     };
   }
 }

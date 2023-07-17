@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/config/config.dart';
+import 'package:klasha_checkout/klasha_checkout.dart';
 import 'package:klasha_checkout/src/ui/views/klasha_checkout_base_view.dart';
 
 /// Make payment using the KlashaCheckout payment options.
@@ -25,8 +25,10 @@ class KlashaCheckout {
     CheckoutCurrency checkoutCurrency = CheckoutCurrency.NGN,
     Environment environment = Environment.TEST,
     required OnCheckoutResponse<KlashaCheckoutResponse> onComplete,
+    required String authToken,
   }) {
     _validateEmailAndAmount(email, amount);
+    globalAuthToken = authToken;
     showModalBottomSheet(
       context: context,
       enableDrag: false,

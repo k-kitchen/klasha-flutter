@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
           print(
               'checkout response message is ${klashaCheckoutResponse.message}');
         },
+        authToken: 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4='
       );
     }
   }
