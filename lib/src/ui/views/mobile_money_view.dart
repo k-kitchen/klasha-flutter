@@ -36,6 +36,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
   @override
   void initState() {
     super.initState();
+    email = widget.config.email;
     pageController = PageController();
   }
 
@@ -144,6 +145,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                   onEmailChanged: (val) => email = val,
                   onPhoneNumberChanged: (val) => phoneNumber = val,
                   formKey: _formKey,
+                  initialEmail: widget.config.email,
                 ),
                 CodeDialedSection(phoneNumber: phoneNumber),
               ],

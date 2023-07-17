@@ -32,6 +32,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
   @override
   void initState() {
     super.initState();
+    email = widget.config.email;
     pageController = PageController();
   }
 
@@ -83,6 +84,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                   onEmailChanged: (val) => email = val,
                   onPhoneNumberChanged: (val) => phoneNumber = val,
                   formKey: _formKey,
+                  initialEmail: widget.config.email,
                 ),
                 CodeDialedSection(phoneNumber: phoneNumber),
               ],

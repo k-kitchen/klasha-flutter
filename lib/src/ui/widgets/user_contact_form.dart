@@ -10,12 +10,14 @@ class UserContactForm extends StatelessWidget {
     required this.onEmailChanged,
     required this.onPhoneNumberChanged,
     required this.formKey,
+    this.initialEmail,
   });
 
   final Function(String) onFullNameChanged;
   final Function(String) onEmailChanged;
   final Function(String) onPhoneNumberChanged;
   final GlobalKey<FormState> formKey;
+  final String? initialEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class UserContactForm extends StatelessWidget {
                     KlashaInputField(
                       onChanged: onEmailChanged,
                       hintText: 'john@gmail.com',
+                      initialText: initialEmail,
                       validator: KlashaUtils.validateEmail,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
