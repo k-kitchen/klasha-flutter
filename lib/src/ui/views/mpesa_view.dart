@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:klasha_checkout/src/core/core.dart';
 import 'package:klasha_checkout/src/core/services/mpesa/mpesa_service_impl.dart';
 import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/widgets/user_contact_form.dart';
 import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
 import 'package:klasha_checkout/src/ui/widgets/code_dialed_section.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';

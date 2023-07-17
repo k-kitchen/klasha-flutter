@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
 
-import '../../shared/shared.dart';
+import 'package:klasha_checkout/src/shared/shared.dart';
 
-class UserContactForm extends StatelessWidget {
-  const UserContactForm({
-    required this.onFullNameChanged,
-    required this.onEmailChanged,
-    required this.onPhoneNumberChanged,
+class CardInputForm extends StatelessWidget {
+  const CardInputForm({
+    this.onCardNumberChanged,
+    this.onCardExpiryChanged,
+    this.onCardCvvChanged,
     required this.formKey,
-    this.initialEmail,
   });
 
-  final Function(String) onFullNameChanged;
-  final Function(String) onEmailChanged;
-  final Function(String) onPhoneNumberChanged;
+  final Function(String)? onCardNumberChanged;
+  final Function(String)? onCardExpiryChanged;
+  final Function(String)? onCardCvvChanged;
   final GlobalKey<FormState> formKey;
-  final String? initialEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -29,80 +27,88 @@ class UserContactForm extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Full Name',
+            'Card',
             style: TextStyle(
               fontSize: 14,
               color: appColors.subText,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 5),
-          KlashaInputField(
-            onChanged: onFullNameChanged,
-            hintText: 'John Doe',
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\d+')),
-            ],
-            validator: (input) =>
-                KlashaUtils.validateRequiredFields(input, 'Full Name'),
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.text,
+          const SizedBox(
+            height: 5,
           ),
-          const SizedBox(height: 20),
+          KlashaInputField(
+            onChanged: onCardNumberChanged,
+            hintText: '0000 0000 0000 0000',
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+              LengthLimitingTextInputFormatter(19),
+              CardNumberInputFormatter(),
+            ],
+            validator: KlashaUtils.validateCardNum,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
+                flex: 4,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Email',
+                      'Expiry',
                       style: TextStyle(
                         fontSize: 14,
                         color: appColors.subText,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     KlashaInputField(
-                      onChanged: onEmailChanged,
-                      hintText: 'john@gmail.com',
-                      initialText: initialEmail,
-                      validator: KlashaUtils.validateEmail,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
+                      onChanged: onCardExpiryChanged,
+                      hintText: 'MM / YY',
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                        LengthLimitingTextInputFormatter(4),
+                        CardMonthInputFormatter(),
+                      ],
+                      validator: KlashaUtils.validateDate,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 15),
+              const SizedBox(
+                width: 30,
+              ),
               Expanded(
+                flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Phone number',
+                      'CVV',
                       style: TextStyle(
                         fontSize: 14,
                         color: appColors.subText,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     KlashaInputField(
-                      onChanged: onPhoneNumberChanged,
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.number,
-                      hintText: '0123456789',
+                      onChanged: onCardCvvChanged,
+                      hintText: '123',
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(12),
+                        FilteringTextInputFormatter.allow(RegExp(r'\d+')),
+                        LengthLimitingTextInputFormatter(4),
                       ],
-                      validator: (input) => KlashaUtils.validateRequiredFields(
-                        input,
-                        'Phone Number',
-                      ),
+                      validator: KlashaUtils.validateCVC,
                     ),
                   ],
                 ),
