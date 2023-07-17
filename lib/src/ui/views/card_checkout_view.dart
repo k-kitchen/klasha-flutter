@@ -127,9 +127,9 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     sourceCurrency: widget.config.checkoutCurrency.name,
                     rememberMe: false,
                     redirectUrl: 'https://dashboard.klasha.com/woocommerce',
-                    phoneNumber: 'phone_number',
+                    phoneNumber: phoneNumber,
                     email: widget.config.email,
-                    fullName: 'Full Name',
+                    fullName: fullName,
                     txRef: transactionReference,
                   );
 
