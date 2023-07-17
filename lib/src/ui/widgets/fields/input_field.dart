@@ -57,6 +57,7 @@ class KlashaOutlinedInputField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final FocusNode? focusNode;
   final String? Function(String?)? validator;
+  final bool readOnly;
 
   const KlashaOutlinedInputField({
     super.key,
@@ -67,6 +68,7 @@ class KlashaOutlinedInputField extends StatelessWidget {
     this.textInputAction,
     this.focusNode,
     this.validator,
+    this.readOnly = false,
   });
 
   @override
@@ -74,6 +76,7 @@ class KlashaOutlinedInputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       focusNode: focusNode,
+      readOnly: readOnly,
       textInputAction: textInputAction,
       style: TextStyle(
         fontWeight: FontWeight.w500,

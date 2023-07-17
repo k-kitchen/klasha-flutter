@@ -136,6 +136,7 @@ class _BankAccountDetailsView extends StatelessWidget {
         const SizedBox(height: 20),
         KlashaOutlinedInputField(
           labeltext: 'Bank name',
+          readOnly: true,
           controller: TextEditingController(text: bankName),
         ),
         const SizedBox(height: 20),
@@ -144,9 +145,8 @@ class _BankAccountDetailsView extends StatelessWidget {
             Expanded(
               child: KlashaOutlinedInputField(
                 labeltext: 'Account Number',
-                controller: TextEditingController(
-                  text: bankAccountNumber,
-                ),
+                readOnly: true,
+                controller: TextEditingController(text: bankAccountNumber),
               ),
             ),
             const SizedBox(width: 20),
@@ -198,6 +198,7 @@ class _BankAccountDetailsView extends StatelessWidget {
         const SizedBox(height: 20),
         KlashaOutlinedInputField(
           labeltext: 'Account Name',
+          readOnly: true,
           controller: TextEditingController(text: 'Klasha'),
         ),
       ],
