@@ -102,7 +102,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                     sourceCurrency: widget.config.checkoutCurrency.name,
                     rememberMe: false,
                     redirectUrl: 'https://dashboard.klasha.com/woocommerce',
-                    phoneNumber: 'phone_number',
+                    phoneNumber: phoneNumber,
                     email: email,
                     fullName: fullName,
                     txRef: transactionReference,

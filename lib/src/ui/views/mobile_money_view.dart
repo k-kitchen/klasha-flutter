@@ -58,29 +58,31 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.config.email,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: appColors.text,
-                      fontWeight: FontWeight.w600,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.config.email,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: appColors.text,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    'GHS ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: appColors.text,
-                      fontWeight: FontWeight.w600,
+                    const SizedBox(height: 5),
+                    Text(
+                      '${widget.config.checkoutCurrency.name} ${KlashaUtils.formatCurrencyInput(widget.config.amount.toString(), true)}',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: appColors.text,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               if (currentPage == 0)
                 Container(
@@ -105,12 +107,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                         fontWeight: FontWeight.w400,
                       ),
                       value: _networkValue,
-                      items: <String>[
-                        'Dash',
-                        'Tigo',
-                        'Mtn',
-                        'Vodafone',
-                      ].map(
+                      items: <String>['Dash', 'Tigo', 'Mtn', 'Vodafone'].map(
                         (String value) {
                           return DropdownMenuItem<String>(
                             value: value,
