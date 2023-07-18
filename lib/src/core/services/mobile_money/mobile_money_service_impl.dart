@@ -21,12 +21,14 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
-      apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+    var status = getStatus(decodedResponseMap);
 
+    if (status.isFail) {
+      apiResponse.status = false;
+      apiResponse.message = status.errorMessage;
     } else {
-      MobileMoneyResponse mobileMoneyResponse = MobileMoneyResponse.fromJson(decodedResponseMap);
+      MobileMoneyResponse mobileMoneyResponse =
+          MobileMoneyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mobileMoneyResponse;
       apiResponse.message = 'Successful';
     }
@@ -36,7 +38,8 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
   @override
   Future<ApiResponse> verifyPayment(String tnxId, String orderId) async {
-    ApiResponse<MobileMoneyVerifyResponse> apiResponse = ApiResponse(status: true);
+    ApiResponse<MobileMoneyVerifyResponse> apiResponse =
+        ApiResponse(status: true);
 
     final String url = ApiUrls.baseUrl + ApiUrls.verifyPaymentUrl('GHS');
 
@@ -54,12 +57,14 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
-      apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+    var status = getStatus(decodedResponseMap);
 
+    if (status.isFail) {
+      apiResponse.status = false;
+      apiResponse.message = status.errorMessage;
     } else {
-      MobileMoneyVerifyResponse mobileMoneyVerifyResponse = MobileMoneyVerifyResponse.fromJson(decodedResponseMap);
+      MobileMoneyVerifyResponse mobileMoneyVerifyResponse =
+          MobileMoneyVerifyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mobileMoneyVerifyResponse;
       apiResponse.message = 'Successful';
     }

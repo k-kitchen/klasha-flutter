@@ -20,15 +20,16 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
-    } else if (decodedResponseMap == null) {
+      apiResponse.message = status.errorMessage;
+    } else if (decodedResponseMap.isEmpty) {
       apiResponse.message = 'Payment Successful';
     } else {
       AddBankCardResponse addBankCardResponse =
           AddBankCardResponse.fromJson(decodedResponseMap);
-      // log('card service => add bank card response = $addBankCardResponse');
 
       apiResponse.data = addBankCardResponse;
       apiResponse.message = 'Charge authorization data required';
@@ -57,9 +58,11 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+      apiResponse.message = status.errorMessage;
 
       apiResponse.data =
           AuthenticateBankCardResponse.fromJson(decodedResponseMap);
@@ -94,9 +97,11 @@ class CardServiceImpl extends CardService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+      apiResponse.message = status.errorMessage;
     } else {
       var validateBankCardResponse =
           ValidateBankCardResponse.fromJson(decodedResponseMap);

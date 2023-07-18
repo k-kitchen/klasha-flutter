@@ -48,4 +48,17 @@ mixin KlashaBaseService {
       'x-auth-token': globalAuthToken,
     };
   }
+
+  ({bool isFail, String? errorMessage}) getStatus(Map<String, dynamic> map) {
+    var status =
+        map['status'] ?? (map['data'] != null ? map['data']['status'] : null);
+
+    var errorMessage =
+        map['message'] ?? (map['data'] != null ? map['data']['message'] : null);
+
+    return (
+      isFail: ['error', 'failed'].contains(status),
+      errorMessage: errorMessage,
+    );
+  }
 }

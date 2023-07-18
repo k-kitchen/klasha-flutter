@@ -186,6 +186,7 @@ class _MobileMoneyViewState extends State<MobileMoneyView> {
                     KlashaDialogs.showStatusDialog(
                       context,
                       apiResponse.message,
+                      !apiResponse.status,
                     );
                   }
                 }

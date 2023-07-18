@@ -18,12 +18,14 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
-      apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+    var status = getStatus(decodedResponseMap);
 
+    if (status.isFail) {
+      apiResponse.status = false;
+      apiResponse.message = status.errorMessage;
     } else {
-      MpesaCheckoutResponse mpesaCheckoutResponse = MpesaCheckoutResponse.fromJson(decodedResponseMap);
+      MpesaCheckoutResponse mpesaCheckoutResponse =
+          MpesaCheckoutResponse.fromJson(decodedResponseMap);
       apiResponse.data = mpesaCheckoutResponse;
       apiResponse.message = 'Successful';
     }
@@ -51,12 +53,14 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
 
     var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
-      apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
+    var status = getStatus(decodedResponseMap);
 
+    if (status.isFail) {
+      apiResponse.status = false;
+      apiResponse.message = status.errorMessage;
     } else {
-      MpesaVerifyResponse mpesaVerifyResponse = MpesaVerifyResponse.fromJson(decodedResponseMap);
+      MpesaVerifyResponse mpesaVerifyResponse =
+          MpesaVerifyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mpesaVerifyResponse;
       apiResponse.message = 'Successful';
     }

@@ -140,13 +140,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
 
                   Navigator.pop(context);
 
-                  if (apiResponse.status) {
-                    addBankCardResponse = apiResponse.data;
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  } else if (apiResponse.status &&
+                  if (apiResponse.status &&
                       apiResponse.data == null &&
                       apiResponse.message == 'Payment Successful') {
                     widget.onCheckoutResponse(
@@ -156,9 +150,18 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                         transactionReference: transactionReference,
                       ),
                     );
+                  } else if (apiResponse.status) {
+                    addBankCardResponse = apiResponse.data;
+                    pageController.nextPage(
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
                   } else {
                     KlashaDialogs.showStatusDialog(
-                        context, apiResponse.message);
+                      context,
+                      apiResponse.message,
+                      !apiResponse.status,
+                    );
                   }
                 }
               },
@@ -202,8 +205,6 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     );
                   } else if (apiResponse.data?.status != 'pending' &&
                       apiResponse.status) {
-                    /// payment is successful
-                    ///
                     widget.onCheckoutResponse(
                       KlashaCheckoutResponse(
                         status: true,
@@ -215,6 +216,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                     KlashaDialogs.showStatusDialog(
                       context,
                       apiResponse.message,
+                      !apiResponse.status,
                     );
                   }
                 }
@@ -245,7 +247,6 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                       ),
                     );
                   } else {
-                    // KlashaDialogs.showStatusDialog(context, apiResponse.message);
                     widget.onCheckoutResponse(
                       KlashaCheckoutResponse(
                         status: false,

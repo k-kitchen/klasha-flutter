@@ -127,6 +127,7 @@ class _MpesaCheckoutViewState extends State<MpesaCheckoutView> {
                     KlashaDialogs.showStatusDialog(
                       context,
                       apiResponse.message,
+                      !apiResponse.status,
                     );
                   }
                 }
