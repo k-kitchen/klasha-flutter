@@ -20,7 +20,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 
 ```yaml
 dependencies:
-  klasha_checkout: ^0.0.1
+  klasha_checkout: ^0.0.3
 ```
 
 ## How To Use
@@ -31,39 +31,21 @@ dependencies:
 import 'package:klasha_checkout/klasha_checkout.dart';
 ```
 
-2. Call the `checkout` method:
+2. Call the `checkout` method and handle the response of the `checkout` method
 
 ```dart
-    KlashaCheckout.checkout(
-      context,
-      email: _email,
-      amount: int.parse(_amount),
-      checkoutCurrency: _checkoutCurrency,
-    );
-```
-
-3. Handle the response of the `checkout` method
-
-```dart
-    KlashaCheckout.checkout(
-      context,
-      // the onComplete callback returns the details of the just completed transaction
-      onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
-        // the transaction reference of the just carried out transaction
-        print('checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
-        // the status of the transaction
-        print('checkout response status is ${klashaCheckoutResponse.status}');
-        // a user readable message describing the status of the transaction
-        print('checkout response message is ${klashaCheckoutResponse.message}');
-
-        if (klashaCheckoutResponse.status) {
-          // show success dialog -> transaction  successful
-
-        } else {
-          // show error dialog -> transaction not successful
-        }
-      },
-    );
+KlashaCheckout.checkout(
+  context,
+  config: KlashaCheckoutConfig(
+    email: email!,
+    amount: int.parse(amount!),
+    checkoutCurrency: _checkoutCurrency,
+    authToken: 'your_auth_token',
+    onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
+      print(klashaCheckoutResponse);
+    }
+  ),
+);
 ```
 
 ## Customizations
