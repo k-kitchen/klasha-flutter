@@ -7,9 +7,9 @@ class PayWithKlashaButton extends KlashaBaseButton {
   final VoidCallback onPressed;
 
   const PayWithKlashaButton({
-    Key key,
-    @required this.onPressed,
-  }) : super(key: key);
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,7 @@ class PayWithKlashaButton extends KlashaBaseButton {
             fit: BoxFit.cover,
             package: KlashaStrings.packageName,
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Text(
             KlashaStrings.payWith,
             style: TextStyle(
@@ -36,9 +34,7 @@ class PayWithKlashaButton extends KlashaBaseButton {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(
-            width: 5,
-          ),
+          const SizedBox(width: 5),
           Image.asset(
             KlashaAssets.ic_klasha_white,
             height: 15,
@@ -55,18 +51,18 @@ class PayWithKlashaButton extends KlashaBaseButton {
 class KlashaPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? borderColor;
 
   const KlashaPrimaryButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
+    super.key,
+    required this.text,
+    required this.onPressed,
     this.buttonColor,
     this.textColor,
     this.borderColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,40 +78,39 @@ class KlashaPrimaryButton extends StatelessWidget {
 
 class KlashaOutlineButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
-  final Color buttonColor;
-  final Color textColor;
-  final Color borderColor;
+  final VoidCallback? onPressed;
+  final Color? buttonColor;
+  final Color? textColor;
+  final Color? borderColor;
 
   const KlashaOutlineButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
+    super.key,
+    required this.text,
+    this.onPressed,
     this.buttonColor,
     this.textColor,
     this.borderColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      height: 50,
-      minWidth: 140,
-      onPressed: onPressed,
-      color: buttonColor ?? appColors.white,
-      textColor: textColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(
-          color: appColors.grey,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: buttonColor ?? appColors.white,
+          border: Border.all(color: appColors.grey),
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 17,
-          color: textColor ?? appColors.text,
-          fontWeight: FontWeight.w600,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 17,
+            color: textColor ?? appColors.text,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
@@ -124,11 +119,11 @@ class KlashaOutlineButton extends StatelessWidget {
 
 class KlashaCloseButton extends StatelessWidget {
   const KlashaCloseButton({
-    Key key,
+    super.key,
     this.onTap,
-  }) : super(key: key);
+  });
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -141,22 +136,16 @@ class KlashaCloseButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: appColors.primaryLight,
         ),
-        child: Icon(
-          Icons.close_rounded,
-          color: appColors.primary,
-        ),
+        child: Icon(Icons.close_rounded, color: appColors.primary),
       ),
     );
   }
 }
 
 class KlashaBackButton extends StatelessWidget {
-  const KlashaBackButton({
-    Key key,
-    this.onTap,
-  }) : super(key: key);
+  const KlashaBackButton({super.key, this.onTap});
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -164,19 +153,11 @@ class KlashaBackButton extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Icon(
-            Icons.arrow_back_ios_rounded,
-            color: appColors.white,
-          ),
-          SizedBox(
-            width: 3,
-          ),
+          Icon(Icons.arrow_back_ios_rounded, color: appColors.white),
+          SizedBox(width: 3),
           Text(
             'Back',
-            style: TextStyle(
-              fontSize: 16,
-              color: appColors.white,
-            ),
+            style: TextStyle(fontSize: 16, color: appColors.white),
           ),
         ],
       ),

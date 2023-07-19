@@ -2,10 +2,10 @@ class ApiResponse<T> {
   ApiResponse({
     this.data,
     this.message,
-    this.status,
+    required this.status,
   });
 
-  T data;
-  String message;
+  T? data;
+  String? message;
   bool status;
 }

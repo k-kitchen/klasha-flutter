@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       title: 'Klasha Checkout Demo',
       theme: ThemeData(
         primaryColor: Color(0xFFE85243),
-        accentColor: Color(0xFFE85243),
       ),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
@@ -28,37 +27,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _email;
-  String _amount;
-  var _formKey = GlobalKey<FormState>();
-  CheckoutCurrency _checkoutCurrency;
+  String? email, amount;
+  var formKey = GlobalKey<FormState>();
+  CheckoutCurrency _checkoutCurrency = CheckoutCurrency.NGN;
 
   void _launchKlashaPay() async {
-    if (_formKey.currentState.validate()) {
+    if ((formKey.currentState?.validate() ?? false) &&
+        email != null &&
+        amount != null) {
       KlashaCheckout.checkout(
         context,
-        email: _email,
-        amount: int.parse(_amount),
-        checkoutCurrency: _checkoutCurrency,
-        onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
-          print('checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
-          print('checkout response status is ${klashaCheckoutResponse.status}');
-          print('checkout response message is ${klashaCheckoutResponse.message}');
-        },
+        config: KlashaCheckoutConfig(
+          email: email!,
+          amount: int.parse(amount!),
+          checkoutCurrency: _checkoutCurrency,
+          onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {
+            print(
+                'checkout response transaction reference is  ${klashaCheckoutResponse.transactionReference}');
+            print(
+                'checkout response status is ${klashaCheckoutResponse.status}');
+            print(
+                'checkout response message is ${klashaCheckoutResponse.message}');
+          },
+          authToken: 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4=',
+        ),
       );
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _checkoutCurrency = CheckoutCurrency.NGN;
-  }
-
-  void _onRadioChanged(CheckoutCurrency checkoutCurrency) {
-    setState(
-      () => _checkoutCurrency = checkoutCurrency,
-    );
+  void _onRadioChanged(CheckoutCurrency? checkoutCurrency) {
+    if (checkoutCurrency == null) return;
+    setState(() => _checkoutCurrency = checkoutCurrency);
   }
 
   @override
@@ -67,28 +66,21 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFfaf1f0),
       appBar: AppBar(
         elevation: 0.0,
-        title: Text(
-          'Klasha Checkout Demo',
-        ),
+        title: Text('Klasha Checkout Demo'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
         child: Form(
-          key: _formKey,
+          key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 25,
-              ),
-              // customer email
-              Text(
-                'Customer Email',
-              ),
+              const SizedBox(height: 25),
+              Text('Customer Email'),
               SizedBox(height: 5),
               TextFormField(
-                onChanged: (val) => setState(() => _email = val),
+                onChanged: (val) => setState(() => email = val),
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -102,14 +94,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 validator: validateEmail,
               ),
-
-              const SizedBox(
-                height: 25,
-              ),
-
-              Text(
-                'Currency',
-              ),
+              const SizedBox(height: 25),
+              Text('Currency'),
               SizedBox(height: 5),
               RadioListTile(
                 value: CheckoutCurrency.NGN,
@@ -135,18 +121,11 @@ class _HomePageState extends State<HomePage> {
                 controlAffinity: ListTileControlAffinity.leading,
                 contentPadding: EdgeInsets.zero,
               ),
-
-              const SizedBox(
-                height: 25,
-              ),
-
-              // amount
-              Text(
-                'Amount',
-              ),
+              const SizedBox(height: 25),
+              Text('Amount'),
               SizedBox(height: 5),
               TextFormField(
-                onChanged: (val) => setState(() => _amount = val),
+                onChanged: (val) => setState(() => amount = val),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -158,34 +137,26 @@ class _HomePageState extends State<HomePage> {
                   filled: true,
                   fillColor: Color(0xFFFCE5E3),
                 ),
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (val) {
-                  if (val.isEmpty) {
-                    return 'Amount is required';
-                  } else {
-                    return null;
-                  }
+                  return val?.isEmpty ?? true ? 'Amount is required' : null;
                 },
               ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              FlatButton(
-                height: 55,
-                minWidth: double.infinity,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+              const SizedBox(height: 30),
+              GestureDetector(
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xFFE85243),
+                  ),
+                  child: Text(
+                    'Checkout',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                textColor: Colors.white,
-                color: Color(0xFFE85243),
-                onPressed: _launchKlashaPay,
-                child: Text(
-                  'Checkout',
-                ),
+                onTap: _launchKlashaPay,
               ),
             ],
           ),
@@ -194,14 +165,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  String validateEmail(String email) {
+  String? validateEmail(String? email) {
     String source =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(source);
-    if (email.trim().isEmpty) {
+    if (email?.trim().isEmpty ?? true) {
       return 'Email is required';
-    } else if (!regExp.hasMatch(email)) {
+    } else if (!regExp.hasMatch(email!)) {
       return 'Enter a valid email address';
     } else {
       return null;

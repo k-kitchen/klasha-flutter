@@ -17,17 +17,18 @@ class KlashaDialogs {
             width: 80,
             child: Platform.isIOS
                 ? CupertinoActivityIndicator()
-                : Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                : Center(child: CircularProgressIndicator()),
           ),
         );
       },
     );
   }
 
-  static Future<void> showStatusDialog(BuildContext context, String message,
-      [bool hasError = false]) async {
+  static Future<void> showStatusDialog(
+    BuildContext context,
+    String? message, [
+    bool hasError = false,
+  ]) async {
     await showDialog(
       context: context,
       builder: (context) {
@@ -46,7 +47,7 @@ class KlashaDialogs {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    message,
+                    message ?? '',
                     style: TextStyle(
                       fontSize: 15,
                       color: appColors.text,

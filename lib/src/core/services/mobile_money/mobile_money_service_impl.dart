@@ -1,8 +1,4 @@
-import 'dart:developer';
-
-import 'package:klasha_checkout/src/core/config/api_response.dart';
 import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/requests/mobile_money/mobile_money_request_body.dart';
 import 'package:klasha_checkout/src/core/models/responses/mobile_money/mobile_money_verify_response.dart';
 import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service.dart';
 
@@ -23,16 +19,16 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
-
+      apiResponse.message = status.errorMessage;
     } else {
-      MobileMoneyResponse mobileMoneyResponse = MobileMoneyResponse.fromJson(decodedResponseMap);
-      // log('mobile money service => mobile money  payment here = $mobileMoneyResponse');
-
+      MobileMoneyResponse mobileMoneyResponse =
+          MobileMoneyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mobileMoneyResponse;
       apiResponse.message = 'Successful';
     }
@@ -42,7 +38,8 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
 
   @override
   Future<ApiResponse> verifyPayment(String tnxId, String orderId) async {
-    ApiResponse<MobileMoneyVerifyResponse> apiResponse = ApiResponse(status: true);
+    ApiResponse<MobileMoneyVerifyResponse> apiResponse =
+        ApiResponse(status: true);
 
     final String url = ApiUrls.baseUrl + ApiUrls.verifyPaymentUrl('GHS');
 
@@ -58,16 +55,16 @@ class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
-
+      apiResponse.message = status.errorMessage;
     } else {
-      MobileMoneyVerifyResponse mobileMoneyVerifyResponse = MobileMoneyVerifyResponse.fromJson(decodedResponseMap);
-      // log('mobile money service => mobile money verify payment here = $mobileMoneyVerifyResponse');
-
+      MobileMoneyVerifyResponse mobileMoneyVerifyResponse =
+          MobileMoneyVerifyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mobileMoneyVerifyResponse;
       apiResponse.message = 'Successful';
     }

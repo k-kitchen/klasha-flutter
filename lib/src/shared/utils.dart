@@ -1,16 +1,15 @@
 import 'package:intl/intl.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
 
 class KlashaUtils {
   /// contains utils liek validations, card validations, strings utils, e.t.c
   ///
   ///
-  static String validateEmail(String email) {
+  static String? validateEmail(String? email) {
     String source =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
     RegExp regExp = new RegExp(source);
-    if (email.trim().isEmpty) {
+    if (email == null || email.trim().isEmpty) {
       return 'Email is required';
     } else if (!regExp.hasMatch(email)) {
       return 'Enter a valid email address';
@@ -19,7 +18,11 @@ class KlashaUtils {
     }
   }
 
-  static String formatCurrencyInput(String amount,[bool ignoreSymbol = false, int decimalDigits = 2]) {
+  static String formatCurrencyInput(
+    String amount, [
+    bool ignoreSymbol = false,
+    int decimalDigits = 2,
+  ]) {
     final formatter = NumberFormat.currency(
       locale: "en_NG",
       name: 'NGN',
@@ -34,15 +37,15 @@ class KlashaUtils {
     return formatter.format(amountDouble);
   }
 
-  static String validateRequiredFields(String input, String fieldName) {
-    if (input.trim().isEmpty) {
+  static String? validateRequiredFields(String? input, String fieldName) {
+    if (input == null || input.trim().isEmpty) {
       return 'Invalid $fieldName';
     } else {
       return null;
     }
   }
 
-  static String validateCardNum(String input) {
+  static String? validateCardNum(String? input) {
     if (input == null || input.isEmpty) {
       return 'Invalid card number';
     }
@@ -51,7 +54,7 @@ class KlashaUtils {
     return input.length >= 14 ? null : 'Invalid card number';
   }
 
-  static String validateDate(String value) {
+  static String? validateDate(String? value) {
     if (value == null || value.isEmpty) {
       return 'Invalid expiry date';
     }
@@ -76,13 +79,13 @@ class KlashaUtils {
     return null;
   }
 
-  static String validateCVC(String value) {
+  static String? validateCVC(String? value) {
     if (value == null || value.trim().isEmpty) return 'Invalid CVV';
 
     return (value.length >= 3 && value.length <= 4) ? null : 'Invalid CVV';
   }
 
-  static List<int> getExpiryDate(String value) {
+  static List<int> getExpiryDate(String? value) {
     if (value == null) return [-1, -1];
     var split = value.split(new RegExp(r'(\/)'));
     var month = int.tryParse(split[0]) ?? -1;
@@ -93,7 +96,7 @@ class KlashaUtils {
     return [month, year];
   }
 
-  static bool isNotExpired(int year, int month) {
+  static bool isNotExpired(int? year, int? month) {
     if ((year == null || month == null) || (month > 12 || year > 2999)) {
       return false;
     }
@@ -108,11 +111,7 @@ class KlashaUtils {
     return fourDigitsYear < now.year;
   }
 
-  static bool isValidMonth(int month) {
-    return month != null && month > 0 && month < 13;
-  }
-
-  static bool hasMonthPassed(int year, int month) {
+  static bool hasMonthPassed(int? year, int? month) {
     if (year == null || month == null) return true;
     var now = DateTime.now();
     // The month has passed if:
@@ -123,7 +122,7 @@ class KlashaUtils {
         convertYearTo4Digits(year) == now.year && (month < now.month + 1);
   }
 
-  static int convertYearTo4Digits(int year) {
+  static int convertYearTo4Digits(int? year) {
     if (year == null) return 0;
     if (year < 100 && year >= 0) {
       String prefix = "20";

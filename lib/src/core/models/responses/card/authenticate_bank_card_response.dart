@@ -19,10 +19,10 @@ class AuthenticateBankCardResponse {
     this.data,
   });
 
-  String txRef;
-  String flwRef;
-  String message;
-  String status;
+  String? txRef;
+  String? flwRef;
+  String? message;
+  String? status;
   dynamic data;
 
   factory AuthenticateBankCardResponse.fromJson(Map<String, dynamic> json) =>

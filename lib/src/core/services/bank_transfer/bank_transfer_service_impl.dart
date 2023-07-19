@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:klasha_checkout/src/core/core.dart';
 
 class BankTransferServiceImpl extends BankTransferService
@@ -21,11 +18,9 @@ class BankTransferServiceImpl extends BankTransferService
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody['meta']['authorization'];
+    var decodedResponseMap = decodedResponseBody['meta']['authorization'];
 
     BankAccountDetails bankAccountDetails = BankAccountDetails.fromJson(decodedResponseMap);
-    // log('bank transfer service => get bank details response = $bankAccountDetails');
-
     apiResponse.data = bankAccountDetails;
     apiResponse.message = 'Retrieved bank details successful';
 

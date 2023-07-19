@@ -27,7 +27,7 @@ class CardNumberInputFormatter extends TextInputFormatter {
 }
 
 class CardMonthInputFormatter extends TextInputFormatter {
-  String previousText;
+  String? previousText;
 
   @override
   TextEditingValue formatEditUpdate(
@@ -58,10 +58,9 @@ class CardMonthInputFormatter extends TextInputFormatter {
   }
 }
 
-bool _isDeletion(String prevText, String newText) {
+bool _isDeletion(String? prevText, String newText) {
   if (prevText == null) {
     return false;
   }
-
   return prevText.length > newText.length;
 }

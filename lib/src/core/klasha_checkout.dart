@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/config/config.dart';
-import 'package:klasha_checkout/src/ui/views/base_view.dart';
+import 'package:klasha_checkout/klasha_checkout.dart';
+import 'package:klasha_checkout/src/ui/views/klasha_checkout_base_view.dart';
 
 /// Make payment using the KlashaCheckout payment options.
 class KlashaCheckout {
@@ -20,45 +20,22 @@ class KlashaCheckout {
   ///
   static void checkout(
     BuildContext context, {
-    @required String email,
-    @required int amount,
-    CheckoutCurrency checkoutCurrency = CheckoutCurrency.NGN,
-    Environment environment = Environment.TEST,
-    OnCheckoutResponse<KlashaCheckoutResponse> onComplete,
+    required KlashaCheckoutConfig config,
   }) {
-    _validateEmailAndAmount(email, amount);
+    _validateEmail(config.email);
+    globalAuthToken = config.authToken;
     showModalBottomSheet(
       context: context,
       enableDrag: false,
-      isScrollControlled: true,
       isDismissible: false,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(15.0),
-          topLeft: Radius.circular(15.0),
-        ),
-      ),
-      builder: (context) {
-        return SafeArea(
-          bottom: true,
-          child: KlashaCheckoutBaseView(
-            email: email,
-            amount: amount,
-            checkoutCurrency: checkoutCurrency,
-            onComplete: onComplete,
-            environment: environment,
-          ),
-        );
-      },
+      isScrollControlled: true,
+      builder: (context) => KlashaCheckoutBaseView(config),
     );
   }
 
-  static _validateEmailAndAmount(String email, int amount) {
-    if (email == null) {
+  static _validateEmail(String email) {
+    if (email.isEmpty) {
       throw KlashaCheckoutError('An email needs to be provided');
-    }
-    if (amount == null) {
-      throw KlashaCheckoutError('An amount needs to be provided');
     }
   }
 }

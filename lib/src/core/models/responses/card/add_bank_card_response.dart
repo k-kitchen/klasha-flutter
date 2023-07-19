@@ -1,61 +1,54 @@
 class AddBankCardResponse {
-  AddBankCardResponse({
-    this.txRef,
-    this.data,
-  });
+  AddBankCardResponse({this.txRef, this.data});
 
-  String txRef;
-  Data data;
+  String? txRef;
+  Data? data;
 
   factory AddBankCardResponse.fromJson(Map<String, dynamic> json) =>
       AddBankCardResponse(
         txRef: json["tx_ref"],
-        data: Data.fromJson(json["data"]),
+        data: json["data"] != null ? Data.fromJson(json["data"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,
-        "data": data.toJson(),
+        "data": data?.toJson(),
       };
 }
 
 class Data {
-  Data({
-    this.status,
-    this.message,
-    this.meta,
-  });
+  Data({this.status, this.message, this.meta});
 
-  String status;
-  String message;
-  Meta meta;
+  String? status;
+  String? message;
+  Meta? meta;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         status: json["status"],
         message: json["message"],
-        meta: Meta.fromJson(json["meta"]),
+        meta: json["meta"] != null ? Meta.fromJson(json["meta"]) : null,
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "meta": meta.toJson(),
+        "meta": meta?.toJson(),
       };
 }
 
 class Meta {
-  Meta({
-    this.authorization,
-  });
+  Meta({this.authorization});
 
-  Authorization authorization;
+  Authorization? authorization;
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        authorization: Authorization.fromJson(json["authorization"]),
+        authorization: json["authorization"] != null
+            ? Authorization.fromJson(json["authorization"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
-        "authorization": authorization.toJson(),
+        "authorization": authorization?.toJson(),
       };
 }
 
@@ -65,16 +58,19 @@ class Authorization {
     this.fields,
   });
 
-  String mode;
-  List<String> fields;
+  String? mode;
+  List<String>? fields;
 
   factory Authorization.fromJson(Map<String, dynamic> json) => Authorization(
         mode: json["mode"],
-        fields: List<String>.from(json["fields"].map((x) => x)),
+        fields: json["fields"] != null
+            ? List<String>.from(json["fields"].map((x) => x))
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "mode": mode,
-        "fields": List<dynamic>.from(fields.map((x) => x)),
+        "fields":
+            fields != null ? List<dynamic>.from(fields!.map((x) => x)) : null,
       };
 }

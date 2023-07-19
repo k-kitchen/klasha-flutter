@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:klasha_checkout/src/core/core.dart';
 
 class MpesaServiceImpl extends MpesaService with KlashaBaseService {
@@ -18,16 +16,16 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
-
+      apiResponse.message = status.errorMessage;
     } else {
-      MpesaCheckoutResponse mpesaCheckoutResponse = MpesaCheckoutResponse.fromJson(decodedResponseMap);
-      // log('mpesa service => mpesa payment here = $mpesaCheckoutResponse');
-
+      MpesaCheckoutResponse mpesaCheckoutResponse =
+          MpesaCheckoutResponse.fromJson(decodedResponseMap);
       apiResponse.data = mpesaCheckoutResponse;
       apiResponse.message = 'Successful';
     }
@@ -53,16 +51,16 @@ class MpesaServiceImpl extends MpesaService with KlashaBaseService {
       requestBody: requestBody,
     );
 
-    Map decodedResponseMap = decodedResponseBody;
+    var decodedResponseMap = decodedResponseBody;
 
-    if (decodedResponseMap['status'] == 'error') {
+    var status = getStatus(decodedResponseMap);
+
+    if (status.isFail) {
       apiResponse.status = false;
-      apiResponse.message = decodedResponseMap['message'];
-
+      apiResponse.message = status.errorMessage;
     } else {
-      MpesaVerifyResponse mpesaVerifyResponse = MpesaVerifyResponse.fromJson(decodedResponseMap);
-      // log('mpesa service => mpesa verify payment here = $mpesaVerifyResponse');
-
+      MpesaVerifyResponse mpesaVerifyResponse =
+          MpesaVerifyResponse.fromJson(decodedResponseMap);
       apiResponse.data = mpesaVerifyResponse;
       apiResponse.message = 'Successful';
     }

@@ -1,12 +1,12 @@
 class AuthenticateCardPaymentBody {
-  String mode;
-  String pin;
-  String txRef;
-  String city;
-  String address;
-  String state;
-  String country;
-  String zipcode;
+  String? mode;
+  String? pin;
+  String? txRef;
+  String? city;
+  String? address;
+  String? state;
+  String? country;
+  String? zipcode;
 
   AuthenticateCardPaymentBody({
     this.mode,
