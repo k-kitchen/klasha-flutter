@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
 
 class RetryWidget extends StatelessWidget {
   const RetryWidget({this.onRetry});

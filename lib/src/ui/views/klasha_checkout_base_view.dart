@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/views/payment_status_view.dart';
-import 'package:klasha_checkout/src/ui/views/views.dart';
-import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
-import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
+import 'package:klasha_checkout_v2/src/core/core.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/ui/views/payment_status_view.dart';
+import 'package:klasha_checkout_v2/src/ui/views/views.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/widgets.dart';
 
 class KlashaCheckoutBaseView extends StatefulWidget {
   const KlashaCheckoutBaseView(this.config, {super.key});

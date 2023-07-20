@@ -107,13 +107,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
-  klasha_checkout:
+  klasha_checkout_v2:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.0"
   matcher:
     dependency: transitive
     description:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/config/config.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/widgets/checkout_options_entry.dart';
+import 'package:klasha_checkout_v2/src/core/config/config.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/checkout_options_entry.dart';
 
 enum CheckoutType {
   Card('Card', KlashaAssets.ic_card),

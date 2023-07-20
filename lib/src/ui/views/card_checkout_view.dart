@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/services/card/card_service_impl.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
-import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
+import 'package:klasha_checkout_v2/src/core/core.dart';
+import 'package:klasha_checkout_v2/src/core/services/card/card_service_impl.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/widgets.dart';
 
 class CardCheckoutView extends StatefulWidget {
   const CardCheckoutView({

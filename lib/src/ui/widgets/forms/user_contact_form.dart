@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/widgets.dart';
 
 import '../../../shared/shared.dart';
 

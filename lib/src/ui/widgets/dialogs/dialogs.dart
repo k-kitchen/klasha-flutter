@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/shared/assets.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/shared/assets.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
 
 class KlashaDialogs {
   static Future<void> showLoadingDialog(BuildContext context) async {

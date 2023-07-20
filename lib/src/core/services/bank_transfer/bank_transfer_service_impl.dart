@@ -1,4 +1,4 @@
-import 'package:klasha_checkout/src/core/core.dart';
+import 'package:klasha_checkout_v2/src/core/core.dart';
 
 class BankTransferServiceImpl extends BankTransferService
     with KlashaBaseService {

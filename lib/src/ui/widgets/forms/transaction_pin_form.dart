@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:klasha_checkout/src/ui/widgets/widgets.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/widgets.dart';
 
-import 'package:klasha_checkout/src/shared/theme.dart';
+import 'package:klasha_checkout_v2/src/shared/theme.dart';
 
 class TransactionPinForm extends StatelessWidget {
   const TransactionPinForm({this.onTransactionPinChanged});

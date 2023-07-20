@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
 
 class PaymentStatusView extends StatefulWidget {
   const PaymentStatusView({

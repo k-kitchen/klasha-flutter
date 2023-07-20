@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/services/bank_transfer/bank_transfer_service_impl.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
-import 'package:klasha_checkout/src/ui/widgets/bank_account_details_widget.dart';
-import 'package:klasha_checkout/src/ui/widgets/buttons/buttons.dart';
-import 'package:klasha_checkout/src/ui/widgets/retry_widget.dart';
+import 'package:klasha_checkout_v2/src/core/core.dart';
+import 'package:klasha_checkout_v2/src/core/services/bank_transfer/bank_transfer_service_impl.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/bank_account_details_widget.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/retry_widget.dart';
 
 import '../widgets/widgets.dart';
 

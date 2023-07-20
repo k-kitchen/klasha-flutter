@@ -1,6 +1,6 @@
-import 'package:klasha_checkout/src/core/core.dart';
-import 'package:klasha_checkout/src/core/models/responses/mobile_money/mobile_money_verify_response.dart';
-import 'package:klasha_checkout/src/core/services/mobile_money/mobile_money_service.dart';
+import 'package:klasha_checkout_v2/src/core/core.dart';
+import 'package:klasha_checkout_v2/src/core/models/responses/mobile_money/mobile_money_verify_response.dart';
+import 'package:klasha_checkout_v2/src/core/services/mobile_money/mobile_money_service.dart';
 
 class MobileMoneyServiceImpl extends MobileMoneyService with KlashaBaseService {
   @override

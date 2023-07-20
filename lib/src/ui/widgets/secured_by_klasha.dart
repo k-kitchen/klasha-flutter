@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klasha_checkout/src/shared/shared.dart';
+import 'package:klasha_checkout_v2/src/shared/shared.dart';
 
 class SecuredByKlasha extends StatelessWidget {
   @override
