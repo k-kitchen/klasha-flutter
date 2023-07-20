@@ -1,6 +1,3 @@
-## 0.0.3
+## 1.0.1
 
-* Dart and Flutter versions updated
-* Upgraded to null safety
-* UI improvements
-* Network bugs fixed
+* Readme and Changelog updated

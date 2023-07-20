@@ -1,4 +1,4 @@
-# klasha_checkout
+# klasha_checkout_v2
 
 A Flutter plugin for making payments via Klasha Checkout Technology
 
@@ -20,7 +20,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 
 ```yaml
 dependencies:
-  klasha_checkout: ^0.0.3
+  klasha_checkout_v2: ^1.0.1
 ```
 
 ## How To Use
@@ -28,7 +28,7 @@ dependencies:
 1. In your file add the following import:
 
 ```dart
-import 'package:klasha_checkout/klasha_checkout.dart';
+import 'package:klasha_checkout_v2/klasha_checkout.dart';
 ```
 
 2. Call the `checkout` method and handle the response of the `checkout` method
