@@ -1,3 +1,3 @@
-## 1.0.1
+## 1.0.2
 
-* Readme and Changelog updated
+* Initial release for klasha_checkout_v2

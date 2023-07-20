@@ -20,7 +20,7 @@ In the `pubspec.yaml` of your flutter project, add the following dependency:
 
 ```yaml
 dependencies:
-  klasha_checkout_v2: ^1.0.1
+  klasha_checkout_v2: ^1.0.2
 ```
 
 ## How To Use
