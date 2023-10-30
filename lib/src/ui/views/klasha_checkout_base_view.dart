@@ -106,7 +106,7 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          currentIndex == 0
+          checkoutResponse != null || currentIndex == 0
               ? SizedBox.shrink()
               : KlashaBackButton(
                   onTap: () {
