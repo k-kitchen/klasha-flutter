@@ -1,7 +1,7 @@
 class KlashaStrings {
 
   // package name
-  static const String packageName = 'klasha_checkout';
+  static const String packageName = 'klasha_checkout_v2';
 
   // texts
   static const String card = 'Card';
