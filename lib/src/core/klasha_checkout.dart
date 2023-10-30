@@ -29,6 +29,8 @@ class KlashaCheckout {
       enableDrag: false,
       isDismissible: false,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       builder: (context) => KlashaCheckoutBaseView(config),
     );
   }

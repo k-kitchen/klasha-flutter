@@ -97,29 +97,15 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 25),
               Text('Currency'),
               SizedBox(height: 5),
-              RadioListTile(
-                value: CheckoutCurrency.NGN,
-                groupValue: _checkoutCurrency,
-                onChanged: _onRadioChanged,
-                title: Text('NGN'),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
-              RadioListTile(
-                value: CheckoutCurrency.KES,
-                groupValue: _checkoutCurrency,
-                onChanged: _onRadioChanged,
-                title: Text('KES'),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
-              RadioListTile(
-                value: CheckoutCurrency.GHS,
-                groupValue: _checkoutCurrency,
-                onChanged: _onRadioChanged,
-                title: Text('GHS'),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
+              ...CheckoutCurrency.values.map(
+                (e) => RadioListTile(
+                  value: e,
+                  groupValue: _checkoutCurrency,
+                  onChanged: _onRadioChanged,
+                  title: Text('${e.name}'),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
               const SizedBox(height: 25),
               Text('Amount'),
@@ -143,20 +129,18 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               const SizedBox(height: 30),
-              GestureDetector(
-                child: Container(
-                  height: 55,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFE85243),
-                  ),
-                  child: Text(
-                    'Checkout',
-                    style: TextStyle(color: Colors.white),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _launchKlashaPay,
+                  child: Text('Checkout'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFE85243),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    fixedSize: Size.fromHeight(55),
                   ),
                 ),
-                onTap: _launchKlashaPay,
               ),
             ],
           ),

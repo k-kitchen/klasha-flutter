@@ -25,18 +25,21 @@ class CheckoutOptionsView extends StatelessWidget {
   final Function(CheckoutType) onCheckoutSelected;
   final CheckoutCurrency checkoutCurrency;
 
-  var _paymentTypes = [CheckoutType.Card];
+  final _paymentTypes = <CheckoutType>[];
 
   void _filterCheckoutOptions() {
     switch (checkoutCurrency) {
       case CheckoutCurrency.NGN:
-        _paymentTypes.insert(1, CheckoutType.BankTransfer);
+        _paymentTypes.addAll([CheckoutType.Card, CheckoutType.BankTransfer]);
         break;
       case CheckoutCurrency.KES:
-        _paymentTypes.insert(1, CheckoutType.Mpesa);
+        _paymentTypes.addAll([CheckoutType.Card, CheckoutType.Mpesa]);
         break;
       case CheckoutCurrency.GHS:
-        _paymentTypes.insert(1, CheckoutType.MobileMoney);
+        _paymentTypes.addAll([CheckoutType.MobileMoney]);
+        break;
+      case CheckoutCurrency.USD:
+        _paymentTypes.addAll([CheckoutType.Card]);
         break;
     }
   }

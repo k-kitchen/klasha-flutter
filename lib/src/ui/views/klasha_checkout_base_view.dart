@@ -25,59 +25,65 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
   void initState() {
     super.initState();
     pageController = PageController();
-    ApiUrls.getBaseUrl(widget.config.environment);
+    ApiUrls.setBaseUrl(widget.config.environment);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxHeight: MediaQuery.sizeOf(context).height * 0.8,
-      ),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height * 0.8,
         ),
-        child: SingleChildScrollView(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              buildHeader(context),
-              checkoutResponse == null
-                  ? CheckoutViewWrapper(
-                      config: widget.config,
-                      onCheckoutResponse: (KlashaCheckoutResponse response) {
-                        checkoutResponse = response;
-                        widget.config.onComplete(response);
-                        setState(() {});
-                      },
-                      pageController: pageController,
-                      onPageChanged: (newIndex) {
-                        setState(() {});
-                        currentIndex = newIndex;
-                      },
-                    )
-                  : PaymentStatusView(
-                      paymentStatus: checkoutResponse!.status,
-                      onAction: () {
-                        if (checkoutResponse!.status) {
-                          Navigator.pop(context);
-                        } else {
-                          checkoutResponse = null;
-                        }
-                        setState(() {});
-                      },
-                    ),
-              const SizedBox(height: 15),
-              SecuredByKlasha(),
-              const SizedBox(height: 40),
-            ],
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15),
+              topRight: Radius.circular(15),
+            ),
+          ),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.viewInsetsOf(context).bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                buildHeader(context),
+                checkoutResponse == null
+                    ? CheckoutViewWrapper(
+                        config: widget.config,
+                        onCheckoutResponse: (KlashaCheckoutResponse response) {
+                          checkoutResponse = response;
+                          widget.config.onComplete(response);
+                          setState(() {});
+                        },
+                        pageController: pageController,
+                        onPageChanged: (newIndex) {
+                          setState(() {});
+                          currentIndex = newIndex;
+                        },
+                      )
+                    : PaymentStatusView(
+                        paymentStatus: checkoutResponse!.status,
+                        onAction: () {
+                          if (checkoutResponse!.status) {
+                            Navigator.pop(context);
+                          } else {
+                            checkoutResponse = null;
+                          }
+                          setState(() {});
+                        },
+                      ),
+                const SizedBox(height: 15),
+                SecuredByKlasha(),
+                SizedBox(height: MediaQuery.paddingOf(context).bottom + 20),
+              ],
+            ),
           ),
         ),
       ),

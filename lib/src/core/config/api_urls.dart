@@ -8,7 +8,7 @@ class ApiUrls {
   static const String bankTransferUrl = '/pay/NGN/banktransfer';
 
   // card checkout urls
-  static const String addBankCardUrl = '/pay/NGN/cardpayment';
+  static String addBankCardUrl(String currency) => '/pay/$currency/cardpayment';
   static const String authenticateCardPaymentUrl = '/pay/NGN/charge';
   static const String validateCardPaymentUrl = '/pay/NGN/validatepayment';
 
@@ -22,7 +22,7 @@ class ApiUrls {
   static String verifyPaymentUrl(String countryCode) =>
       '/pay/$countryCode/payment/verify';
 
-  static void getBaseUrl(Environment environment) {
+  static void setBaseUrl(Environment environment) {
     switch (environment) {
       case Environment.TEST:
         baseUrl = 'https://dev.kcookery.com';

@@ -21,12 +21,12 @@ class PayWithKlashaButton extends KlashaBaseButton {
         children: [
           Image.asset(
             KlashaAssets.ic_lock,
-            height: 25,
-            width: 25,
+            height: 23,
+            width: 23,
             fit: BoxFit.cover,
             package: KlashaStrings.packageName,
           ),
-          const SizedBox(width: 5),
+          const SizedBox(width: 6),
           Text(
             KlashaStrings.payWith,
             style: TextStyle(

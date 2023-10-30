@@ -3,7 +3,7 @@
 /// callbacks
 /// environments (test and live)
 
-enum CheckoutCurrency { NGN, KES, GHS }
+enum CheckoutCurrency { NGN, KES, GHS, USD }
 
 enum Environment { TEST, LIVE }
 

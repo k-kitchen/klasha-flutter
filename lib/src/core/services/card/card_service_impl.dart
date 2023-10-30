@@ -7,7 +7,7 @@ class CardServiceImpl extends CardService with KlashaBaseService {
   ) async {
     ApiResponse<AddBankCardResponse> apiResponse = ApiResponse(status: true);
 
-    final String url = ApiUrls.baseUrl + ApiUrls.addBankCardUrl;
+    final String url = ApiUrls.baseUrl + ApiUrls.addBankCardUrl(bankCardDetailsBody.currency);
 
     final requestBody = bankCardDetailsBody.toJson();
 
