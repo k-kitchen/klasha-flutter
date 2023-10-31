@@ -19,7 +19,7 @@ jobs:
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
 
-    - run: flutter --disable-telemetry.
+    - run: flutter --disable-telemetry
     
     - name: Get flutter dependencies
       run: flutter pub get
