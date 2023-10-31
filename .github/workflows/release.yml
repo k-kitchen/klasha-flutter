@@ -21,7 +21,6 @@ jobs:
     
     - name: Get flutter dependencies
       run: flutter pub get
-      working-directory: app
       
     - name: Publish
       run: dart pub publish --force
