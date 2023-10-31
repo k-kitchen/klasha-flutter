@@ -28,7 +28,7 @@ dependencies:
 1. In your file add the following import:
 
 ```dart
-import 'package:klasha_checkout_v2/klasha_checkout.dart';
+import 'package:klasha_checkout_v2/klasha_checkout_v2.dart';
 ```
 
 2. Call the `checkout` method and handle the response of the `checkout` method

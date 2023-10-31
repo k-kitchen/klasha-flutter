@@ -1,4 +1,4 @@
-import 'package:klasha_checkout_v2/klasha_checkout.dart';
+import 'package:klasha_checkout_v2/klasha_checkout_v2.dart';
 
 class ApiUrls {
   // base url

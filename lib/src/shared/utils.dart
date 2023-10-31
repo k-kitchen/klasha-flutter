@@ -29,9 +29,9 @@ class KlashaUtils {
       symbol: ignoreSymbol ? '' : "₦",
       decimalDigits: decimalDigits,
     );
-    amount = amount.replaceAll(RegExp(r'[^0-9\.]'), "");
+    amount = amount.replaceAll(RegExp(r'[^0-9.]'), "");
     final amountDouble = double.tryParse(amount);
-    if (amount == null || amountDouble == null) {
+    if (amountDouble == null) {
       return "";
     }
     return formatter.format(amountDouble);
@@ -87,7 +87,7 @@ class KlashaUtils {
 
   static List<int> getExpiryDate(String? value) {
     if (value == null) return [-1, -1];
-    var split = value.split(new RegExp(r'(\/)'));
+    var split = value.split('/');
     var month = int.tryParse(split[0]) ?? -1;
     if (split.length == 1) {
       return [month, -1];
