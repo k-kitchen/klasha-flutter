@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Allow card redirects
+
 ## 1.0.3
 
 * Layout fixes and improvements
