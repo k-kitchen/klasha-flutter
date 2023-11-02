@@ -9,8 +9,14 @@ class ApiUrls {
 
   // card checkout urls
   static String addBankCardUrl(String currency) => '/pay/$currency/cardpayment';
-  static const String authenticateCardPaymentUrl = '/pay/NGN/charge';
-  static const String validateCardPaymentUrl = '/pay/NGN/validatepayment';
+
+  static String authenticateCardPaymentUrl(String currency) =>
+      '/pay/$currency/charge';
+
+  static String validateCardPaymentUrl(String currency) =>
+      '/pay/$currency/validatepayment';
+
+  static const String checkTransaction = '/nucleus/tnx/merchant/status';
 
   // mpesa
   static const String mpesaUrl = '/pay/KES/cardpayment';

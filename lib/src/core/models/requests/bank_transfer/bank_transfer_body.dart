@@ -9,7 +9,7 @@ class BankTransferBody {
   });
 
   String? txRef;
-  int? amount;
+  double? amount;
   String? email;
   String? phoneNumber;
   String? currency;

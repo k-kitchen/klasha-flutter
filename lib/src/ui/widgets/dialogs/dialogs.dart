@@ -13,11 +13,16 @@ class KlashaDialogs {
         return Dialog(
           insetPadding: EdgeInsets.zero,
           child: SizedBox(
-            height: 65,
+            height: 70,
             width: 80,
             child: Platform.isIOS
                 ? CupertinoActivityIndicator()
-                : Center(child: CircularProgressIndicator()),
+                : Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.black,
+                      valueColor: AlwaysStoppedAnimation(appColors.primary),
+                    ),
+                  ),
           ),
         );
       },

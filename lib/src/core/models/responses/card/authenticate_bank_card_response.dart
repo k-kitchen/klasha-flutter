@@ -16,23 +16,28 @@ class AuthenticateBankCardResponse {
     this.flwRef,
     this.message,
     this.status,
-    this.data,
+    required this.authMode,
+    this.redirectUrl,
   });
 
   String? txRef;
   String? flwRef;
   String? message;
   String? status;
-  dynamic data;
+  AuthMode? authMode;
+  String? redirectUrl;
 
-  factory AuthenticateBankCardResponse.fromJson(Map<String, dynamic> json) =>
-      AuthenticateBankCardResponse(
-        txRef: json["tx_ref"],
-        flwRef: json.containsKey("flw_ref") ? json["flw_ref"] : null,
-        data: json.containsKey("data") ? json["data"] : null,
-        message: json["message"],
-        status: json["status"],
-      );
+  factory AuthenticateBankCardResponse.fromJson(Map<String, dynamic> json) {
+    final authData = json['data']?['meta']?['authorization'];
+    return AuthenticateBankCardResponse(
+      txRef: json["tx_ref"],
+      flwRef: json.containsKey("flw_ref") ? json["flw_ref"] : null,
+      message: json["message"],
+      status: json["status"],
+      authMode: AuthMode.fromString(authData?['mode'] ?? ''),
+      redirectUrl: authData?['redirect'],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "tx_ref": txRef,
@@ -40,4 +45,14 @@ class AuthenticateBankCardResponse {
         "message": message,
         "status": status,
       };
+}
+
+enum AuthMode {
+  pin,
+  avs_noauth,
+  redirect;
+
+  static AuthMode? fromString(String value) {
+    return AuthMode.values.where((b) => b.name == value).firstOrNull;
+  }
 }

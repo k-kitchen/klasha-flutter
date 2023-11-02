@@ -3,6 +3,8 @@ import 'package:klasha_checkout_v2/src/core/core.dart';
 import 'package:klasha_checkout_v2/src/core/services/card/card_service_impl.dart';
 import 'package:klasha_checkout_v2/src/shared/shared.dart';
 import 'package:klasha_checkout_v2/src/ui/widgets/buttons/buttons.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/forms/card_redirect_form.dart';
+import 'package:klasha_checkout_v2/src/ui/widgets/forms/transaction_verification_form.dart';
 import 'package:klasha_checkout_v2/src/ui/widgets/widgets.dart';
 
 class CardCheckoutView extends StatefulWidget {
@@ -23,11 +25,9 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
   late PageController pageController;
   int currentPage = 0;
   String? cardNumber, cardExpiry, cardCvv, transactionPin, otp;
-  AddBankCardResponse? addBankCardResponse;
   AuthenticateBankCardResponse? authBankCardResponse;
   var cardFormKey = GlobalKey<FormState>();
   var userFormKey = GlobalKey<FormState>();
-  String? otpMessage = '';
   String? fullName, email, phoneNumber, transactionReference;
 
   @override
@@ -98,170 +98,205 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                 ),
                 OTPForm(
                   onOtpChanged: (val) => otp = val,
-                  message: otpMessage ?? '',
+                  message: authBankCardResponse?.message ?? '',
                 ),
+                CardRedirectForm(
+                  redirectUrl: authBankCardResponse?.redirectUrl ?? '',
+                  flwRef: authBankCardResponse?.flwRef ?? '',
+                  onClose: (value) {
+                    if (value) {
+                      _onSuccess();
+                      return;
+                    }
+                    _moveToPage(5);
+                  },
+                ),
+                TransactionVerificationForm(
+                  txnRef: authBankCardResponse?.txRef ?? '',
+                  onVerified: _onSuccess,
+                )
               ],
             ),
           ),
           const SizedBox(height: 20),
-          if (currentPage == 1)
-            PayWithKlashaButton(
-              onPressed: () async {
-                if (cardFormKey.currentState?.validate() ?? false) {
-                  transactionReference =
-                      'klasha-add-bank-card-${DateTime.now().microsecondsSinceEpoch}';
-                  String? formattedCardNumber =
-                      cardNumber?.replaceAll(RegExp(r"[^0-9]"), '');
-                  String? cardExpiryYear =
-                      cardExpiry?.split(RegExp(r'(/)')).last;
-                  String? cardExpiryMonth =
-                      cardExpiry?.split(RegExp(r'(/)')).first;
-                  BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
-                    cardNumber: formattedCardNumber,
-                    expiryMonth: cardExpiryMonth,
-                    expiryYear: cardExpiryYear,
-                    cvv: cardCvv,
-                    currency: widget.config.checkoutCurrency.name,
-                    amount: widget.config.amount.toString(),
-                    rate: 1,
-                    sourceCurrency: widget.config.checkoutCurrency.name,
-                    rememberMe: false,
-                    redirectUrl: 'https://dashboard.klasha.com/woocommerce',
-                    phoneNumber: phoneNumber,
-                    email: widget.config.email,
-                    fullName: fullName,
-                    txRef: transactionReference,
-                  );
-
-                  KlashaDialogs.showLoadingDialog(context);
-
-                  ApiResponse<AddBankCardResponse> apiResponse =
-                      await CardServiceImpl().addBankCard(bankCardDetailsBody);
-
-                  Navigator.pop(context);
-
-                  if (apiResponse.status &&
-                      apiResponse.data == null &&
-                      apiResponse.message == 'Payment Successful') {
-                    widget.onCheckoutResponse(
-                      KlashaCheckoutResponse(
-                        status: true,
-                        message: 'Payment Successful',
-                        transactionReference: transactionReference,
-                      ),
-                    );
-                  } else if (apiResponse.status) {
-                    addBankCardResponse = apiResponse.data;
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  } else {
-                    KlashaDialogs.showStatusDialog(
-                      context,
-                      apiResponse.message,
-                      !apiResponse.status,
-                    );
-                  }
-                }
-              },
-            ),
-          if (currentPage != 1)
-            KlashaPrimaryButton(
-              text: 'Continue',
-              onPressed: () async {
-                if (currentPage == 0) {
-                  if (userFormKey.currentState?.validate() ?? false) {
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  }
-                }
-                // authenticate payment
-                if (currentPage == 2) {
-                  AuthenticateCardPaymentBody authenticateCardPaymentBody =
-                      AuthenticateCardPaymentBody(
-                    mode: 'pin',
-                    pin: transactionPin,
-                    txRef: addBankCardResponse?.txRef,
-                  );
-
-                  KlashaDialogs.showLoadingDialog(context);
-
-                  ApiResponse<AuthenticateBankCardResponse> apiResponse =
-                      await CardServiceImpl()
-                          .authenticateCardPayment(authenticateCardPaymentBody);
-
-                  Navigator.pop(context);
-
-                  if (apiResponse.status ||
-                      apiResponse.data?.status == 'pending') {
-                    otpMessage = apiResponse.data?.message;
-                    authBankCardResponse = apiResponse.data;
-                    pageController.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                    );
-                  } else if (apiResponse.data?.status != 'pending' &&
-                      apiResponse.status) {
-                    widget.onCheckoutResponse(
-                      KlashaCheckoutResponse(
-                        status: true,
-                        message: 'Payment Successful',
-                        transactionReference: transactionReference,
-                      ),
-                    );
-                  } else if (!apiResponse.status) {
-                    KlashaDialogs.showStatusDialog(
-                      context,
-                      apiResponse.message,
-                      !apiResponse.status,
-                    );
-                  }
-                }
-
-                // validate payment
-                if (currentPage == 3) {
-                  ValidateCardPaymentBody validateCardPaymentBody =
-                      ValidateCardPaymentBody(
-                    flwRef: authBankCardResponse?.flwRef,
-                    otp: otp,
-                    type: 'card',
-                  );
-
-                  KlashaDialogs.showLoadingDialog(context);
-
-                  ApiResponse<ValidateBankCardResponse> apiResponse =
-                      await CardServiceImpl()
-                          .validateCardPayment(validateCardPaymentBody);
-
-                  Navigator.pop(context);
-
-                  if (apiResponse.status) {
-                    widget.onCheckoutResponse(
-                      KlashaCheckoutResponse(
-                        status: true,
-                        message: 'Payment Successful',
-                        transactionReference: transactionReference,
-                      ),
-                    );
-                  } else {
-                    widget.onCheckoutResponse(
-                      KlashaCheckoutResponse(
-                        status: false,
-                        message:
-                            apiResponse.message ?? 'Payment Not Successful',
-                        transactionReference: transactionReference,
-                      ),
-                    );
-                  }
-                }
-              },
-            ),
+          Builder(builder: (_) {
+            return switch (currentPage) {
+              0 => KlashaPrimaryButton(
+                  text: 'Continue',
+                  onPressed: () async {
+                    if (userFormKey.currentState?.validate() ?? false) {
+                      _moveToPage(1);
+                    }
+                  },
+                ),
+              1 => PayWithKlashaButton(onPressed: _addBankCard),
+              2 => KlashaPrimaryButton(
+                  text: 'Continue',
+                  onPressed: _validatePin,
+                ),
+              3 => KlashaPrimaryButton(
+                  text: 'Continue',
+                  onPressed: _validateOtp,
+                ),
+              _ => const SizedBox(),
+            };
+          }),
           const SizedBox(height: 4),
         ],
       ),
+    );
+  }
+
+  void _addBankCard() async {
+    if (cardFormKey.currentState?.validate() ?? false) {
+      transactionReference =
+          'klasha-add-bank-card-${DateTime.now().microsecondsSinceEpoch}';
+      String? formattedCardNumber =
+          cardNumber?.replaceAll(RegExp(r"[^0-9]"), '');
+      String? cardExpiryYear = cardExpiry?.split(RegExp(r'(/)')).last;
+      String? cardExpiryMonth = cardExpiry?.split(RegExp(r'(/)')).first;
+      BankCardDetailsBody bankCardDetailsBody = BankCardDetailsBody(
+        cardNumber: formattedCardNumber,
+        expiryMonth: cardExpiryMonth,
+        expiryYear: cardExpiryYear,
+        cvv: cardCvv,
+        currency: widget.config.checkoutCurrency.name,
+        amount: widget.config.amount.toString(),
+        rate: 1,
+        sourceCurrency: widget.config.checkoutCurrency.name,
+        rememberMe: false,
+        redirectUrl: 'https://dashboard.klasha.com/woocommerce',
+        phoneNumber: phoneNumber,
+        email: widget.config.email,
+        fullName: fullName,
+        txRef: transactionReference,
+      );
+
+      KlashaDialogs.showLoadingDialog(context);
+
+      final apiResponse =
+          await CardServiceImpl().addBankCard(bankCardDetailsBody);
+
+      Navigator.pop(context);
+
+      if (apiResponse.status &&
+          apiResponse.data == null &&
+          apiResponse.message == 'Payment Successful') {
+        widget.onCheckoutResponse(
+          KlashaCheckoutResponse(
+            status: true,
+            message: 'Payment Successful',
+            transactionReference: transactionReference,
+          ),
+        );
+      } else if (apiResponse.status) {
+        authBankCardResponse = apiResponse.data;
+        switch (apiResponse.data?.authMode) {
+          case AuthMode.pin:
+            _moveToPage(2);
+          case AuthMode.redirect:
+            _moveToPage(4);
+          case AuthMode.avs_noauth:
+            KlashaDialogs.showStatusDialog(
+              context,
+              'Card not supported',
+              false,
+            );
+          default:
+            KlashaDialogs.showStatusDialog(
+              context,
+              'Card not supported',
+              false,
+            );
+        }
+      } else {
+        KlashaDialogs.showStatusDialog(
+          context,
+          apiResponse.message,
+          !apiResponse.status,
+        );
+      }
+    }
+  }
+
+  Future<void> _validatePin() async {
+    AuthenticateCardPaymentBody authenticateCardPaymentBody =
+        AuthenticateCardPaymentBody(
+      currency: widget.config.checkoutCurrency.name,
+      email: widget.config.email,
+      amount: '${widget.config.amount}',
+      mode: 'pin',
+      pin: transactionPin,
+      txRef: authBankCardResponse?.txRef,
+    );
+
+    KlashaDialogs.showLoadingDialog(context);
+
+    ApiResponse<AuthenticateBankCardResponse> apiResponse =
+        await CardServiceImpl()
+            .authenticateCardPayment(authenticateCardPaymentBody);
+
+    Navigator.pop(context);
+    if (!apiResponse.status) {
+      KlashaDialogs.showStatusDialog(
+        context,
+        apiResponse.message,
+        !apiResponse.status,
+      );
+      return;
+    }
+    if (apiResponse.data?.status == 'pending') {
+      authBankCardResponse = apiResponse.data;
+      _moveToPage(3);
+    } else if (apiResponse.data?.status != 'pending') {
+      _onSuccess();
+    }
+  }
+
+  Future<void> _validateOtp() async {
+    ValidateCardPaymentBody validateCardPaymentBody = ValidateCardPaymentBody(
+      currency: widget.config.checkoutCurrency.name,
+      flwRef: authBankCardResponse?.flwRef,
+      otp: otp,
+      type: 'card',
+    );
+
+    KlashaDialogs.showLoadingDialog(context);
+
+    ApiResponse<ValidateBankCardResponse> apiResponse =
+        await CardServiceImpl().validateCardPayment(validateCardPaymentBody);
+
+    Navigator.pop(context);
+
+    if (apiResponse.status) {
+      _onSuccess();
+    } else {
+      widget.onCheckoutResponse(
+        KlashaCheckoutResponse(
+          status: false,
+          message: apiResponse.message ?? 'Payment Not Successful',
+          transactionReference: transactionReference,
+        ),
+      );
+    }
+  }
+
+  void _onSuccess() {
+    widget.onCheckoutResponse(
+      KlashaCheckoutResponse(
+        status: true,
+        message: 'Payment Successful',
+        transactionReference:
+            transactionReference ?? authBankCardResponse?.txRef ?? '',
+      ),
+    );
+  }
+
+  void _moveToPage(int page) {
+    pageController.animateToPage(
+      page,
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
     );
   }
 }

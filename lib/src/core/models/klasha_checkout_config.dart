@@ -2,7 +2,7 @@ import 'package:klasha_checkout_v2/klasha_checkout_v2.dart';
 
 class KlashaCheckoutConfig {
   String email, authToken;
-  int amount;
+  double amount;
   CheckoutCurrency checkoutCurrency;
   Environment environment;
   OnCheckoutResponse<KlashaCheckoutResponse> onComplete;

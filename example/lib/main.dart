@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         context,
         config: KlashaCheckoutConfig(
           email: email!,
-          amount: int.parse(amount!),
+          amount: double.parse(amount!),
           checkoutCurrency: _checkoutCurrency,
           authToken: 'GByi/gkhn5+BX4j6uI0lR7HCVo2NvTsVAQhyPko/uK4=',
           onComplete: (KlashaCheckoutResponse klashaCheckoutResponse) {

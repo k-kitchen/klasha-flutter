@@ -119,11 +119,11 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
           KlashaCloseButton(
             onTap: () {
               Navigator.pop(context);
-              checkoutResponse = KlashaCheckoutResponse(
-                message: 'User Cancelled',
-                status: false,
-                transactionReference: '',
-              );
+              // checkoutResponse = KlashaCheckoutResponse(
+              //   message: 'User Cancelled',
+              //   status: false,
+              //   transactionReference: '',
+              // );
             },
           ),
         ],
