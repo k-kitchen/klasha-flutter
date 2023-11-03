@@ -1,11 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:klasha_checkout_v2/klasha_checkout_v2.dart';
+import 'package:klasha_checkout_v2/src/shared/debouncer.dart';
 import 'package:klasha_checkout_v2/src/shared/shared.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+class CardRedirectResponse {
+  final bool? status;
+  final String? error;
+
+  CardRedirectResponse({this.status, this.error});
+}
 
 class CardRedirectForm extends StatefulWidget {
   final String redirectUrl;
   final String flwRef;
-  final Function(bool) onClose;
+  final Function(CardRedirectResponse) onClose;
 
   const CardRedirectForm({
     super.key,
@@ -22,6 +33,8 @@ class _CardRedirectFormState extends State<CardRedirectForm>
     with TickerProviderStateMixin {
   var key = GlobalKey<ScaffoldState>();
   late WebViewController controller;
+  final bool done = true;
+  final _debouncer = Debouncer(milliseconds: 2000);
 
   @override
   void initState() {
@@ -35,28 +48,48 @@ class _CardRedirectFormState extends State<CardRedirectForm>
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageFinished: (String url) {
-            print('URL: $url ${Uri.parse(url).queryParameters}');
-            final queryParams = Uri.parse(url).queryParameters;
-
-            if (queryParams['ref'] == widget.flwRef &&
-                queryParams['message']?.toLowerCase().contains('successful') ==
-                    true) {
-              widget.onClose(true);
-            } else {
-              setState(() {
-                isLoading = false;
-              });
-            }
+            _debouncer.run(() {
+              _processUrlResponse(url);
+              if (isLoading && mounted) {
+                setState(() {
+                  isLoading = false;
+                });
+              }
+            });
           },
         ),
       )
-      ..setOnConsoleMessage((message) {
-        print('JS MESSAGE: ${message.message}');
-      })
       ..loadRequest(Uri.parse(widget.redirectUrl));
   }
 
   bool isLoading = true;
+
+  void _processUrlResponse(String url) {
+    try {
+      if (!url.startsWith(ApiUrls.cardRedirectUrl)) {
+        return;
+      }
+      final uri = Uri.parse(url);
+      final response = jsonDecode('${uri.queryParameters['response']}');
+      if (response['flwRef'].toString() != widget.flwRef) {
+        return;
+      }
+      switch (response['status'].toString().toLowerCase()) {
+        case final a when a.contains('fail') == true:
+          widget.onClose(
+            CardRedirectResponse(
+              status: false,
+              error:
+                  '${response['vbvrespmessage'] ?? response['processor_response']}',
+            ),
+          );
+          break;
+        case final a when a.contains('success') == true:
+          widget.onClose(CardRedirectResponse(status: true));
+          break;
+      }
+    } catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +99,14 @@ class _CardRedirectFormState extends State<CardRedirectForm>
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          toolbarHeight: 30,
+          backgroundColor: appColors.primary,
           elevation: 0.0,
-          leading: IconButton(
-            onPressed: () => widget.onClose(false),
-            icon: Icon(
-              Icons.close,
-              color: Colors.black,
-            ),
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              widget.onClose(CardRedirectResponse());
+            },
           ),
         ),
         body: SafeArea(

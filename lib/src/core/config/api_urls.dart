@@ -4,6 +4,8 @@ class ApiUrls {
   // base url
   static late String baseUrl;
 
+  static  String cardRedirectUrl = 'https://dashboard.klasha.com/woocommerce';
+
   // bank transfer urls
   static const String bankTransferUrl = '/pay/NGN/banktransfer';
 
@@ -32,9 +34,11 @@ class ApiUrls {
     switch (environment) {
       case Environment.TEST:
         baseUrl = 'https://dev.kcookery.com';
+        cardRedirectUrl = 'https://dev.d23nf8816g20mz.amplifyapp.com';
         break;
       case Environment.LIVE:
         baseUrl = 'https://gate.klasapps.com';
+        cardRedirectUrl = 'https://dashboard.klasha.com/woocommerce';
         break;
     }
   }

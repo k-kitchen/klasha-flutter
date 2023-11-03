@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:klasha_checkout_v2/src/core/core.dart';
 import 'package:klasha_checkout_v2/src/core/services/card/card_service_impl.dart';
@@ -100,17 +103,6 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
                   onOtpChanged: (val) => otp = val,
                   message: authBankCardResponse?.message ?? '',
                 ),
-                CardRedirectForm(
-                  redirectUrl: authBankCardResponse?.redirectUrl ?? '',
-                  flwRef: authBankCardResponse?.flwRef ?? '',
-                  onClose: (value) {
-                    if (value) {
-                      _onSuccess();
-                      return;
-                    }
-                    _moveToPage(5);
-                  },
-                ),
                 TransactionVerificationForm(
                   txnRef: authBankCardResponse?.txRef ?? '',
                   onVerified: _onSuccess,
@@ -165,7 +157,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
         rate: 1,
         sourceCurrency: widget.config.checkoutCurrency.name,
         rememberMe: false,
-        redirectUrl: 'https://dashboard.klasha.com/woocommerce',
+        redirectUrl: ApiUrls.cardRedirectUrl,
         phoneNumber: phoneNumber,
         email: widget.config.email,
         fullName: fullName,
@@ -195,18 +187,37 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
           case AuthMode.pin:
             _moveToPage(2);
           case AuthMode.redirect:
-            _moveToPage(4);
+            cardRedirectScreen(BuildContext context) => CardRedirectForm(
+                  redirectUrl: authBankCardResponse?.redirectUrl ?? '',
+                  flwRef: authBankCardResponse?.flwRef ?? '',
+                  onClose: (value) async {
+                    Navigator.pop(context);
+                    switch (value.status) {
+                      case true:
+                        _onSuccess();
+                      case false:
+                        _onFailure(value.error);
+                      default:
+                    }
+                  },
+                );
+            Navigator.push(
+              context,
+              Platform.isIOS
+                  ? CupertinoPageRoute(builder: cardRedirectScreen)
+                  : MaterialPageRoute(builder: cardRedirectScreen),
+            );
           case AuthMode.avs_noauth:
             KlashaDialogs.showStatusDialog(
               context,
               'Card not supported',
-              false,
+              true,
             );
           default:
             KlashaDialogs.showStatusDialog(
               context,
               'Card not supported',
-              false,
+              true,
             );
         }
       } else {
@@ -271,13 +282,7 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
     if (apiResponse.status) {
       _onSuccess();
     } else {
-      widget.onCheckoutResponse(
-        KlashaCheckoutResponse(
-          status: false,
-          message: apiResponse.message ?? 'Payment Not Successful',
-          transactionReference: transactionReference,
-        ),
-      );
+      _onFailure(apiResponse.message);
     }
   }
 
@@ -286,6 +291,17 @@ class _CardCheckoutViewState extends State<CardCheckoutView> {
       KlashaCheckoutResponse(
         status: true,
         message: 'Payment Successful',
+        transactionReference:
+            transactionReference ?? authBankCardResponse?.txRef ?? '',
+      ),
+    );
+  }
+
+  void _onFailure([String? error]) {
+    widget.onCheckoutResponse(
+      KlashaCheckoutResponse(
+        status: false,
+        message: error ?? 'Payment Failed',
         transactionReference:
             transactionReference ?? authBankCardResponse?.txRef ?? '',
       ),

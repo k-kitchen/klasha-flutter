@@ -60,16 +60,17 @@ class _KlashaCheckoutBaseViewState extends State<KlashaCheckoutBaseView> {
                         onCheckoutResponse: (KlashaCheckoutResponse response) {
                           checkoutResponse = response;
                           widget.config.onComplete(response);
-                          setState(() {});
+                          if(mounted)setState(() {});
                         },
                         pageController: pageController,
                         onPageChanged: (newIndex) {
-                          setState(() {});
+                          if(mounted)setState(() {});
                           currentIndex = newIndex;
                         },
                       )
                     : PaymentStatusView(
                         paymentStatus: checkoutResponse!.status,
+                        message: checkoutResponse?.message,
                         onAction: () {
                           if (checkoutResponse!.status) {
                             Navigator.pop(context);

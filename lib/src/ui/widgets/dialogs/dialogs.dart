@@ -9,6 +9,7 @@ class KlashaDialogs {
   static Future<void> showLoadingDialog(BuildContext context) async {
     await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return Dialog(
           insetPadding: EdgeInsets.zero,
