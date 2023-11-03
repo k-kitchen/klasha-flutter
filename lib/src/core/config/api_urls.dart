@@ -4,7 +4,7 @@ class ApiUrls {
   // base url
   static late String baseUrl;
 
-  static  String cardRedirectUrl = 'https://dashboard.klasha.com/woocommerce';
+  static  String cardRedirectUrl = 'https://k-redirect-app.herokuapp.com/woocommerce';
 
   // bank transfer urls
   static const String bankTransferUrl = '/pay/NGN/banktransfer';
@@ -38,7 +38,7 @@ class ApiUrls {
         break;
       case Environment.LIVE:
         baseUrl = 'https://gate.klasapps.com';
-        cardRedirectUrl = 'https://dashboard.klasha.com/woocommerce';
+        cardRedirectUrl = 'https://k-redirect-app.herokuapp.com/woocommerce';
         break;
     }
   }
