@@ -1,6 +1,6 @@
 name: klasha_checkout_v2
 description: A Flutter plugin for making payments via Klasha Checkout Technology
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/klasha-apps/klasha-flutter
 
 environment:
