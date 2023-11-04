@@ -38,7 +38,16 @@ mixin KlashaBaseService {
     if (response.statusCode == HttpStatus.ok) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Request failed with status: ${response.statusCode}.');
+      throw Exception(getErrorMessage(response) ??
+          'Request failed with status: ${response.statusCode}.');
+    }
+  }
+
+  String? getErrorMessage(http.Response r, [String key = 'message']) {
+    try {
+      return jsonDecode(r.body)?[key];
+    } catch (_) {
+      return null;
     }
   }
 

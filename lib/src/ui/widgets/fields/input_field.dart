@@ -39,7 +39,7 @@ class KlashaInputField extends StatelessWidget {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
         filled: true,
